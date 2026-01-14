@@ -1,0 +1,30 @@
+{
+  "name": "croacroa-react-native-template",
+  "displayName": "Croacroa React Native Template",
+  "version": "1.0.0",
+  "description": "Production-ready React Native template with Expo, TypeScript, NativeWind, TanStack Query, and more",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/croacroa/react-native-template"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "template",
+    "typescript",
+    "nativewind",
+    "tailwind",
+    "tanstack-query",
+    "zustand",
+    "sentry"
+  ],
+  "author": "Croacroa",
+  "license": "MIT",
+  "placeholders": {
+    "YourApp": "App display name",
+    "yourapp": "App scheme (lowercase, no spaces)",
+    "your-app": "Package slug (lowercase with dashes)",
+    "com.yourcompany.yourapp": "Bundle identifier",
+    "your-project-id": "EAS Project ID"
+  }
+}

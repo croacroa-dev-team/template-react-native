@@ -1,0 +1,274 @@
+import * as SecureStore from "expo-secure-store";
+import { router } from "expo-router";
+import { API_URL } from "@/constants/config";
+import { toast } from "@/utils/toast";
+import type { AuthTokens } from "@/types";
+
+type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+interface RequestOptions {
+  method?: RequestMethod;
+  body?: Record<string, unknown>;
+  headers?: Record<string, string>;
+  requiresAuth?: boolean;
+  skipRefresh?: boolean;
+}
+
+interface ApiError extends Error {
+  status: number;
+  data?: unknown;
+}
+
+const TOKEN_KEY = "auth_tokens";
+const TOKEN_REFRESH_THRESHOLD = 5 * 60 * 1000;
+
+// Track if we're currently refreshing to prevent multiple refresh calls
+let isRefreshing = false;
+let refreshPromise: Promise<string | null> | null = null;
+
+/**
+ * Get current auth tokens from secure storage
+ */
+async function getTokens(): Promise<AuthTokens | null> {
+  try {
+    const stored = await SecureStore.getItemAsync(TOKEN_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Save new tokens to secure storage
+ */
+async function saveTokens(tokens: AuthTokens): Promise<void> {
+  await SecureStore.setItemAsync(TOKEN_KEY, JSON.stringify(tokens));
+}
+
+/**
+ * Clear tokens and redirect to login
+ */
+async function handleAuthFailure(): Promise<void> {
+  await SecureStore.deleteItemAsync(TOKEN_KEY);
+  await SecureStore.deleteItemAsync("auth_user");
+  toast.error("Session expired", "Please sign in again");
+  router.replace("/(public)/login");
+}
+
+/**
+ * Refresh the access token using the refresh token
+ */
+async function refreshAccessToken(): Promise<string | null> {
+  // If already refreshing, wait for that request
+  if (isRefreshing && refreshPromise) {
+    return refreshPromise;
+  }
+
+  isRefreshing = true;
+  refreshPromise = (async () => {
+    try {
+      const tokens = await getTokens();
+      if (!tokens?.refreshToken) {
+        throw new Error("No refresh token");
+      }
+
+      // TODO: Replace with your actual refresh endpoint
+      const response = await fetch(`${API_URL}/auth/refresh`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken: tokens.refreshToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Refresh failed");
+      }
+
+      const data = await response.json();
+      const newTokens: AuthTokens = {
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken || tokens.refreshToken,
+        expiresAt: Date.now() + (data.expiresIn || 3600) * 1000,
+      };
+
+      await saveTokens(newTokens);
+      return newTokens.accessToken;
+    } catch (error) {
+      console.error("Token refresh failed:", error);
+      await handleAuthFailure();
+      return null;
+    } finally {
+      isRefreshing = false;
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
+}
+
+/**
+ * Get a valid access token, refreshing if necessary
+ */
+async function getValidAccessToken(): Promise<string | null> {
+  const tokens = await getTokens();
+  if (!tokens) return null;
+
+  // Check if token needs refresh
+  const timeUntilExpiry = tokens.expiresAt - Date.now();
+  if (timeUntilExpiry < TOKEN_REFRESH_THRESHOLD) {
+    return refreshAccessToken();
+  }
+
+  return tokens.accessToken;
+}
+
+class ApiClient {
+  private baseUrl: string;
+  private defaultTimeout: number;
+
+  constructor(baseUrl: string, timeout = 30000) {
+    this.baseUrl = baseUrl;
+    this.defaultTimeout = timeout;
+  }
+
+  private async request<T>(
+    endpoint: string,
+    options: RequestOptions = {}
+  ): Promise<T> {
+    const {
+      method = "GET",
+      body,
+      headers = {},
+      requiresAuth = true,
+      skipRefresh = false,
+    } = options;
+
+    const requestHeaders: Record<string, string> = {
+      "Content-Type": "application/json",
+      ...headers,
+    };
+
+    // Add auth token if required
+    if (requiresAuth) {
+      const token = await getValidAccessToken();
+      if (token) {
+        requestHeaders.Authorization = `Bearer ${token}`;
+      }
+    }
+
+    // Setup abort controller for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.defaultTimeout);
+
+    try {
+      const config: RequestInit = {
+        method,
+        headers: requestHeaders,
+        signal: controller.signal,
+      };
+
+      if (body && method !== "GET") {
+        config.body = JSON.stringify(body);
+      }
+
+      const response = await fetch(`${this.baseUrl}${endpoint}`, config);
+
+      // Handle 401 - try refresh once
+      if (response.status === 401 && requiresAuth && !skipRefresh) {
+        const newToken = await refreshAccessToken();
+        if (newToken) {
+          // Retry the request with new token
+          return this.request(endpoint, { ...options, skipRefresh: true });
+        }
+        throw new Error("Authentication failed");
+      }
+
+      // Handle other errors
+      if (!response.ok) {
+        const error = new Error(
+          `API Error: ${response.status} ${response.statusText}`
+        ) as ApiError;
+        error.status = response.status;
+        try {
+          error.data = await response.json();
+        } catch {
+          // Response body is not JSON
+        }
+        throw error;
+      }
+
+      // Handle empty responses
+      const text = await response.text();
+      if (!text) {
+        return {} as T;
+      }
+
+      return JSON.parse(text);
+    } catch (error) {
+      if (error instanceof Error) {
+        // Handle abort (timeout)
+        if (error.name === "AbortError") {
+          const timeoutError = new Error("Request timeout") as ApiError;
+          timeoutError.status = 408;
+          throw timeoutError;
+        }
+
+        // Handle network errors
+        if (error.message.includes("Network") || error.message.includes("fetch")) {
+          const networkError = new Error("Network error") as ApiError;
+          networkError.status = 0;
+          throw networkError;
+        }
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  async get<T>(
+    endpoint: string,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) {
+    return this.request<T>(endpoint, { ...options, method: "GET" });
+  }
+
+  async post<T>(
+    endpoint: string,
+    body?: Record<string, unknown>,
+    options?: Omit<RequestOptions, "method">
+  ) {
+    return this.request<T>(endpoint, { ...options, method: "POST", body });
+  }
+
+  async put<T>(
+    endpoint: string,
+    body?: Record<string, unknown>,
+    options?: Omit<RequestOptions, "method">
+  ) {
+    return this.request<T>(endpoint, { ...options, method: "PUT", body });
+  }
+
+  async patch<T>(
+    endpoint: string,
+    body?: Record<string, unknown>,
+    options?: Omit<RequestOptions, "method">
+  ) {
+    return this.request<T>(endpoint, { ...options, method: "PATCH", body });
+  }
+
+  async delete<T>(
+    endpoint: string,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) {
+    return this.request<T>(endpoint, { ...options, method: "DELETE" });
+  }
+}
+
+// Export singleton instance
+export const api = new ApiClient(API_URL);
+
+// Export class for testing or creating additional instances
+export { ApiClient };
+
+// Export token utilities for auth hook
+export { getTokens, saveTokens, getValidAccessToken };
