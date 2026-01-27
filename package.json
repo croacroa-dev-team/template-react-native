@@ -1,7 +1,35 @@
 {
-  "name": "react-native-template",
+  "name": "@croacroa/react-native-template",
   "version": "1.0.0",
+  "description": "Production-ready React Native template with Expo, authentication, i18n, offline support, and more",
   "main": "expo-router/entry",
+  "author": "Croacroa <contact@croacroa.dev>",
+  "license": "MIT",
+  "homepage": "https://github.com/croacroa-dev-team/template-react-native#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/croacroa-dev-team/template-react-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/croacroa-dev-team/template-react-native/issues"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "template",
+    "typescript",
+    "nativewind",
+    "tailwind",
+    "zustand",
+    "react-query",
+    "authentication",
+    "i18n",
+    "offline",
+    "biometrics",
+    "push-notifications",
+    "sentry",
+    "production-ready"
+  ],
   "scripts": {
     "start": "expo start",
     "dev": "expo start --dev-client",
@@ -102,5 +130,41 @@
       "prettier --write"
     ]
   },
-  "private": true
+  "files": [
+    "app",
+    "assets",
+    "components",
+    "constants",
+    "hooks",
+    "i18n",
+    "services",
+    "stores",
+    "types",
+    "utils",
+    "scripts",
+    "maestro",
+    "docs",
+    ".storybook",
+    ".github",
+    "__tests__",
+    "app.config.ts",
+    "babel.config.js",
+    "eas.json",
+    "global.css",
+    "jest.config.js",
+    "metro.config.js",
+    "nativewind-env.d.ts",
+    "tailwind.config.js",
+    "tsconfig.json",
+    ".env.example",
+    ".eslintrc.js",
+    ".prettierrc",
+    ".gitignore",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,10 +1,14 @@
-# React Native Template
+# @croacroa/react-native-template
 
-A production-ready React Native template with Expo, featuring authentication, theming, notifications, offline support, and more.
+[![npm version](https://img.shields.io/npm/v/@croacroa/react-native-template.svg)](https://www.npmjs.com/package/@croacroa/react-native-template)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+A production-ready React Native template with Expo SDK 52, featuring authentication, i18n, biometrics, offline support, and more.
 
 ## ✨ Features
 
 ### Core
+
 - **Expo SDK 52** with TypeScript
 - **Expo Router** for file-based navigation
 - **NativeWind** (Tailwind CSS) for styling
@@ -13,50 +17,88 @@ A production-ready React Native template with Expo, featuring authentication, th
 - **React Hook Form + Zod** for form validation
 
 ### Authentication & Security
+
+- **Auth Adapter Pattern** - Easy switching between Supabase, Firebase, etc.
+- **Biometric Auth** - Face ID / Touch ID support
 - **Secure token storage** with expo-secure-store
 - **Automatic token refresh** with race condition handling
-- **401 retry logic** in API client
+
+### Internationalization
+
+- **i18n** with expo-localization + i18next
+- **English & French** translations included
+- **Language detection** and persistence
 
 ### UX Features
+
 - **Dark/Light Theme** with system preference support
+- **Onboarding Screens** with animated pagination
 - **Push Notifications** with Expo Notifications
 - **Toast Notifications** with Burnt
+- **Deep Linking** support with route parsing
 - **Skeleton Loaders** with shimmer animation
 - **Offline Support** with connection status toasts
-- **Error Boundary** with crash recovery
+- **OTA Updates** with expo-updates integration
 
-### DevOps
-- **Sentry** integration for crash reporting
+### UI Components
+
+- Button, Input, Card, Modal, Skeleton
+- **Select/Dropdown**, Checkbox, Switch
+- **BottomSheet** with @gorhom/bottom-sheet
+- **Avatar** with initials fallback
+- **Badge, Chip, CountBadge**
+- **OptimizedImage** with expo-image
+
+### DevOps & Quality
+
+- **GitHub Actions** CI/CD workflows
+- **Maestro** E2E tests
+- **Sentry** for crash reporting
+- **Analytics Adapter** for multiple providers
+- **Performance Monitoring** hooks
+- **Accessibility** utilities and hooks
 - **Jest + Testing Library** with 58+ tests
 - **Storybook** for component documentation
 - **ESLint + Prettier + Husky** for code quality
-- **EAS Build** configured for dev/preview/production
 
 ## 🚀 Quick Start
 
-### Option 1: Using degit (Recommended)
+### Option 1: Using npx (Recommended)
+
 ```bash
-npx degit croacroa/react-native-template my-app
+npx create-expo-app my-app --template @croacroa/react-native-template
+cd my-app
+npm install
+```
+
+### Option 2: Using degit
+
+```bash
+npx degit croacroa-dev-team/template-react-native my-app
 cd my-app
 ./scripts/init.sh  # macOS/Linux
 # or
 .\scripts\init.ps1  # Windows PowerShell
 ```
 
-### Option 2: Manual Setup
+### Option 3: Clone Repository
+
 ```bash
-git clone https://github.com/croacroa/react-native-template my-app
+git clone https://github.com/croacroa-dev-team/template-react-native my-app
 cd my-app
-npm install --legacy-peer-deps
+rm -rf .git
+npm install
 cp .env.example .env
 ```
 
-Then manually update:
+Then update:
+
 - `app.config.ts` - App name, bundle ID, scheme
 - `package.json` - Package name
 - `constants/config.ts` - API URLs
 
 ### Run the App
+
 ```bash
 npm start           # Start development server
 npm run ios         # Run on iOS simulator
@@ -110,6 +152,7 @@ function MyComponent() {
 ```
 
 Features:
+
 - Tokens stored securely with expo-secure-store
 - Automatic refresh 5 minutes before expiry
 - Race condition handling for concurrent requests
@@ -133,7 +176,9 @@ await api.get("/public", { requiresAuth: false });
 ```
 
 ### 401 Handling
+
 The API client automatically:
+
 1. Catches 401 responses
 2. Refreshes the access token
 3. Retries the original request
@@ -160,6 +205,7 @@ function Profile() {
 ```
 
 ### CRUD Factory
+
 Create hooks for any resource:
 
 ```tsx
@@ -243,7 +289,7 @@ Global error handling with Sentry:
 // Already wrapped in _layout.tsx
 <ErrorBoundary>
   <App />
-</ErrorBoundary>
+</ErrorBoundary>;
 
 // Or use HOC for specific components
 import { withErrorBoundary } from "@/components/ErrorBoundary";
@@ -295,12 +341,14 @@ function MyComponent() {
 ## 🔧 Configuration
 
 ### Environment Variables
+
 ```env
 # .env
 EXPO_PUBLIC_SENTRY_DSN=your-sentry-dsn
 ```
 
 ### Sentry Setup
+
 1. Create project at [sentry.io](https://sentry.io)
 2. Copy DSN to `.env`
 3. Errors automatically reported in production
@@ -316,24 +364,25 @@ npm run test:coverage # With coverage
 ```
 
 Test coverage:
+
 - `useAuth` hook - 24 tests
 - `ApiClient` - 22 tests
 - UI components - 12 tests
 
 ## 📜 Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start Expo dev server |
-| `npm run ios` | Run on iOS simulator |
-| `npm run android` | Run on Android emulator |
-| `npm test` | Run tests |
-| `npm run storybook` | Start Storybook |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | TypeScript check |
-| `npm run build:dev` | Build development client |
-| `npm run build:preview` | Build preview APK/IPA |
-| `npm run build:prod` | Build production release |
+| Command                 | Description              |
+| ----------------------- | ------------------------ |
+| `npm start`             | Start Expo dev server    |
+| `npm run ios`           | Run on iOS simulator     |
+| `npm run android`       | Run on Android emulator  |
+| `npm test`              | Run tests                |
+| `npm run storybook`     | Start Storybook          |
+| `npm run lint`          | Run ESLint               |
+| `npm run typecheck`     | TypeScript check         |
+| `npm run build:dev`     | Build development client |
+| `npm run build:preview` | Build preview APK/IPA    |
+| `npm run build:prod`    | Build production release |
 
 ## ✅ Customization Checklist
 
