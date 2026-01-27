@@ -7,3 +7,16 @@ export {
   setUser,
   addBreadcrumb,
 } from "./sentry";
+export { authAdapter, mockAuthAdapter } from "./authAdapter";
+export type { AuthAdapter, AuthResult, AuthError } from "./authAdapter";
+export {
+  analytics,
+  track,
+  identify,
+  screen,
+  resetAnalytics,
+  setUserProperties,
+  trackRevenue,
+  AnalyticsEvents,
+} from "./analytics";
+export type { AnalyticsAdapter, AnalyticsEvent } from "./analytics";

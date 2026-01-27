@@ -1,0 +1,94 @@
+appId: ${APP_ID}
+name: Registration Flow
+tags:
+  - auth
+  - smoke
+---
+# Registration Flow Test
+# Tests the complete signup experience
+
+- launchApp:
+    clearState: true
+
+# Navigate to registration
+- tapOn: "Sign Up"
+- waitForAnimationToEnd
+
+# Verify we're on register screen
+- assertVisible: "Create Account"
+- assertVisible: "Join us today"
+
+# Test validation - empty form
+- scrollUntilVisible:
+    element: "Sign Up"
+    direction: DOWN
+- tapOn:
+    text: "Sign Up"
+    index: 1
+- assertVisible: "required"
+
+# Enter name
+- tapOn:
+    text: "Name"
+- inputText: "Test User"
+
+# Enter email
+- tapOn:
+    text: "Email"
+- inputText: "newuser@example.com"
+
+# Enter password (too short)
+- tapOn:
+    text: "Password"
+    index: 0
+- inputText: "short"
+- tapOn:
+    text: "Confirm Password"
+- inputText: "short"
+
+# Try to submit - should show password length error
+- tapOn:
+    text: "Sign Up"
+    index: 1
+- assertVisible: "8 characters"
+
+# Fix password
+- tapOn:
+    text: "Password"
+    index: 0
+- clearText
+- inputText: "SecurePass123"
+
+# Enter mismatched confirm password
+- tapOn:
+    text: "Confirm Password"
+- clearText
+- inputText: "DifferentPass123"
+
+- tapOn:
+    text: "Sign Up"
+    index: 1
+- assertVisible: "match"
+
+# Fix confirm password
+- tapOn:
+    text: "Confirm Password"
+- clearText
+- inputText: "SecurePass123"
+
+# Submit the form
+- tapOn:
+    text: "Sign Up"
+    index: 1
+
+# Wait for registration
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify successful registration
+- assertVisible: "Account created"
+
+# Verify we're logged in
+- assertVisible:
+    text: "Home"
+    optional: true

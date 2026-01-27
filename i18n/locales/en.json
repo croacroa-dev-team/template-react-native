@@ -1,0 +1,101 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "retry": "Retry",
+    "search": "Search",
+    "noResults": "No results found",
+    "offline": "You are offline",
+    "online": "Back online"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reset Password",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "welcomeBack": "Welcome back!",
+    "signInToContinue": "Sign in to continue",
+    "createAccount": "Create Account",
+    "joinUs": "Join us today",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "enterName": "Enter your name",
+    "passwordHint": "At least 8 characters",
+    "invalidCredentials": "Invalid email or password",
+    "accountCreated": "Account created successfully!",
+    "sessionExpired": "Session expired. Please sign in again.",
+    "biometric": {
+      "title": "Biometric Authentication",
+      "prompt": "Authenticate to continue",
+      "fallback": "Use passcode",
+      "enabled": "Biometric login enabled",
+      "disabled": "Biometric login disabled",
+      "notAvailable": "Biometric authentication not available"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "notifications": "Notifications"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit Profile",
+    "changePhoto": "Change Photo",
+    "personalInfo": "Personal Information",
+    "memberSince": "Member since {{date}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "language": "Language",
+    "notifications": "Notifications",
+    "pushNotifications": "Push Notifications",
+    "emailNotifications": "Email Notifications",
+    "security": "Security",
+    "biometricAuth": "Biometric Authentication",
+    "changePassword": "Change Password",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "about": "About",
+    "version": "Version",
+    "deleteAccount": "Delete Account"
+  },
+  "errors": {
+    "generic": "Something went wrong",
+    "network": "Network error. Please check your connection.",
+    "timeout": "Request timed out. Please try again.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "notFound": "Resource not found.",
+    "validation": "Please check your input and try again."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordMatch": "Passwords do not match",
+    "nameMin": "Name must be at least 2 characters"
+  }
+}

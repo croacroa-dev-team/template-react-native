@@ -1,0 +1,101 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "done": "Terminé",
+    "retry": "Réessayer",
+    "search": "Rechercher",
+    "noResults": "Aucun résultat trouvé",
+    "offline": "Vous êtes hors ligne",
+    "online": "De retour en ligne"
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "name": "Nom",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "welcomeBack": "Bon retour !",
+    "signInToContinue": "Connectez-vous pour continuer",
+    "createAccount": "Créer un compte",
+    "joinUs": "Rejoignez-nous",
+    "enterEmail": "Entrez votre email",
+    "enterPassword": "Entrez votre mot de passe",
+    "enterName": "Entrez votre nom",
+    "passwordHint": "Au moins 8 caractères",
+    "invalidCredentials": "Email ou mot de passe invalide",
+    "accountCreated": "Compte créé avec succès !",
+    "sessionExpired": "Session expirée. Veuillez vous reconnecter.",
+    "biometric": {
+      "title": "Authentification biométrique",
+      "prompt": "Authentifiez-vous pour continuer",
+      "fallback": "Utiliser le code",
+      "enabled": "Connexion biométrique activée",
+      "disabled": "Connexion biométrique désactivée",
+      "notAvailable": "Authentification biométrique non disponible"
+    }
+  },
+  "navigation": {
+    "home": "Accueil",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "notifications": "Notifications"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Modifier le profil",
+    "changePhoto": "Changer la photo",
+    "personalInfo": "Informations personnelles",
+    "memberSince": "Membre depuis {{date}}"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "themeSystem": "Système",
+    "language": "Langue",
+    "notifications": "Notifications",
+    "pushNotifications": "Notifications push",
+    "emailNotifications": "Notifications par email",
+    "security": "Sécurité",
+    "biometricAuth": "Authentification biométrique",
+    "changePassword": "Changer le mot de passe",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "about": "À propos",
+    "version": "Version",
+    "deleteAccount": "Supprimer le compte"
+  },
+  "errors": {
+    "generic": "Une erreur s'est produite",
+    "network": "Erreur réseau. Vérifiez votre connexion.",
+    "timeout": "Délai dépassé. Veuillez réessayer.",
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "notFound": "Ressource introuvable.",
+    "validation": "Veuillez vérifier vos informations et réessayer."
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "email": "Veuillez entrer un email valide",
+    "passwordMin": "Le mot de passe doit contenir au moins 8 caractères",
+    "passwordMatch": "Les mots de passe ne correspondent pas",
+    "nameMin": "Le nom doit contenir au moins 2 caractères"
+  }
+}

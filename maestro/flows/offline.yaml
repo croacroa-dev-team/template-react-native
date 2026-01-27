@@ -1,0 +1,60 @@
+appId: ${APP_ID}
+name: Offline Mode Flow
+tags:
+  - offline
+  - edge-case
+---
+# Offline Mode Test
+# Tests app behavior when offline
+
+- launchApp:
+    clearState: true
+
+# Login while online
+- tapOn:
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+- tapOn:
+    text: "Sign In"
+    index: 1
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify login successful
+- assertVisible: "Home"
+
+# Enable airplane mode (simulates offline)
+- setAirplaneMode:
+    enabled: true
+
+# Wait for offline detection
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Verify offline indicator appears
+- assertVisible:
+    text: "offline"
+    optional: true
+
+# Try to perform an action that requires network
+- tapOn: "Profile"
+- waitForAnimationToEnd
+
+# The cached data should still be visible
+- assertVisible: "Profile"
+
+# Disable airplane mode
+- setAirplaneMode:
+    enabled: false
+
+# Wait for reconnection
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify back online
+- assertVisible:
+    text: "online"
+    optional: true

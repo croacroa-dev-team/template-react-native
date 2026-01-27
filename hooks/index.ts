@@ -9,3 +9,10 @@ export {
   createCrudHooks,
   postsApi,
 } from "./useApi";
+export {
+  useDeepLinking,
+  createDeepLink,
+  getDeepLinkPrefix,
+} from "./useDeepLinking";
+export { useBiometrics, getBiometricName } from "./useBiometrics";
+export { useOffline, usePendingMutations } from "./useOffline";

@@ -1,0 +1,35 @@
+# Maestro Configuration
+# https://maestro.mobile.dev/reference/configuration
+
+# Default app ID (can be overridden with env vars)
+appId: com.croacroa.app
+
+# Environment variables
+env:
+  APP_ID: ${APP_ID:-com.croacroa.app}
+  API_URL: ${API_URL:-http://localhost:3000}
+
+# Test execution settings
+executionOrder:
+  continueOnFailure: false
+  retryFailedTests: 1
+
+# Screenshots
+screenshots:
+  enabled: true
+  directory: ./maestro/screenshots
+
+# Video recording
+video:
+  enabled: true
+  directory: ./maestro/videos
+
+# Timeouts
+timeouts:
+  launchApp: 30000
+  waitForAnimationToEnd: 5000
+
+# Device settings
+device:
+  locale: en_US
+  orientation: portrait

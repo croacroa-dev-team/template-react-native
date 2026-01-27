@@ -1,0 +1,62 @@
+appId: ${APP_ID}
+name: Login Flow
+tags:
+  - auth
+  - smoke
+---
+# Login Flow Test
+# Tests the complete login experience
+
+- launchApp:
+    clearState: true
+
+# Wait for app to load
+- waitForAnimationToEnd
+
+# Verify we're on the login screen
+- assertVisible: "Sign In"
+- assertVisible: "Sign in to continue"
+
+# Test empty form submission
+- tapOn: "Sign In"
+- assertVisible: "required"
+
+# Enter invalid email
+- tapOn:
+    text: "Email"
+- inputText: "invalid-email"
+- tapOn: "Sign In"
+- assertVisible: "valid email"
+
+# Clear and enter valid credentials
+- clearText
+- inputText: "test@example.com"
+
+# Enter password
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+
+# Toggle password visibility
+- tapOn:
+    id: "password-toggle"
+- assertVisible: "password123"
+- tapOn:
+    id: "password-toggle"
+
+# Submit the form
+- tapOn:
+    text: "Sign In"
+    index: 1
+
+# Wait for loading
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify successful login (should see home screen)
+- assertVisible: "Welcome back"
+
+# Verify we're on the authenticated section
+- assertVisible:
+    text: "Home"
+    optional: true

@@ -1,10 +1,48 @@
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
+import Bottleneck from "bottleneck";
 import { API_URL } from "@/constants/config";
 import { toast } from "@/utils/toast";
 import type { AuthTokens } from "@/types";
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+// ============================================================================
+// Rate Limiting Configuration
+// ============================================================================
+
+/**
+ * Rate limiter to prevent API abuse and handle rate limiting gracefully
+ * - maxConcurrent: Maximum concurrent requests
+ * - minTime: Minimum time between requests (ms)
+ * - reservoir: Number of requests allowed in the reservoir
+ * - reservoirRefreshAmount: How many requests to add on refresh
+ * - reservoirRefreshInterval: How often to refresh the reservoir (ms)
+ */
+const limiter = new Bottleneck({
+  maxConcurrent: 5, // Max 5 concurrent requests
+  minTime: 100, // At least 100ms between requests
+  reservoir: 50, // 50 requests per interval
+  reservoirRefreshAmount: 50,
+  reservoirRefreshInterval: 60 * 1000, // Refresh every minute
+});
+
+// Track rate limit errors
+let rateLimitRetryAfter = 0;
+
+limiter.on("failed", async (error, _jobInfo) => {
+  // If we hit a rate limit, wait and retry
+  if (error instanceof Error && error.message.includes("429")) {
+    const retryAfter = rateLimitRetryAfter || 1000;
+    console.warn(`Rate limited, retrying in ${retryAfter}ms`);
+    return retryAfter;
+  }
+  return null;
+});
+
+limiter.on("retry", (error, jobInfo) => {
+  console.log(`Retrying request (attempt ${jobInfo.retryCount + 1})`);
+});
 
 interface RequestOptions {
   method?: RequestMethod;
@@ -124,10 +162,22 @@ async function getValidAccessToken(): Promise<string | null> {
 class ApiClient {
   private baseUrl: string;
   private defaultTimeout: number;
+  private enableRateLimiting: boolean;
 
-  constructor(baseUrl: string, timeout = 30000) {
+  constructor(baseUrl: string, timeout = 30000, enableRateLimiting = true) {
     this.baseUrl = baseUrl;
     this.defaultTimeout = timeout;
+    this.enableRateLimiting = enableRateLimiting;
+  }
+
+  /**
+   * Execute a request with rate limiting
+   */
+  private async executeWithRateLimiting<T>(fn: () => Promise<T>): Promise<T> {
+    if (!this.enableRateLimiting) {
+      return fn();
+    }
+    return limiter.schedule(fn);
   }
 
   private async request<T>(
@@ -170,7 +220,9 @@ class ApiClient {
         config.body = JSON.stringify(body);
       }
 
-      const response = await fetch(`${this.baseUrl}${endpoint}`, config);
+      const response = await this.executeWithRateLimiting(() =>
+        fetch(`${this.baseUrl}${endpoint}`, config)
+      );
 
       // Handle 401 - try refresh once
       if (response.status === 401 && requiresAuth && !skipRefresh) {
@@ -180,6 +232,17 @@ class ApiClient {
           return this.request(endpoint, { ...options, skipRefresh: true });
         }
         throw new Error("Authentication failed");
+      }
+
+      // Handle rate limiting (429)
+      if (response.status === 429) {
+        const retryAfter = response.headers.get("Retry-After");
+        rateLimitRetryAfter = retryAfter
+          ? parseInt(retryAfter, 10) * 1000
+          : 1000;
+        const error = new Error("Rate limited - too many requests") as ApiError;
+        error.status = 429;
+        throw error;
       }
 
       // Handle other errors
@@ -213,7 +276,10 @@ class ApiClient {
         }
 
         // Handle network errors
-        if (error.message.includes("Network") || error.message.includes("fetch")) {
+        if (
+          error.message.includes("Network") ||
+          error.message.includes("fetch")
+        ) {
           const networkError = new Error("Network error") as ApiError;
           networkError.status = 0;
           throw networkError;

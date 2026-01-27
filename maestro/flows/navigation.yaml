@@ -1,0 +1,68 @@
+appId: ${APP_ID}
+name: Navigation Flow
+tags:
+  - navigation
+  - smoke
+---
+# Navigation Flow Test
+# Tests navigation between main screens
+
+- launchApp:
+    clearState: true
+
+# Login first
+- tapOn:
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+- tapOn:
+    text: "Sign In"
+    index: 1
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify we're on home
+- assertVisible: "Home"
+
+# Navigate to Profile
+- tapOn: "Profile"
+- waitForAnimationToEnd
+- assertVisible: "Profile"
+- assertVisible: "test@example.com"
+
+# Navigate to Settings
+- tapOn: "Settings"
+- waitForAnimationToEnd
+- assertVisible: "Settings"
+- assertVisible: "Appearance"
+- assertVisible: "Theme"
+
+# Test theme toggle
+- tapOn: "Theme"
+- waitForAnimationToEnd
+- assertVisible: "Dark"
+- tapOn: "Dark"
+- waitForAnimationToEnd
+
+# Go back
+- back
+- assertVisible: "Settings"
+
+# Navigate back to Home
+- tapOn: "Home"
+- waitForAnimationToEnd
+- assertVisible: "Home"
+
+# Test sign out
+- tapOn: "Profile"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: "Sign Out"
+    direction: DOWN
+- tapOn: "Sign Out"
+- waitForAnimationToEnd
+
+# Verify we're back on login
+- assertVisible: "Sign In"
