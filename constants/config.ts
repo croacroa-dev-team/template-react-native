@@ -2,7 +2,8 @@ import Constants from "expo-constants";
 
 // Environment detection
 export const IS_DEV = __DEV__;
-export const IS_PREVIEW = Constants.expoConfig?.extra?.APP_VARIANT === "preview";
+export const IS_PREVIEW =
+  Constants.expoConfig?.extra?.APP_VARIANT === "preview";
 export const IS_PROD = !IS_DEV && !IS_PREVIEW;
 
 // API Configuration
@@ -24,7 +25,16 @@ export const FEATURES = {
   ENABLE_CRASH_REPORTING: IS_PROD,
   ENABLE_PUSH_NOTIFICATIONS: true,
   ENABLE_BIOMETRIC_AUTH: true,
+  ENABLE_PERFORMANCE_MONITORING: IS_DEV || IS_PREVIEW,
 } as const;
+
+// Export individual flags for convenience
+export const ENABLE_ANALYTICS = FEATURES.ENABLE_ANALYTICS;
+export const ENABLE_CRASH_REPORTING = FEATURES.ENABLE_CRASH_REPORTING;
+export const ENABLE_PUSH_NOTIFICATIONS = FEATURES.ENABLE_PUSH_NOTIFICATIONS;
+export const ENABLE_BIOMETRIC_AUTH = FEATURES.ENABLE_BIOMETRIC_AUTH;
+export const ENABLE_PERFORMANCE_MONITORING =
+  FEATURES.ENABLE_PERFORMANCE_MONITORING;
 
 // Timing Constants
 export const TIMING = {

@@ -30,6 +30,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - CONTRIBUTING.md
   - CHANGELOG.md
   - Architecture Decision Records (ADRs)
+- GitHub Actions CI/CD workflows:
+  - Lint, test, and build checks
+  - Maestro Cloud E2E tests
+  - EAS Build workflow (manual trigger)
+  - EAS Update workflow (OTA on push to main)
+- Onboarding screens with animated pagination
+- OTA updates support with `useUpdates` hook
+- Performance monitoring with `usePerformance` hook
+- Comprehensive accessibility utilities:
+  - Builder functions for all UI patterns (button, input, toggle, etc.)
+  - Hooks for screen reader, reduce motion, and bold text preferences
+  - Utility functions for announcements and focus management
 
 ### Changed
 

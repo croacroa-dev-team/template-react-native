@@ -16,3 +16,10 @@ export {
 } from "./useDeepLinking";
 export { useBiometrics, getBiometricName } from "./useBiometrics";
 export { useOffline, usePendingMutations } from "./useOffline";
+export { useUpdates, getUpdateInfo, forceUpdate } from "./useUpdates";
+export {
+  usePerformance,
+  measureAsync,
+  measureSync,
+  runAfterInteractions,
+} from "./usePerformance";
