@@ -18,7 +18,7 @@ const getAppName = () => {
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: getAppName(),
-  slug: "your-app",
+  slug: "react-native-template",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
@@ -87,6 +87,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     "expo-router",
     "expo-secure-store",
+    "expo-image-picker",
     [
       "expo-notifications",
       {
@@ -109,7 +110,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     eas: {
-      projectId: "your-project-id",
+      projectId: "e683c5b3-fb16-4a31-b578-01f3fca1e67a",
     },
   },
 });
