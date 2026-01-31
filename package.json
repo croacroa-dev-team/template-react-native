@@ -123,6 +123,7 @@
     "jest-expo": "~52.0.3",
     "lint-staged": "^15.3.0",
     "prettier": "^3.4.2",
+    "sharp": "^0.34.5",
     "storybook": "^8.5.0",
     "typedoc": "^0.27.6",
     "typescript": "^5.7.3"
