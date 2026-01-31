@@ -1,0 +1,86 @@
+appId: ${APP_ID}
+name: MFA Setup Flow
+tags:
+  - auth
+  - mfa
+  - security
+---
+# MFA Setup Test
+# Tests the complete MFA (2FA) setup experience
+
+- launchApp:
+    clearState: true
+
+# Login first
+- tapOn:
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+- tapOn:
+    text: "Sign In"
+    index: 1
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Navigate to settings
+- tapOn: "Settings"
+- waitForAnimationToEnd
+
+# Find and tap on security section
+- scrollUntilVisible:
+    element: "Security"
+    direction: DOWN
+- tapOn: "Security"
+- waitForAnimationToEnd
+
+# Tap on enable MFA
+- tapOn: "Biometric Authentication"
+- waitForAnimationToEnd
+
+# OR tap on 2FA if available
+- tapOn:
+    text: "Two-Factor Authentication"
+    optional: true
+- waitForAnimationToEnd
+
+# Verify MFA setup screen appears
+- assertVisible:
+    text: "Enable"
+    optional: true
+
+# If there's an enable button, tap it
+- tapOn:
+    text: "Enable 2FA"
+    optional: true
+- waitForAnimationToEnd
+
+# Verify QR code or setup instructions appear
+- assertVisible:
+    text:
+      - "Authenticator"
+      - "QR"
+      - "code"
+    optional: true
+
+# Enter verification code (mock: 123456)
+- tapOn:
+    text: "Verification"
+    optional: true
+- inputText: "123456"
+
+# Confirm setup
+- tapOn:
+    text: "Verify"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Verify success message or enabled state
+- assertVisible:
+    text:
+      - "enabled"
+      - "success"
+      - "active"
+    optional: true

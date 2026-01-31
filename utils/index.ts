@@ -41,3 +41,12 @@ export {
   formatDurationA11y,
 } from "./accessibility";
 export type { AccessibilityProps } from "./accessibility";
+
+// Accessibility enforcement HOC and utilities
+export {
+  withAccessibility,
+  useAccessibilityValidation,
+  createA11yProps,
+  A11yContext,
+  auditAccessibility,
+} from "./withAccessibility";

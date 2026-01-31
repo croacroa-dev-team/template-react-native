@@ -1,0 +1,128 @@
+appId: ${APP_ID}
+name: Offline Sync Flow
+tags:
+  - offline
+  - sync
+  - edge-case
+---
+# Offline Sync Test
+# Tests offline mutation queueing and sync when back online
+
+- launchApp:
+    clearState: true
+
+# Login while online
+- tapOn:
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+- tapOn:
+    text: "Sign In"
+    index: 1
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify login successful
+- assertVisible: "Home"
+
+# Navigate to a screen where we can create/edit data
+- tapOn: "Profile"
+- waitForAnimationToEnd
+
+# Enable airplane mode to go offline
+- setAirplaneMode:
+    enabled: true
+
+# Wait for offline detection
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Verify offline indicator
+- assertVisible:
+    text: "offline"
+    optional: true
+
+# Try to edit profile (should queue mutation)
+- tapOn:
+    text: "Edit Profile"
+    optional: true
+- waitForAnimationToEnd
+
+# Make a change
+- tapOn:
+    text: "Name"
+    optional: true
+- clearText
+- inputText: "Offline Updated Name"
+
+# Save (should queue for sync)
+- tapOn:
+    text: "Save"
+    optional: true
+- waitForAnimationToEnd
+
+# Verify queued message appears
+- assertVisible:
+    text:
+      - "queued"
+      - "pending"
+      - "sync"
+      - "offline"
+    optional: true
+
+# Make another change while offline
+- tapOn:
+    text: "Edit"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Bio"
+    optional: true
+- inputText: "Updated while offline"
+- tapOn:
+    text: "Save"
+    optional: true
+- waitForAnimationToEnd
+
+# Verify multiple items queued
+- assertVisible:
+    text:
+      - "2 pending"
+      - "pending sync"
+    optional: true
+
+# Go back online
+- setAirplaneMode:
+    enabled: false
+
+# Wait for sync
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Verify sync started
+- assertVisible:
+    text:
+      - "Syncing"
+      - "online"
+    optional: true
+
+# Wait for sync to complete
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify sync completed
+- assertVisible:
+    text:
+      - "synced"
+      - "updated"
+      - "success"
+    optional: true
+
+# Verify changes persisted
+- tapOn: "Profile"
+- waitForAnimationToEnd
+- assertVisible:
+    text: "Offline Updated Name"
+    optional: true

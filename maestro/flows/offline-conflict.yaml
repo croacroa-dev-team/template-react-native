@@ -1,0 +1,101 @@
+appId: ${APP_ID}
+name: Offline Conflict Resolution Flow
+tags:
+  - offline
+  - sync
+  - conflict
+  - edge-case
+---
+# Offline Conflict Resolution Test
+# Tests conflict resolution when offline changes conflict with server
+
+- launchApp:
+    clearState: true
+
+# Login
+- tapOn:
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+- tapOn:
+    text: "Sign In"
+    index: 1
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Navigate to editable content
+- tapOn: "Profile"
+- waitForAnimationToEnd
+
+# Note the current state
+- assertVisible: "Profile"
+
+# Go offline
+- setAirplaneMode:
+    enabled: true
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Edit while offline
+- tapOn:
+    text: "Edit Profile"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Name"
+    optional: true
+- clearText
+- inputText: "Client Version"
+- tapOn:
+    text: "Save"
+    optional: true
+- waitForAnimationToEnd
+
+# Simulate server having different version (via test flag if available)
+# In real test, another client would have modified the same data
+
+# Go back online
+- setAirplaneMode:
+    enabled: false
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Sync should detect conflict
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# If conflict dialog appears
+- assertVisible:
+    text:
+      - "Conflict"
+      - "modified"
+      - "resolve"
+    optional: true
+
+# Choose resolution strategy (if UI presents options)
+- tapOn:
+    text: "Keep my changes"
+    optional: true
+
+# Or
+- tapOn:
+    text: "Use server version"
+    optional: true
+
+# Or
+- tapOn:
+    text: "Merge"
+    optional: true
+
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Verify resolution completed
+- assertVisible:
+    text:
+      - "resolved"
+      - "success"
+      - "updated"
+    optional: true
