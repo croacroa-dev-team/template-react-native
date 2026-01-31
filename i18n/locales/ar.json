@@ -1,0 +1,101 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "done": "تم",
+    "retry": "إعادة المحاولة",
+    "search": "بحث",
+    "noResults": "لم يتم العثور على نتائج",
+    "offline": "أنت غير متصل",
+    "online": "متصل مرة أخرى"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "name": "الاسم",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "noAccount": "ليس لديك حساب؟",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "welcomeBack": "مرحباً بعودتك!",
+    "signInToContinue": "سجل الدخول للمتابعة",
+    "createAccount": "إنشاء حساب",
+    "joinUs": "انضم إلينا اليوم",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "enterPassword": "أدخل كلمة المرور",
+    "enterName": "أدخل اسمك",
+    "passwordHint": "8 أحرف على الأقل",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "accountCreated": "تم إنشاء الحساب بنجاح!",
+    "sessionExpired": "انتهت الجلسة. يرجى تسجيل الدخول مرة أخرى.",
+    "biometric": {
+      "title": "المصادقة البيومترية",
+      "prompt": "قم بالمصادقة للمتابعة",
+      "fallback": "استخدام رمز المرور",
+      "enabled": "تم تفعيل تسجيل الدخول البيومتري",
+      "disabled": "تم تعطيل تسجيل الدخول البيومتري",
+      "notAvailable": "المصادقة البيومترية غير متاحة"
+    }
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "notifications": "الإشعارات"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "editProfile": "تعديل الملف الشخصي",
+    "changePhoto": "تغيير الصورة",
+    "personalInfo": "المعلومات الشخصية",
+    "memberSince": "عضو منذ {{date}}"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "appearance": "المظهر",
+    "theme": "السمة",
+    "themeLight": "فاتح",
+    "themeDark": "داكن",
+    "themeSystem": "النظام",
+    "language": "اللغة",
+    "notifications": "الإشعارات",
+    "pushNotifications": "إشعارات الدفع",
+    "emailNotifications": "إشعارات البريد الإلكتروني",
+    "security": "الأمان",
+    "biometricAuth": "المصادقة البيومترية",
+    "changePassword": "تغيير كلمة المرور",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "about": "حول",
+    "version": "الإصدار",
+    "deleteAccount": "حذف الحساب"
+  },
+  "errors": {
+    "generic": "حدث خطأ ما",
+    "network": "خطأ في الشبكة. يرجى التحقق من اتصالك.",
+    "timeout": "انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.",
+    "unauthorized": "غير مصرح لك بتنفيذ هذا الإجراء.",
+    "notFound": "المورد غير موجود.",
+    "validation": "يرجى التحقق من المدخلات والمحاولة مرة أخرى."
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "email": "يرجى إدخال بريد إلكتروني صالح",
+    "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "passwordMatch": "كلمات المرور غير متطابقة",
+    "nameMin": "يجب أن يكون الاسم حرفين على الأقل"
+  }
+}

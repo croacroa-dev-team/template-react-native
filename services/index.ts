@@ -41,5 +41,14 @@ export {
   isBackgroundSyncRegistered,
   getBackgroundSyncStatus,
   isNetworkError,
+  registerConflictResolver,
+  unregisterConflictResolver,
+  getPendingConflicts,
+  clearPendingConflict,
 } from "./backgroundSync";
-export type { QueuedMutation } from "./backgroundSync";
+export type {
+  QueuedMutation,
+  ConflictResolutionStrategy,
+  SyncConflict,
+  ConflictResolver,
+} from "./backgroundSync";

@@ -14,6 +14,7 @@ import en from "./locales/en.json";
 import fr from "./locales/fr.json";
 import es from "./locales/es.json";
 import de from "./locales/de.json";
+import ar from "./locales/ar.json";
 
 /**
  * Supported languages configuration.
@@ -24,9 +25,7 @@ export const LANGUAGES = {
   fr: { name: "French", nativeName: "Français", rtl: false },
   es: { name: "Spanish", nativeName: "Español", rtl: false },
   de: { name: "German", nativeName: "Deutsch", rtl: false },
-  // Add RTL languages here:
-  // ar: { name: "Arabic", nativeName: "العربية", rtl: true },
-  // he: { name: "Hebrew", nativeName: "עברית", rtl: true },
+  ar: { name: "Arabic", nativeName: "العربية", rtl: true },
 } as const;
 
 export type LanguageCode = keyof typeof LANGUAGES;
@@ -38,6 +37,7 @@ const resources = {
   fr: { translation: fr },
   es: { translation: es },
   de: { translation: de },
+  ar: { translation: ar },
 };
 
 /**
@@ -126,6 +126,68 @@ export function getAvailableLanguages(): Array<{
  */
 export function getCurrentLanguage(): LanguageCode {
   return (i18n.language || "en") as LanguageCode;
+}
+
+/**
+ * Hook-friendly RTL detection
+ * Returns current RTL state from I18nManager
+ */
+export function isRTL(): boolean {
+  return I18nManager.isRTL;
+}
+
+/**
+ * Get text alignment based on RTL
+ * Useful for styling text components
+ */
+export function getTextAlign(): "left" | "right" {
+  return I18nManager.isRTL ? "right" : "left";
+}
+
+/**
+ * Get flex direction based on RTL
+ * Useful for horizontal layouts
+ */
+export function getFlexDirection(): "row" | "row-reverse" {
+  return I18nManager.isRTL ? "row-reverse" : "row";
+}
+
+/**
+ * Get start/end values swapped for RTL
+ * Useful for margins, paddings, and positioning
+ */
+export function getStartEnd(): { start: "left" | "right"; end: "left" | "right" } {
+  return I18nManager.isRTL
+    ? { start: "right", end: "left" }
+    : { start: "left", end: "right" };
+}
+
+/**
+ * Transform a value for RTL (e.g., for translateX animations)
+ * @param value - The original value
+ * @returns The transformed value (negated for RTL)
+ */
+export function rtlTransform(value: number): number {
+  return I18nManager.isRTL ? -value : value;
+}
+
+/**
+ * Check if a specific language requires RTL
+ */
+export function isLanguageRTL(languageCode: string): boolean {
+  const lang = LANGUAGES[languageCode as LanguageCode];
+  return lang?.rtl ?? false;
+}
+
+/**
+ * Force app restart for RTL changes to take effect
+ * Call this after changing to/from an RTL language
+ */
+export async function applyRTLAndRestart(isRTL: boolean): Promise<void> {
+  I18nManager.allowRTL(isRTL);
+  I18nManager.forceRTL(isRTL);
+  // Note: In production, use expo-updates to reload the app
+  // await Updates.reloadAsync();
 }
 
 export { i18n };

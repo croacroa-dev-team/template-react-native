@@ -15,6 +15,43 @@ const BACKGROUND_SYNC_TASK = "BACKGROUND_SYNC_TASK";
 const MUTATION_QUEUE_KEY = "offline_mutation_queue";
 
 /**
+ * Conflict resolution strategies
+ */
+export type ConflictResolutionStrategy =
+  | "last-write-wins"
+  | "first-write-wins"
+  | "merge"
+  | "manual"
+  | "server-wins"
+  | "client-wins";
+
+/**
+ * Conflict information when a sync conflict is detected
+ */
+export interface SyncConflict {
+  /** The local mutation that caused the conflict */
+  localMutation: QueuedMutation;
+  /** Server data at the time of conflict (if available) */
+  serverData?: Record<string, unknown>;
+  /** Error message from the server */
+  errorMessage: string;
+  /** HTTP status code */
+  statusCode: number;
+  /** Timestamp when conflict was detected */
+  detectedAt: number;
+}
+
+/**
+ * Conflict resolver function type
+ */
+export type ConflictResolver = (
+  conflict: SyncConflict
+) => Promise<{
+  action: "retry" | "discard" | "merge";
+  mergedData?: Record<string, unknown>;
+}>;
+
+/**
  * Queued mutation structure
  */
 export interface QueuedMutation {
@@ -32,6 +69,10 @@ export interface QueuedMutation {
   retryCount: number;
   /** Maximum retries before giving up */
   maxRetries: number;
+  /** Conflict resolution strategy for this mutation */
+  conflictStrategy?: ConflictResolutionStrategy;
+  /** Version/ETag for optimistic locking */
+  version?: string | number;
   /** Optional metadata for tracking */
   metadata?: {
     type: string;
@@ -47,6 +88,8 @@ interface SyncResult {
   id: string;
   success: boolean;
   error?: string;
+  conflict?: SyncConflict;
+  statusCode?: number;
 }
 
 /**
@@ -59,7 +102,13 @@ const SYNC_CONFIG = {
   MAX_RETRIES: 5,
   /** Timeout for the entire sync task (in seconds) */
   TASK_TIMEOUT: 30,
+  /** Default conflict resolution strategy */
+  DEFAULT_CONFLICT_STRATEGY: "last-write-wins" as ConflictResolutionStrategy,
 };
+
+// Store for conflict handlers
+const conflictHandlers: Map<string, ConflictResolver> = new Map();
+const pendingConflicts: SyncConflict[] = [];
 
 // ============================================================================
 // Mutation Queue Management
@@ -154,14 +203,129 @@ export async function getPendingMutationCount(): Promise<number> {
 }
 
 // ============================================================================
+// Conflict Resolution
+// ============================================================================
+
+/**
+ * Register a custom conflict resolver for a mutation type
+ *
+ * @example
+ * ```ts
+ * registerConflictResolver('update_profile', async (conflict) => {
+ *   // Custom merge logic
+ *   const merged = {
+ *     ...conflict.serverData,
+ *     ...conflict.localMutation.body,
+ *     updatedAt: Date.now(),
+ *   };
+ *   return { action: 'merge', mergedData: merged };
+ * });
+ * ```
+ */
+export function registerConflictResolver(
+  mutationType: string,
+  resolver: ConflictResolver
+): void {
+  conflictHandlers.set(mutationType, resolver);
+}
+
+/**
+ * Unregister a conflict resolver
+ */
+export function unregisterConflictResolver(mutationType: string): void {
+  conflictHandlers.delete(mutationType);
+}
+
+/**
+ * Get pending conflicts that need manual resolution
+ */
+export function getPendingConflicts(): SyncConflict[] {
+  return [...pendingConflicts];
+}
+
+/**
+ * Clear a pending conflict after manual resolution
+ */
+export function clearPendingConflict(mutationId: string): void {
+  const index = pendingConflicts.findIndex(
+    (c) => c.localMutation.id === mutationId
+  );
+  if (index !== -1) {
+    pendingConflicts.splice(index, 1);
+  }
+}
+
+/**
+ * Resolve a conflict using the default strategy
+ */
+async function resolveConflictWithStrategy(
+  conflict: SyncConflict,
+  strategy: ConflictResolutionStrategy
+): Promise<{ action: "retry" | "discard" | "merge"; mergedData?: Record<string, unknown> }> {
+  switch (strategy) {
+    case "last-write-wins":
+    case "client-wins":
+      // Client data takes precedence, retry with same data
+      return { action: "retry" };
+
+    case "first-write-wins":
+    case "server-wins":
+      // Server data takes precedence, discard local changes
+      return { action: "discard" };
+
+    case "merge":
+      // Attempt automatic merge
+      if (conflict.serverData && conflict.localMutation.body) {
+        const mergedData = {
+          ...conflict.serverData,
+          ...conflict.localMutation.body,
+          _mergedAt: Date.now(),
+          _conflictResolved: true,
+        };
+        return { action: "merge", mergedData };
+      }
+      return { action: "retry" };
+
+    case "manual":
+      // Add to pending conflicts for user resolution
+      pendingConflicts.push(conflict);
+      return { action: "discard" }; // Don't retry automatically
+
+    default:
+      return { action: "retry" };
+  }
+}
+
+/**
+ * Check if an error indicates a conflict (409 or version mismatch)
+ */
+function isConflictError(error: unknown): { isConflict: boolean; statusCode?: number; serverData?: Record<string, unknown> } {
+  if (error && typeof error === "object" && "status" in error) {
+    const status = (error as { status: number }).status;
+    if (status === 409 || status === 412) {
+      // 409 Conflict or 412 Precondition Failed
+      const serverData = "data" in error ? (error as { data?: Record<string, unknown> }).data : undefined;
+      return { isConflict: true, statusCode: status, serverData };
+    }
+  }
+  return { isConflict: false };
+}
+
+// ============================================================================
 // Sync Processing
 // ============================================================================
 
 /**
- * Process a single mutation
+ * Process a single mutation with conflict handling
  */
 async function processMutation(mutation: QueuedMutation): Promise<SyncResult> {
   try {
+    // Add version header if available for optimistic locking
+    const headers: Record<string, string> = {};
+    if (mutation.version) {
+      headers["If-Match"] = String(mutation.version);
+    }
+
     switch (mutation.method) {
       case "POST":
         await api.post(mutation.endpoint, mutation.body);
@@ -180,24 +344,45 @@ async function processMutation(mutation: QueuedMutation): Promise<SyncResult> {
     return { id: mutation.id, success: true };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    const conflictCheck = isConflictError(error);
+
+    if (conflictCheck.isConflict) {
+      const conflict: SyncConflict = {
+        localMutation: mutation,
+        serverData: conflictCheck.serverData,
+        errorMessage: message,
+        statusCode: conflictCheck.statusCode || 409,
+        detectedAt: Date.now(),
+      };
+
+      return {
+        id: mutation.id,
+        success: false,
+        error: message,
+        conflict,
+        statusCode: conflictCheck.statusCode,
+      };
+    }
+
     return { id: mutation.id, success: false, error: message };
   }
 }
 
 /**
- * Process all pending mutations
+ * Process all pending mutations with conflict resolution
  * Called by background task and can also be triggered manually
  */
 export async function processQueue(): Promise<{
   processed: number;
   succeeded: number;
   failed: number;
+  conflicts: number;
   remaining: number;
 }> {
   const queue = await getMutationQueue();
 
   if (queue.length === 0) {
-    return { processed: 0, succeeded: 0, failed: 0, remaining: 0 };
+    return { processed: 0, succeeded: 0, failed: 0, conflicts: 0, remaining: 0 };
   }
 
   if (IS_DEV) {
@@ -206,24 +391,74 @@ export async function processQueue(): Promise<{
 
   const results: SyncResult[] = [];
   const updatedQueue: QueuedMutation[] = [];
+  let conflictCount = 0;
 
   for (const mutation of queue) {
     const result = await processMutation(mutation);
     results.push(result);
 
     if (!result.success) {
-      // Check if we should retry
-      if (mutation.retryCount < mutation.maxRetries) {
-        updatedQueue.push({
-          ...mutation,
-          retryCount: mutation.retryCount + 1,
-        });
+      // Check if this is a conflict
+      if (result.conflict) {
+        conflictCount++;
+        const strategy =
+          mutation.conflictStrategy || SYNC_CONFIG.DEFAULT_CONFLICT_STRATEGY;
+
+        // Check for custom resolver first
+        const customResolver = mutation.metadata?.type
+          ? conflictHandlers.get(mutation.metadata.type)
+          : null;
+
+        let resolution: { action: "retry" | "discard" | "merge"; mergedData?: Record<string, unknown> };
+
+        if (customResolver) {
+          resolution = await customResolver(result.conflict);
+        } else {
+          resolution = await resolveConflictWithStrategy(result.conflict, strategy);
+        }
+
+        if (IS_DEV) {
+          console.log(
+            `[BackgroundSync] Conflict for ${mutation.id} resolved with action: ${resolution.action}`
+          );
+        }
+
+        switch (resolution.action) {
+          case "retry":
+            if (mutation.retryCount < mutation.maxRetries) {
+              updatedQueue.push({
+                ...mutation,
+                retryCount: mutation.retryCount + 1,
+              });
+            }
+            break;
+          case "merge":
+            if (resolution.mergedData && mutation.retryCount < mutation.maxRetries) {
+              updatedQueue.push({
+                ...mutation,
+                body: resolution.mergedData,
+                retryCount: mutation.retryCount + 1,
+              });
+            }
+            break;
+          case "discard":
+            // Don't add to queue, effectively discarding
+            break;
+        }
       } else {
-        // Max retries reached, log and discard
-        console.warn(
-          `[BackgroundSync] Mutation ${mutation.id} failed after ${mutation.maxRetries} retries:`,
-          result.error
-        );
+        // Regular failure, check if we should retry
+        if (mutation.retryCount < mutation.maxRetries) {
+          updatedQueue.push({
+            ...mutation,
+            retryCount: mutation.retryCount + 1,
+          });
+        } else {
+          // Max retries reached, log and discard
+          console.warn(
+            `[BackgroundSync] Mutation ${mutation.id} failed after ${mutation.maxRetries} retries:`,
+            result.error
+          );
+        }
       }
     }
   }
@@ -236,7 +471,7 @@ export async function processQueue(): Promise<{
 
   if (IS_DEV) {
     console.log(
-      `[BackgroundSync] Processed: ${results.length}, Succeeded: ${succeeded}, Failed: ${failed}, Remaining: ${updatedQueue.length}`
+      `[BackgroundSync] Processed: ${results.length}, Succeeded: ${succeeded}, Failed: ${failed}, Conflicts: ${conflictCount}, Remaining: ${updatedQueue.length}`
     );
   }
 
@@ -244,6 +479,7 @@ export async function processQueue(): Promise<{
     processed: results.length,
     succeeded,
     failed,
+    conflicts: conflictCount,
     remaining: updatedQueue.length,
   };
 }
