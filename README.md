@@ -2,6 +2,9 @@
 
 [![npm version](https://img.shields.io/npm/v/@croacroa/react-native-template.svg)](https://www.npmjs.com/package/@croacroa/react-native-template)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
+[![Expo SDK](https://img.shields.io/badge/Expo-SDK%2052-000020.svg)](https://expo.dev/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/croacroa-dev-team/template-react-native/pulls)
 
 A production-ready React Native template with Expo SDK 52, featuring authentication, i18n, biometrics, offline support, and more.
 
