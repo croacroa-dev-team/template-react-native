@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Data fetching hooks built on TanStack Query
+ * Provides type-safe query keys, user hooks, and a CRUD factory for rapid API integration.
+ * @module hooks/useApi
+ */
+
 import {
   useQuery,
   useMutation,
@@ -8,7 +14,19 @@ import {
 import { api } from "@/services/api";
 import { toast, handleApiError } from "@/utils/toast";
 
-// Query keys factory for type-safe and organized cache management
+/**
+ * Query keys factory for type-safe and organized cache management.
+ * Use these keys with React Query to ensure consistent cache invalidation.
+ *
+ * @example
+ * ```ts
+ * // Invalidate all user queries
+ * queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
+ *
+ * // Invalidate specific user
+ * queryClient.invalidateQueries({ queryKey: queryKeys.users.detail('123') });
+ * ```
+ */
 export const queryKeys = {
   all: ["api"] as const,
   users: {
@@ -45,7 +63,23 @@ interface User {
 }
 
 /**
- * Fetch current user profile
+ * Fetch current user profile.
+ * Automatically caches the result for 5 minutes.
+ *
+ * @param options - Additional React Query options
+ * @returns Query result with user data, loading state, and error
+ *
+ * @example
+ * ```tsx
+ * function Profile() {
+ *   const { data: user, isLoading, error } = useCurrentUser();
+ *
+ *   if (isLoading) return <Skeleton />;
+ *   if (error) return <ErrorMessage error={error} />;
+ *
+ *   return <Text>Hello, {user.name}</Text>;
+ * }
+ * ```
  */
 export function useCurrentUser(
   options?: Omit<UseQueryOptions<User, Error>, "queryKey" | "queryFn">
@@ -59,7 +93,20 @@ export function useCurrentUser(
 }
 
 /**
- * Fetch user by ID
+ * Fetch a user by their ID.
+ * Query is automatically disabled if no userId is provided.
+ *
+ * @param userId - The unique identifier of the user to fetch
+ * @param options - Additional React Query options
+ * @returns Query result with user data, loading state, and error
+ *
+ * @example
+ * ```tsx
+ * function UserProfile({ userId }: { userId: string }) {
+ *   const { data: user, isLoading } = useUser(userId);
+ *   return isLoading ? <Skeleton /> : <Avatar name={user?.name} />;
+ * }
+ * ```
  */
 export function useUser(
   userId: string,
@@ -74,7 +121,27 @@ export function useUser(
 }
 
 /**
- * Update user profile
+ * Update the current user's profile.
+ * Automatically updates the cache and shows a success/error toast.
+ *
+ * @returns Mutation object with mutate function and state
+ *
+ * @example
+ * ```tsx
+ * function EditProfile() {
+ *   const updateUser = useUpdateUser();
+ *
+ *   const handleSave = () => {
+ *     updateUser.mutate({ name: 'New Name' });
+ *   };
+ *
+ *   return (
+ *     <Button onPress={handleSave} isLoading={updateUser.isPending}>
+ *       Save
+ *     </Button>
+ *   );
+ * }
+ * ```
  */
 export function useUpdateUser() {
   const queryClient = useQueryClient();
@@ -103,7 +170,37 @@ interface CrudHooksConfig<T, CreateDTO, UpdateDTO> {
 }
 
 /**
- * Factory to create CRUD hooks for any resource
+ * Factory to create CRUD hooks for any resource.
+ * Generates useList, useById, useCreate, useUpdate, and useDelete hooks
+ * with automatic cache management and toast notifications.
+ *
+ * @typeParam T - The entity type (must have an 'id' field)
+ * @typeParam CreateDTO - The type for create operations (defaults to Omit<T, 'id'>)
+ * @typeParam UpdateDTO - The type for update operations (defaults to Partial<T>)
+ * @param config - Configuration object with baseKey, endpoint, and entityName
+ * @returns Object containing all CRUD hooks
+ *
+ * @example
+ * ```ts
+ * interface Product {
+ *   id: string;
+ *   name: string;
+ *   price: number;
+ * }
+ *
+ * export const productsApi = createCrudHooks<Product>({
+ *   baseKey: ['products'],
+ *   endpoint: '/products',
+ *   entityName: 'Product',
+ * });
+ *
+ * // Usage in components:
+ * const { data: products } = productsApi.useList();
+ * const { data: product } = productsApi.useById('123');
+ * const createProduct = productsApi.useCreate();
+ * const updateProduct = productsApi.useUpdate();
+ * const deleteProduct = productsApi.useDelete();
+ * ```
  */
 export function createCrudHooks<
   T extends { id: string },

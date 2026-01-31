@@ -1,0 +1,101 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Correcto",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "done": "Hecho",
+    "retry": "Reintentar",
+    "search": "Buscar",
+    "noResults": "No se encontraron resultados",
+    "offline": "Estás sin conexión",
+    "online": "Conexión restablecida"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "name": "Nombre",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetPassword": "Restablecer contraseña",
+    "noAccount": "¿No tienes una cuenta?",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "welcomeBack": "¡Bienvenido de nuevo!",
+    "signInToContinue": "Inicia sesión para continuar",
+    "createAccount": "Crear cuenta",
+    "joinUs": "Únete hoy",
+    "enterEmail": "Ingresa tu correo electrónico",
+    "enterPassword": "Ingresa tu contraseña",
+    "enterName": "Ingresa tu nombre",
+    "passwordHint": "Mínimo 8 caracteres",
+    "invalidCredentials": "Correo o contraseña inválidos",
+    "accountCreated": "¡Cuenta creada exitosamente!",
+    "sessionExpired": "Sesión expirada. Por favor inicia sesión nuevamente.",
+    "biometric": {
+      "title": "Autenticación biométrica",
+      "prompt": "Autentícate para continuar",
+      "fallback": "Usar código de acceso",
+      "enabled": "Inicio de sesión biométrico activado",
+      "disabled": "Inicio de sesión biométrico desactivado",
+      "notAvailable": "Autenticación biométrica no disponible"
+    }
+  },
+  "navigation": {
+    "home": "Inicio",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "notifications": "Notificaciones"
+  },
+  "profile": {
+    "title": "Perfil",
+    "editProfile": "Editar perfil",
+    "changePhoto": "Cambiar foto",
+    "personalInfo": "Información personal",
+    "memberSince": "Miembro desde {{date}}"
+  },
+  "settings": {
+    "title": "Configuración",
+    "appearance": "Apariencia",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeSystem": "Sistema",
+    "language": "Idioma",
+    "notifications": "Notificaciones",
+    "pushNotifications": "Notificaciones push",
+    "emailNotifications": "Notificaciones por correo",
+    "security": "Seguridad",
+    "biometricAuth": "Autenticación biométrica",
+    "changePassword": "Cambiar contraseña",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio",
+    "about": "Acerca de",
+    "version": "Versión",
+    "deleteAccount": "Eliminar cuenta"
+  },
+  "errors": {
+    "generic": "Algo salió mal",
+    "network": "Error de red. Por favor verifica tu conexión.",
+    "timeout": "Tiempo de espera agotado. Por favor intenta de nuevo.",
+    "unauthorized": "No estás autorizado para realizar esta acción.",
+    "notFound": "Recurso no encontrado.",
+    "validation": "Por favor verifica tus datos e intenta de nuevo."
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Por favor ingresa un correo válido",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMatch": "Las contraseñas no coinciden",
+    "nameMin": "El nombre debe tener al menos 2 caracteres"
+  }
+}

@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Push notification handling with Expo Notifications
+ * Provides hooks for registering, receiving, and managing push notifications.
+ * @module hooks/useNotifications
+ */
+
 import { useEffect, useRef } from "react";
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
@@ -15,6 +21,39 @@ Notifications.setNotificationHandler({
   }),
 });
 
+/**
+ * Hook for managing push notifications.
+ * Handles registration, receiving, and responding to notifications.
+ *
+ * @returns Object with notification management functions
+ *
+ * @example
+ * ```tsx
+ * function App() {
+ *   const {
+ *     registerForPushNotifications,
+ *     scheduleLocalNotification,
+ *     setBadgeCount,
+ *   } = useNotifications();
+ *
+ *   useEffect(() => {
+ *     // Register for push notifications on mount
+ *     registerForPushNotifications();
+ *   }, []);
+ *
+ *   const handleReminder = () => {
+ *     scheduleLocalNotification(
+ *       'Reminder',
+ *       'Don\'t forget to check your tasks!',
+ *       { screen: 'tasks' },
+ *       { seconds: 60 } // Trigger in 1 minute
+ *     );
+ *   };
+ *
+ *   return <Button onPress={handleReminder}>Set Reminder</Button>;
+ * }
+ * ```
+ */
 export function useNotifications() {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();

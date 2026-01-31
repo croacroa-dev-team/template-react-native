@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Authentication context and hooks
+ * Provides secure authentication with token management, auto-refresh, and persistent sessions.
+ * @module hooks/useAuth
+ */
+
 import {
   createContext,
   useContext,
@@ -10,6 +16,9 @@ import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 import { toast } from "@/utils/toast";
 
+/**
+ * User profile information
+ */
 interface User {
   id: string;
   email: string;
@@ -23,14 +32,26 @@ interface AuthTokens {
   expiresAt: number;
 }
 
+/**
+ * Authentication context type definition.
+ * Provides all authentication-related state and actions.
+ */
 interface AuthContextType {
+  /** Currently authenticated user, or null if not authenticated */
   user: User | null;
+  /** Whether the user is currently authenticated */
   isAuthenticated: boolean;
+  /** Whether the auth state is still loading (e.g., checking stored tokens) */
   isLoading: boolean;
+  /** Sign in with email and password */
   signIn: (email: string, password: string) => Promise<void>;
+  /** Create a new account */
   signUp: (email: string, password: string, name: string) => Promise<void>;
+  /** Sign out and clear all stored credentials */
   signOut: () => Promise<void>;
+  /** Update the current user's profile locally */
   updateUser: (user: Partial<User>) => void;
+  /** Manually refresh the session tokens */
   refreshSession: () => Promise<boolean>;
 }
 
@@ -40,6 +61,32 @@ const TOKEN_KEY = "auth_tokens";
 const USER_KEY = "auth_user";
 const TOKEN_REFRESH_THRESHOLD = 5 * 60 * 1000; // 5 minutes before expiry
 
+/**
+ * Authentication Provider component.
+ * Wraps your app to provide authentication context to all children.
+ *
+ * Features:
+ * - Automatic token refresh before expiry
+ * - Secure token storage (iOS Keychain / Android Encrypted SharedPreferences)
+ * - Persistent sessions across app restarts
+ * - Automatic session validation on app launch
+ *
+ * @param children - Child components to wrap
+ *
+ * @example
+ * ```tsx
+ * // In your app root (_layout.tsx)
+ * export default function RootLayout() {
+ *   return (
+ *     <AuthProvider>
+ *       <ThemeProvider>
+ *         <App />
+ *       </ThemeProvider>
+ *     </AuthProvider>
+ *   );
+ * }
+ * ```
+ */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [tokens, setTokens] = useState<AuthTokens | null>(null);
@@ -256,6 +303,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * Hook to access authentication state and actions.
+ * Must be used within an AuthProvider.
+ *
+ * @returns Authentication context with user, state, and actions
+ * @throws Error if used outside of AuthProvider
+ *
+ * @example
+ * ```tsx
+ * function LoginScreen() {
+ *   const { signIn, isLoading } = useAuth();
+ *   const [email, setEmail] = useState('');
+ *   const [password, setPassword] = useState('');
+ *
+ *   const handleLogin = async () => {
+ *     try {
+ *       await signIn(email, password);
+ *       // Navigation happens automatically via router
+ *     } catch (error) {
+ *       // Error toast is shown automatically
+ *     }
+ *   };
+ *
+ *   return (
+ *     <View>
+ *       <Input value={email} onChangeText={setEmail} />
+ *       <Input value={password} onChangeText={setPassword} secureTextEntry />
+ *       <Button onPress={handleLogin} isLoading={isLoading}>
+ *         Sign In
+ *       </Button>
+ *     </View>
+ *   );
+ * }
+ * ```
+ */
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {

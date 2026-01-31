@@ -1,0 +1,60 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "hooks/index.ts",
+    "hooks/useApi.ts",
+    "hooks/useAuth.tsx",
+    "hooks/useBiometrics.ts",
+    "hooks/useDeepLinking.ts",
+    "hooks/useMFA.ts",
+    "hooks/useNotifications.ts",
+    "hooks/useOffline.ts",
+    "hooks/usePerformance.ts",
+    "hooks/useTheme.tsx",
+    "hooks/useUpdates.ts",
+    "services/api.ts",
+    "services/analytics.ts",
+    "services/authAdapter.ts",
+    "services/backgroundSync.ts",
+    "services/queryClient.ts",
+    "services/security.ts",
+    "services/sentry.ts",
+    "services/storage.ts",
+    "utils/accessibility.ts",
+    "utils/cn.ts",
+    "utils/toast.ts",
+    "utils/validation.ts",
+    "i18n/index.ts"
+  ],
+  "out": "docs/api",
+  "name": "React Native Template API Documentation",
+  "readme": "README.md",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "skipErrorChecking": true,
+  "theme": "default",
+  "navigationLinks": {
+    "GitHub": "https://github.com/croacroa-dev-team/template-react-native",
+    "NPM": "https://www.npmjs.com/package/@croacroa/react-native-template"
+  },
+  "plugin": [],
+  "categorizeByGroup": true,
+  "categoryOrder": [
+    "Hooks",
+    "Services",
+    "Utilities",
+    "Types",
+    "*"
+  ],
+  "sort": ["source-order", "alphabetical"],
+  "visibilityFilters": {
+    "protected": false,
+    "private": false,
+    "inherited": true,
+    "external": false
+  },
+  "searchInComments": true,
+  "cleanOutputDir": true
+}

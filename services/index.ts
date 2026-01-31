@@ -20,3 +20,26 @@ export {
   AnalyticsEvents,
 } from "./analytics";
 export type { AnalyticsAdapter, AnalyticsEvent } from "./analytics";
+export {
+  getCertificatePins,
+  isSslPinningEnabled,
+  getSecurityHeaders,
+  isUrlAllowed,
+  sanitizeInput,
+  checkSecurityEnvironment,
+  SSL_PINNING_CONFIG,
+} from "./security";
+export {
+  queueMutation,
+  getMutationQueue,
+  removeMutation,
+  clearMutationQueue,
+  getPendingMutationCount,
+  processQueue,
+  registerBackgroundSync,
+  unregisterBackgroundSync,
+  isBackgroundSyncRegistered,
+  getBackgroundSyncStatus,
+  isNetworkError,
+} from "./backgroundSync";
+export type { QueuedMutation } from "./backgroundSync";

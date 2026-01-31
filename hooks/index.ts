@@ -23,3 +23,5 @@ export {
   measureSync,
   runAfterInteractions,
 } from "./usePerformance";
+export { useMFA, generateTOTP } from "./useMFA";
+export type { MFAMethod, MFASetupData } from "./useMFA";

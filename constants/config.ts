@@ -52,3 +52,46 @@ export const STORAGE_KEYS = {
   ONBOARDING_COMPLETED: "onboarding_completed",
   PUSH_TOKEN: "push_token",
 } as const;
+
+// Security Configuration
+export const SECURITY = {
+  /**
+   * SSL Pinning configuration for enhanced network security.
+   * Add your API server's certificate public key hashes here.
+   *
+   * To generate a pin from your certificate:
+   * 1. Get your server's certificate: openssl s_client -connect api.yourapp.com:443
+   * 2. Extract public key: openssl x509 -pubkey -noout -in cert.pem
+   * 3. Generate hash: openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+   *
+   * @example
+   * SSL_PINS: {
+   *   "api.yourapp.com": [
+   *     "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=", // Primary cert
+   *     "sha256/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", // Backup cert
+   *   ],
+   * }
+   */
+  SSL_PINS: {
+    // TODO: Add your production API certificate pins
+    // "api.yourapp.com": [
+    //   "sha256/YOUR_CERTIFICATE_HASH_HERE=",
+    // ],
+  } as Record<string, string[]>,
+
+  /**
+   * Enable SSL pinning in production
+   * Set to true once you've configured the SSL_PINS above
+   */
+  ENABLE_SSL_PINNING: IS_PROD && false, // Enable when pins are configured
+
+  /**
+   * Request signing configuration
+   * Used to sign API requests for added security
+   */
+  REQUEST_SIGNING: {
+    ENABLED: false,
+    ALGORITHM: "sha256",
+    HEADER_NAME: "X-Request-Signature",
+  },
+} as const;

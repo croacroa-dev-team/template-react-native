@@ -1,9 +1,22 @@
+/**
+ * @fileoverview Offline detection and handling
+ * Provides hooks for tracking network connectivity with React Query integration.
+ * @module hooks/useOffline
+ */
+
 import { useEffect, useState } from "react";
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { toast } from "@/utils/toast";
 
+/**
+ * Options for the useOffline hook
+ */
 interface UseOfflineOptions {
+  /**
+   * Whether to show toast notifications when connectivity changes
+   * @default true
+   */
   showToast?: boolean;
 }
 
@@ -54,8 +67,25 @@ export function useOffline(options: UseOfflineOptions = {}) {
 }
 
 /**
- * Hook for pending mutations count
- * Useful to show sync indicator
+ * Hook for tracking pending mutations count.
+ * Useful to show a sync indicator when there are queued offline mutations.
+ *
+ * @returns Object with pendingCount and hasPending flag
+ *
+ * @example
+ * ```tsx
+ * function SyncIndicator() {
+ *   const { hasPending, pendingCount } = usePendingMutations();
+ *
+ *   if (!hasPending) return null;
+ *
+ *   return (
+ *     <Badge>
+ *       {pendingCount} pending
+ *     </Badge>
+ *   );
+ * }
+ * ```
  */
 export function usePendingMutations() {
   const [pendingCount, setPendingCount] = useState(0);

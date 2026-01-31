@@ -34,7 +34,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: true,
     bundleIdentifier: getUniqueIdentifier(),
     infoPlist: {
-      UIBackgroundModes: ["remote-notification"],
+      UIBackgroundModes: ["remote-notification", "fetch", "processing"],
     },
   },
   android: {
@@ -43,12 +43,46 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: "#ffffff",
     },
     package: getUniqueIdentifier(),
-    permissions: ["NOTIFICATIONS"],
+    permissions: [
+      "NOTIFICATIONS",
+      "RECEIVE_BOOT_COMPLETED",
+      "FOREGROUND_SERVICE",
+    ],
   },
   web: {
     bundler: "metro",
     output: "static",
     favicon: "./assets/images/favicon.png",
+    // PWA Configuration
+    name: getAppName(),
+    shortName: "YourApp",
+    description: "A production-ready React Native application",
+    lang: "en",
+    themeColor: "#3b82f6",
+    backgroundColor: "#ffffff",
+    display: "standalone",
+    orientation: "portrait",
+    startUrl: "/",
+    scope: "/",
+    // PWA Icons for different sizes
+    icons: [
+      {
+        src: "./assets/images/icon.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any maskable",
+      },
+      {
+        src: "./assets/images/icon.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any maskable",
+      },
+    ],
+    // Enable service worker for offline support
+    serviceWorker: {
+      enabled: true,
+    },
   },
   plugins: [
     "expo-router",
@@ -60,6 +94,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         color: "#ffffff",
       },
     ],
+    [
+      "expo-background-fetch",
+      {
+        ios: {
+          backgroundModes: ["fetch"],
+        },
+      },
+    ],
+    "expo-task-manager",
   ],
   experiments: {
     typedRoutes: true,
