@@ -199,6 +199,9 @@ export const SSL_PINNING_CONFIG = {
 
   /**
    * Generate Android network_security_config.xml content
+   * Save this to android/app/src/main/res/xml/network_security_config.xml
+   * and reference it in AndroidManifest.xml:
+   * <application android:networkSecurityConfig="@xml/network_security_config">
    */
   getAndroidConfig(): string {
     const pinEntries = Object.entries(SECURITY.SSL_PINS)
@@ -209,7 +212,7 @@ export const SSL_PINNING_CONFIG = {
 
         return `    <domain-config cleartextTrafficPermitted="false">
       <domain includeSubdomains="true">${domain}</domain>
-      <pin-set expiration="2025-12-31">
+      <pin-set expiration="2026-12-31">
 ${pinElements}
       </pin-set>
     </domain-config>`;
@@ -225,5 +228,59 @@ ${pinElements}
   </base-config>
 ${pinEntries}
 </network-security-config>`;
+  },
+
+  /**
+   * Generate iOS TrustKit configuration dictionary
+   * Add this to your AppDelegate.mm or use expo-build-properties plugin
+   *
+   * For Expo managed workflow, add to app.config.ts:
+   * ```
+   * plugins: [
+   *   ["expo-build-properties", {
+   *     ios: {
+   *       infoPlist: SSL_PINNING_CONFIG.getIOSInfoPlist()
+   *     }
+   *   }]
+   * ]
+   * ```
+   */
+  getIOSConfig(): Record<string, unknown> {
+    const pinnedDomains: Record<string, unknown> = {};
+
+    Object.entries(SECURITY.SSL_PINS).forEach(([domain, pins]) => {
+      pinnedDomains[domain] = {
+        TSKIncludeSubdomains: true,
+        TSKEnforcePinning: true,
+        TSKPublicKeyHashes: pins.map((pin) => pin.replace("sha256/", "")),
+      };
+    });
+
+    return {
+      TSKSwizzleNetworkDelegates: true,
+      TSKPinnedDomains: pinnedDomains,
+    };
+  },
+
+  /**
+   * Generate iOS Info.plist entries for SSL pinning
+   */
+  getIOSInfoPlist(): Record<string, unknown> {
+    return {
+      NSAppTransportSecurity: {
+        NSAllowsArbitraryLoads: false,
+        NSPinnedDomains: Object.fromEntries(
+          Object.entries(SECURITY.SSL_PINS).map(([domain, pins]) => [
+            domain,
+            {
+              NSIncludesSubdomains: true,
+              NSPinnedLeafIdentities: pins.map((pin) => ({
+                "SPKI-SHA256-BASE64": pin.replace("sha256/", ""),
+              })),
+            },
+          ])
+        ),
+      },
+    };
   },
 };

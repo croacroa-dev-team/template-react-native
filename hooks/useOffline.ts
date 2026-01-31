@@ -4,7 +4,7 @@
  * @module hooks/useOffline
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { toast } from "@/utils/toast";
@@ -68,9 +68,10 @@ export function useOffline(options: UseOfflineOptions = {}) {
 
 /**
  * Hook for tracking pending mutations count.
- * Useful to show a sync indicator when there are queued offline mutations.
+ * Integrates with the backgroundSync mutation queue.
  *
- * @returns Object with pendingCount and hasPending flag
+ * @param pollingInterval - How often to check the queue (default: 5000ms)
+ * @returns Object with pendingCount, hasPending flag, and refresh function
  *
  * @example
  * ```tsx
@@ -87,13 +88,36 @@ export function useOffline(options: UseOfflineOptions = {}) {
  * }
  * ```
  */
-export function usePendingMutations() {
+export function usePendingMutations(pollingInterval = 5000) {
   const [pendingCount, setPendingCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // This would need to be integrated with mutation cache
-  // For now, return 0 as a placeholder
+  const refresh = useCallback(async () => {
+    try {
+      const { getMutationQueue } = await import("@/services/backgroundSync");
+      const queue = await getMutationQueue();
+      setPendingCount(queue.length);
+    } catch (error) {
+      console.error("[usePendingMutations] Failed to get queue:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Initial fetch
+    refresh();
+
+    // Poll for updates
+    const interval = setInterval(refresh, pollingInterval);
+
+    return () => clearInterval(interval);
+  }, [refresh, pollingInterval]);
+
   return {
     pendingCount,
     hasPending: pendingCount > 0,
+    isLoading,
+    refresh,
   };
 }

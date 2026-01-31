@@ -56,7 +56,7 @@ interface ErrorBoundaryProps {
  * </ErrorBoundary>
  * ```
  */
-export class ErrorBoundary extends Component<
+export class LocalErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
@@ -232,7 +232,7 @@ export function AsyncBoundary({
   fallback: loadingFallback,
 }: AsyncBoundaryProps) {
   return (
-    <ErrorBoundary
+    <LocalErrorBoundary
       key={resetKey}
       fallback={errorFallback}
       onError={onError}
@@ -246,7 +246,7 @@ export function AsyncBoundary({
       >
         {children}
       </SuspenseBoundary>
-    </ErrorBoundary>
+    </LocalErrorBoundary>
   );
 }
 
@@ -298,11 +298,11 @@ export function QueryBoundary({
   }
 
   return (
-    <ErrorBoundary fallback={errorFallback}>
+    <LocalErrorBoundary fallback={errorFallback}>
       <Suspense fallback={loadingFallback || <DefaultLoadingFallback />}>
         {children}
       </Suspense>
-    </ErrorBoundary>
+    </LocalErrorBoundary>
   );
 }
 
@@ -351,7 +351,7 @@ export function BoundaryProvider({ children }: { children: ReactNode }) {
 
   return (
     <BoundaryContext.Provider value={{ resetAll, reportError }}>
-      <ErrorBoundary key={resetKey}>{children}</ErrorBoundary>
+      <LocalErrorBoundary key={resetKey}>{children}</LocalErrorBoundary>
     </BoundaryContext.Provider>
   );
 }
