@@ -8,8 +8,10 @@ import {
   useQuery,
   useMutation,
   useQueryClient,
+  useSuspenseQuery,
   UseQueryOptions,
   UseMutationOptions,
+  UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 import { api } from "@/services/api";
 import { toast, handleApiError } from "@/utils/toast";
@@ -116,6 +118,63 @@ export function useUser(
     queryKey: queryKeys.users.detail(userId),
     queryFn: () => api.get<User>(`/users/${userId}`),
     enabled: !!userId,
+    ...options,
+  });
+}
+
+// ===========================================
+// Suspense-Ready Hooks (React 19 compatible)
+// ===========================================
+
+/**
+ * Suspense-ready version of useCurrentUser.
+ * Use inside a Suspense boundary - throws promise while loading.
+ *
+ * @example
+ * ```tsx
+ * function Profile() {
+ *   const { data: user } = useSuspenseCurrentUser();
+ *   // No loading check needed - Suspense handles it
+ *   return <Text>Hello, {user.name}</Text>;
+ * }
+ *
+ * // Wrap with Suspense
+ * <Suspense fallback={<Skeleton />}>
+ *   <Profile />
+ * </Suspense>
+ * ```
+ */
+export function useSuspenseCurrentUser(
+  options?: Omit<UseSuspenseQueryOptions<User, Error>, "queryKey" | "queryFn">
+) {
+  return useSuspenseQuery({
+    queryKey: queryKeys.users.me(),
+    queryFn: () => api.get<User>("/users/me"),
+    staleTime: 1000 * 60 * 5,
+    ...options,
+  });
+}
+
+/**
+ * Suspense-ready version of useUser.
+ * Use inside a Suspense boundary - throws promise while loading.
+ *
+ * @param userId - The unique identifier of the user to fetch
+ * @example
+ * ```tsx
+ * function UserCard({ userId }: { userId: string }) {
+ *   const { data: user } = useSuspenseUser(userId);
+ *   return <Avatar name={user.name} />;
+ * }
+ * ```
+ */
+export function useSuspenseUser(
+  userId: string,
+  options?: Omit<UseSuspenseQueryOptions<User, Error>, "queryKey" | "queryFn">
+) {
+  return useSuspenseQuery({
+    queryKey: queryKeys.users.detail(userId),
+    queryFn: () => api.get<User>(`/users/${userId}`),
     ...options,
   });
 }
