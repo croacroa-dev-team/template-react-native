@@ -114,7 +114,8 @@ export default function LoginScreen() {
           <Animated.View entering={FadeInDown.delay(400).springify()}>
             <SocialLoginButtons
               onSuccess={(result) => {
-                // TODO: Send idToken to your backend, then sign in with the returned session
+                if (__DEV__) console.log('Social login succeeded:', result.provider, result.user.email);
+                // TODO: Send result.idToken to your backend
               }}
             />
           </Animated.View>

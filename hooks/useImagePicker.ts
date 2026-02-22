@@ -122,14 +122,10 @@ export function useImagePicker(
         return false;
       }
 
-      // Request the permission
-      await permission.request();
-
-      // Re-check after request — the hook state may not have updated yet,
-      // so we rely on the fact that if request() didn't throw, we should
-      // re-read the permission. We'll await a refresh and check.
-      await permission.refresh();
-      return permission.isGranted;
+      // Request the permission and use the returned status directly
+      // to avoid reading stale React state after an async operation.
+      const resultStatus = await permission.request();
+      return resultStatus === "granted";
     },
     []
   );

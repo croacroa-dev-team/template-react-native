@@ -30,8 +30,8 @@ export interface UsePermissionReturn {
   isLoading: boolean;
   /** UI configuration for this permission (merged defaults + custom) */
   config: PermissionConfig;
-  /** Request the permission from the user */
-  request: () => Promise<void>;
+  /** Request the permission from the user and return the resulting status */
+  request: () => Promise<PermissionStatus>;
   /** Open device settings for this app */
   openSettings: () => Promise<void>;
   /** Manually refresh the permission status */
@@ -116,13 +116,15 @@ export function usePermission(
   /**
    * Request the permission
    */
-  const request = useCallback(async () => {
+  const request = useCallback(async (): Promise<PermissionStatus> => {
     setIsLoading(true);
     try {
       const result = await PermissionManager.request(type);
       setStatus(result.status);
+      return result.status;
     } catch (error) {
       console.error(`[usePermission] Failed to request ${type}:`, error);
+      return "undetermined";
     } finally {
       setIsLoading(false);
     }

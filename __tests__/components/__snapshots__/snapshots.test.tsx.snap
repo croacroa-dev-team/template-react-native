@@ -1,0 +1,501 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UI Components Snapshots Button renders danger variant correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-red-600 active:bg-red-700 px-4 py-3"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-white text-base"
+  >
+    Danger
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders disabled state correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-4 py-3 opacity-50"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-white text-base"
+  >
+    Disabled
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders ghost variant correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-transparent active:bg-gray-100 dark:active:bg-gray-800 px-4 py-3"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-primary-600 dark:text-primary-400 text-base"
+  >
+    Ghost
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders large size correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-6 py-4"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-white text-lg"
+  >
+    Large
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders loading state correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-4 py-3 opacity-50"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <ActivityIndicator
+    color="#ffffff"
+    size="small"
+  />
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders outline variant correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-transparent active:bg-gray-100 dark:active:bg-gray-800 px-4 py-3"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-text-light dark:text-text-dark text-base"
+  >
+    Outline
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders primary variant correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-4 py-3"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-white text-base"
+  >
+    Primary
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders secondary variant correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 active:bg-gray-300 dark:active:bg-gray-600 px-4 py-3"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-text-light dark:text-text-dark text-base"
+  >
+    Secondary
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders small size correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-3 py-2"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    className="font-semibold text-white text-sm"
+  >
+    Small
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Button renders with custom children correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-4 py-3"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <View>
+    <Text>
+      Custom Content
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`UI Components Snapshots Card renders complex content correctly 1`] = `
+<View
+  className="rounded-xl bg-surface-light shadow-lg dark:bg-surface-dark p-4"
+>
+  <Text>
+    Title
+  </Text>
+  <Text>
+    Description text here
+  </Text>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    className="flex-row items-center justify-center rounded-xl bg-primary-600 active:bg-primary-700 px-4 py-3"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text
+      className="font-semibold text-white text-base"
+    >
+      Action
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`UI Components Snapshots Card renders default variant correctly 1`] = `
+<View
+  className="rounded-xl bg-surface-light dark:bg-surface-dark"
+>
+  <Text>
+    Default Card
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Card renders elevated variant correctly 1`] = `
+<View
+  className="rounded-xl bg-surface-light shadow-lg dark:bg-surface-dark"
+>
+  <Text>
+    Elevated Card
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Card renders outlined variant correctly 1`] = `
+<View
+  className="rounded-xl border-2 border-gray-200 bg-transparent dark:border-gray-700"
+>
+  <Text>
+    Outlined Card
+  </Text>
+</View>
+`;
+
+exports[`UI Components Snapshots Card renders with custom className correctly 1`] = `
+<View
+  className="rounded-xl bg-surface-light dark:bg-surface-dark p-4 m-2"
+>
+  <Text>
+    Custom Styled Card
+  </Text>
+</View>
+`;

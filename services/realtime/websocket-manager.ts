@@ -281,11 +281,30 @@ export class WebSocketManager {
   }
 
   /**
+   * Validate that parsed data conforms to the WebSocketMessage shape.
+   */
+  private isValidMessage(data: unknown): data is WebSocketMessage {
+    return (
+      typeof data === "object" &&
+      data !== null &&
+      typeof (data as Record<string, unknown>).type === "string" &&
+      "payload" in data
+    );
+  }
+
+  /**
    * Parse and dispatch an incoming WebSocket message to the appropriate handlers.
    */
   private handleMessage(event: MessageEvent): void {
     try {
-      const message: WebSocketMessage = JSON.parse(event.data as string);
+      const parsed: unknown = JSON.parse(event.data as string);
+
+      if (!this.isValidMessage(parsed)) {
+        console.warn("[WebSocketManager] Skipping invalid message:", parsed);
+        return;
+      }
+
+      const message: WebSocketMessage = parsed;
 
       // Ignore heartbeat acknowledgements
       if (message.type === "pong") {

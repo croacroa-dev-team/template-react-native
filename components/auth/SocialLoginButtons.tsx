@@ -15,6 +15,7 @@ import {
   type ViewProps,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 import {
   SocialAuth,
@@ -69,6 +70,7 @@ export function SocialLoginButtons({
 }: SocialLoginButtonsProps) {
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
   const colorScheme = useColorScheme();
+  const { t } = useTranslation();
 
   const showApple = isAppleSignInAvailable();
   const isLoading = loadingProvider !== null;
@@ -124,7 +126,7 @@ export function SocialLoginButtons({
               style={{ marginRight: 12 }}
             />
             <Text className="text-base font-semibold text-gray-700">
-              Continue with Google
+              {t("socialAuth.continueWithGoogle")}
             </Text>
           </>
         )}
@@ -155,7 +157,7 @@ export function SocialLoginButtons({
                 style={{ marginRight: 12 }}
               />
               <Text className="text-base font-semibold text-white dark:text-black">
-                Continue with Apple
+                {t("socialAuth.continueWithApple")}
               </Text>
             </>
           )}

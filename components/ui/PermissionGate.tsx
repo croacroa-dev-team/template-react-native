@@ -8,6 +8,7 @@
 import { ReactNode } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 import { usePermission } from "@/hooks/usePermission";
 import { useTheme } from "@/hooks";
@@ -72,6 +73,7 @@ export function PermissionGate({
   const { isGranted, isBlocked, isLoading, config, request, openSettings } =
     usePermission(type, customConfig);
   const { isDark } = useTheme();
+  const { t } = useTranslation();
 
   // Show loading state while checking permission
   if (isLoading) {
@@ -125,7 +127,7 @@ export function PermissionGate({
             className="w-full"
             onPress={openSettings}
           >
-            Open Settings
+            {t("permissions.openSettings")}
           </Button>
         ) : (
           <Button
@@ -134,7 +136,7 @@ export function PermissionGate({
             className="w-full"
             onPress={request}
           >
-            Allow Access
+            {t("permissions.allowAccess")}
           </Button>
         )}
 

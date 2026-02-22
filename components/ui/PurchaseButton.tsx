@@ -55,19 +55,19 @@ export function PurchaseButton({
   className,
   ...props
 }: PurchaseButtonProps) {
-  const { purchase, isLoading } = usePurchase();
+  const { purchase, isLoading, error } = usePurchase();
 
   const handlePress = useCallback(async () => {
     const result = await purchase(productId);
 
     if (result) {
       onSuccess?.(result);
-    } else {
-      // purchase returns null on error — the hook already set the error state,
-      // but we also surface it to the parent via onError if provided.
-      onError?.(new Error(`Purchase failed for product: ${productId}`));
+    } else if (error) {
+      // Only call onError when the hook recorded an actual error.
+      // A null result without an error means the user cancelled.
+      onError?.(error);
     }
-  }, [productId, purchase, onSuccess, onError]);
+  }, [productId, purchase, onSuccess, onError, error]);
 
   return (
     <Button

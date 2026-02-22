@@ -55,7 +55,9 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
       debug: IS_DEV,
     });
 
-    Analytics.initialize();
+    Analytics.initialize().catch((error) => {
+      console.error('[AnalyticsProvider] Initialization failed:', error);
+    });
   }, []);
 
   // Automatic screen tracking via Expo Router

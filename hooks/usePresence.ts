@@ -70,6 +70,7 @@ export function usePresence(
       switch (type) {
         case "presence_join": {
           const user = payload as PresenceUser;
+          if (!user?.id) break;
           usersRef.current.set(user.id, {
             ...user,
             lastSeen: user.lastSeen ?? new Date().toISOString(),
@@ -79,22 +80,26 @@ export function usePresence(
         }
 
         case "presence_leave": {
-          const { id } = payload as { id: string };
-          usersRef.current.delete(id);
+          const leavePayload = payload as { id: string };
+          if (!leavePayload?.id) break;
+          usersRef.current.delete(leavePayload.id);
           setOnlineUsers(Array.from(usersRef.current.values()));
           break;
         }
 
         case "presence_sync": {
           const users = payload as PresenceUser[];
+          if (!Array.isArray(users)) break;
           usersRef.current = new Map(
-            users.map((user) => [
-              user.id,
-              {
-                ...user,
-                lastSeen: user.lastSeen ?? new Date().toISOString(),
-              },
-            ])
+            users
+              .filter((user) => user?.id)
+              .map((user) => [
+                user.id,
+                {
+                  ...user,
+                  lastSeen: user.lastSeen ?? new Date().toISOString(),
+                },
+              ])
           );
           setOnlineUsers(Array.from(usersRef.current.values()));
           break;

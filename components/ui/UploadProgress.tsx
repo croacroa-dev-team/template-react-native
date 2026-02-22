@@ -6,6 +6,7 @@
 
 import { View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { useTheme } from "@/hooks/useTheme";
 import type { UploadProgress as UploadProgressType } from "@/services/media/media-upload";
 import { cn } from "@/utils/cn";
@@ -63,6 +64,7 @@ export function UploadProgress({
   className,
 }: UploadProgressProps) {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
 
   // Nothing to show
   if (!isUploading && !error) {
@@ -91,7 +93,7 @@ export function UploadProgress({
           )}
           numberOfLines={2}
         >
-          Upload failed
+          {t("upload.failed")}
         </Text>
         {onRetry && (
           <Pressable
@@ -109,7 +111,7 @@ export function UploadProgress({
                 isDark ? "text-red-300" : "text-red-600"
               )}
             >
-              Retry
+              {t("upload.retry")}
             </Text>
           </Pressable>
         )}
@@ -137,7 +139,7 @@ export function UploadProgress({
               isDark ? "text-gray-200" : "text-gray-700"
             )}
           >
-            Uploading...
+            {t("upload.uploading")}
           </Text>
           <Text
             className={cn(

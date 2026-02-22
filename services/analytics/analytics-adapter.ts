@@ -1,35 +1,29 @@
 /**
- * @fileoverview Analytics adapter manager
- * Singleton-style module that delegates all analytics calls to a pluggable
- * adapter. Defaults to the console adapter so tracking works out of the box
- * in development without any extra setup.
+ * @fileoverview Analytics adapter facade
+ * Delegates all analytics calls to the pre-existing multi-provider analytics
+ * system in `@/services/analytics` so there is a single source of truth.
  *
- * Usage:
- *   import { Analytics } from "@/services/analytics/analytics-adapter";
- *
- *   // Swap the adapter for production
- *   Analytics.setAdapter(new MixpanelAdapter());
- *
- *   // Configure at runtime
- *   Analytics.configure({ enabled: true, debug: false });
- *
- *   // Track events
- *   Analytics.track("Button Clicked", { screen: "Home" });
+ * Consumers that import `Analytics` from this module (e.g. AnalyticsProvider,
+ * useTrackScreen, useTrackEvent) will ultimately go through the same pipeline
+ * as direct callers of `@/services/analytics`.
  *
  * @module services/analytics/analytics-adapter
  */
 
-import type { AnalyticsAdapter, AnalyticsConfig } from "./types";
-import { ConsoleAnalyticsAdapter } from "./adapters/console";
+import {
+  track,
+  screen,
+  identify,
+  resetAnalytics,
+  setUserProperties,
+} from "@/services/analytics";
+import type { AnalyticsConfig } from "./types";
 
 // ============================================================================
 // Module-level state
 // ============================================================================
 
-/** The currently active analytics adapter */
-let activeAdapter: AnalyticsAdapter = new ConsoleAnalyticsAdapter();
-
-/** Runtime configuration — analytics are enabled by default, debug in dev */
+/** Runtime configuration */
 let config: AnalyticsConfig = {
   enabled: true,
   debug: __DEV__,
@@ -42,17 +36,12 @@ let config: AnalyticsConfig = {
 /**
  * Central analytics facade.
  *
- * Every method checks `config.enabled` before delegating to the active adapter
- * so analytics can be toggled at runtime without touching calling code.
+ * Every method delegates to the pre-existing multi-provider analytics singleton
+ * exported from `@/services/analytics`.
  */
 export const Analytics = {
-  // --------------------------------------------------------------------------
-  // Configuration
-  // --------------------------------------------------------------------------
-
   /**
    * Merge new configuration values.
-   * Existing keys that are not provided will keep their current value.
    */
   configure(newConfig: Partial<AnalyticsConfig>): void {
     config = { ...config, ...newConfig };
@@ -63,58 +52,43 @@ export const Analytics = {
   },
 
   /**
-   * Replace the active adapter.
-   * Call this before `initialize()` to switch providers.
+   * Initialize analytics. The underlying system auto-initializes adapters on
+   * import, so this is effectively a no-op but kept for API compatibility.
    */
-  setAdapter(adapter: AnalyticsAdapter): void {
-    activeAdapter = adapter;
-
-    if (config.debug) {
-      console.log("[Analytics] Adapter set:", adapter.constructor.name);
-    }
-  },
-
-  // --------------------------------------------------------------------------
-  // Lifecycle
-  // --------------------------------------------------------------------------
-
-  /** Initialize the active adapter. Should be called once at app start. */
   async initialize(): Promise<void> {
     if (!config.enabled) return;
-    await activeAdapter.initialize();
+    if (config.debug) {
+      console.log("[Analytics] Initialized (delegating to services/analytics)");
+    }
   },
-
-  // --------------------------------------------------------------------------
-  // Tracking
-  // --------------------------------------------------------------------------
 
   /** Track a named event with optional properties. */
   track(event: string, properties?: Record<string, unknown>): void {
     if (!config.enabled) return;
-    activeAdapter.track(event, properties);
+    track(event, properties);
   },
 
   /** Track a screen view. */
   screen(name: string, properties?: Record<string, unknown>): void {
     if (!config.enabled) return;
-    activeAdapter.screen(name, properties);
+    screen(name, properties);
   },
 
   /** Identify the current user. */
   identify(userId: string, traits?: Record<string, unknown>): void {
     if (!config.enabled) return;
-    activeAdapter.identify(userId, traits);
+    identify(userId, traits);
   },
 
   /** Reset analytics state (e.g. on sign out). */
   reset(): void {
     if (!config.enabled) return;
-    activeAdapter.reset();
+    resetAnalytics();
   },
 
   /** Set persistent user properties. */
   setUserProperties(properties: Record<string, unknown>): void {
     if (!config.enabled) return;
-    activeAdapter.setUserProperties(properties);
+    setUserProperties(properties);
   },
 };

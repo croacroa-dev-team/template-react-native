@@ -13,10 +13,11 @@ import * as MediaLibrary from "expo-media-library";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { STORAGE_KEYS } from "@/constants/config";
 import type { PermissionType, PermissionResult, PermissionStatus } from "./types";
 
 /** AsyncStorage key prefix for tracking asked permissions */
-const PERMISSION_ASKED_PREFIX = "permission_asked_";
+const PERMISSION_ASKED_PREFIX = STORAGE_KEYS.PERMISSION_PREFIX;
 
 /**
  * Normalize native Expo permission status to our unified PermissionStatus.

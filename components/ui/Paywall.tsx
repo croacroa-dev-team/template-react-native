@@ -5,6 +5,7 @@
  */
 
 import { View, Text, Pressable, ScrollView } from "react-native";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
 import { useProducts } from "@/hooks/useProducts";
 import { usePurchase } from "@/hooks/usePurchase";
@@ -154,12 +155,17 @@ function ProductCard({
 export function Paywall({
   productIds,
   features,
-  title = "Upgrade to Premium",
-  subtitle = "Unlock all features and take your experience to the next level.",
+  title,
+  subtitle,
   onPurchaseSuccess,
   onRestore,
   className,
 }: PaywallProps) {
+  const { t } = useTranslation();
+  const resolvedTitle = title ?? t("payments.upgradeToPremium");
+  const resolvedSubtitle =
+    subtitle ??
+    "Unlock all features and take your experience to the next level.";
   const { data: products, isLoading: productsLoading } =
     useProducts(productIds);
   const {
@@ -196,10 +202,10 @@ export function Paywall({
       {/* Header */}
       <View className="mb-6">
         <Text className="text-2xl font-bold text-text-light dark:text-text-dark">
-          {title}
+          {resolvedTitle}
         </Text>
         <Text className="mt-2 text-base text-gray-500 dark:text-gray-400">
-          {subtitle}
+          {resolvedSubtitle}
         </Text>
       </View>
 
@@ -247,7 +253,7 @@ export function Paywall({
               : "text-primary-600 dark:text-primary-400"
           )}
         >
-          Restore Purchases
+          {t("payments.restore")}
         </Text>
       </Pressable>
     </ScrollView>

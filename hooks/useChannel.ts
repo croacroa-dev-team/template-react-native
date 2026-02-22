@@ -10,6 +10,14 @@ import { WebSocketManager } from "@/services/realtime/websocket-manager";
 import type { WebSocketMessage } from "@/services/realtime/types";
 
 /**
+ * Options for the useChannel hook.
+ */
+export interface UseChannelOptions {
+  /** Maximum number of messages to keep in state (default: 500) */
+  maxMessages?: number;
+}
+
+/**
  * Return type for the useChannel hook.
  *
  * @typeParam T - The shape of the message payload
@@ -59,8 +67,10 @@ export interface UseChannelReturn<T = unknown> {
  */
 export function useChannel<T = unknown>(
   manager: WebSocketManager,
-  channel: string
+  channel: string,
+  options: UseChannelOptions = {}
 ): UseChannelReturn<T> {
+  const { maxMessages = 500 } = options;
   const [messages, setMessages] = useState<WebSocketMessage<T>[]>([]);
   const [lastMessage, setLastMessage] = useState<WebSocketMessage<T> | null>(
     null
@@ -74,7 +84,10 @@ export function useChannel<T = unknown>(
     setLastMessage(null);
 
     const unsubscribe = manager.subscribe<T>(channel, (message) => {
-      setMessages((prev) => [...prev, message]);
+      setMessages((prev) => {
+        const next = [...prev, message];
+        return next.length > maxMessages ? next.slice(-maxMessages) : next;
+      });
       setLastMessage(message);
     });
 

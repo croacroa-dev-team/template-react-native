@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { ViewStyle } from "react-native";
 import {
   useSharedValue,
@@ -100,14 +100,19 @@ export function useAnimatedEntry(
   const progress = useSharedValue(0);
   const config = ENTRY_CONFIGS[animation];
 
+  // Store timing config in a ref to avoid infinite re-renders when
+  // callers pass an inline object literal for `timing`.
+  const timingRef = useRef(timing);
+  timingRef.current = timing;
+
   const play = useCallback(() => {
     progress.value = 0;
     if (delay > 0) {
-      progress.value = withDelay(delay, withTiming(1, timing));
+      progress.value = withDelay(delay, withTiming(1, timingRef.current));
     } else {
-      progress.value = withTiming(1, timing);
+      progress.value = withTiming(1, timingRef.current);
     }
-  }, [delay, timing, progress]);
+  }, [delay, progress]);
 
   const reset = useCallback(() => {
     progress.value = 0;

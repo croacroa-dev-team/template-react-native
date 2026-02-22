@@ -73,9 +73,8 @@ export async function compressImage(
   const context = ImageManipulator.manipulate(uri);
 
   // Resize within max dimensions while preserving aspect ratio.
-  // Providing both width and height to resize will constrain to whichever
-  // dimension is limiting, so we pass both.
-  context.resize({ width: maxWidth, height: maxHeight });
+  // Only pass width so the height scales proportionally, avoiding distortion.
+  context.resize({ width: maxWidth });
 
   const imageRef = await context.renderAsync();
 
