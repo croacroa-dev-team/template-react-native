@@ -19,3 +19,6 @@ export {
   BoundaryProvider,
   useBoundary,
 } from "./SuspenseBoundary";
+
+// Analytics
+export { AnalyticsProvider } from "./AnalyticsProvider";

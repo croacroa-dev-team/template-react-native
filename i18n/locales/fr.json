@@ -97,5 +97,35 @@
     "passwordMin": "Le mot de passe doit contenir au moins 8 caractères",
     "passwordMatch": "Les mots de passe ne correspondent pas",
     "nameMin": "Le nom doit contenir au moins 2 caractères"
+  },
+  "permissions": {
+    "camera": "L'accès à la caméra est nécessaire pour prendre des photos.",
+    "location": "L'accès à la localisation est nécessaire pour afficher les résultats à proximité.",
+    "contacts": "L'accès aux contacts est nécessaire pour trouver des amis.",
+    "mediaLibrary": "L'accès à la photothèque est nécessaire pour sélectionner des images.",
+    "microphone": "L'accès au microphone est nécessaire pour enregistrer de l'audio.",
+    "notifications": "L'autorisation de notifications est nécessaire pour vous envoyer des alertes.",
+    "openSettings": "Ouvrir les réglages",
+    "allowAccess": "Autoriser l'accès",
+    "blocked": "L'autorisation a été refusée. Veuillez l'activer dans les réglages."
+  },
+  "socialAuth": {
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithApple": "Continuer avec Apple",
+    "orContinueWith": "Ou continuer avec"
+  },
+  "payments": {
+    "upgradeToPremium": "Passer à Premium",
+    "subscribe": "S'abonner",
+    "restore": "Restaurer les achats",
+    "perMonth": "/mois",
+    "perYear": "/an"
+  },
+  "upload": {
+    "uploading": "Téléchargement en cours...",
+    "complete": "Terminé",
+    "failed": "Échec du téléchargement",
+    "retry": "Réessayer",
+    "addPhoto": "Ajouter une photo"
   }
 }

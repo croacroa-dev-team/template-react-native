@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AnalyticsProvider } from "@/components/providers/AnalyticsProvider";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ThemeProvider, useTheme } from "@/hooks/useTheme";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -85,9 +86,11 @@ export default function RootLayout() {
             persistOptions={persistOptions}
           >
             <ThemeProvider>
-              <AuthProvider>
-                <RootLayoutContent />
-              </AuthProvider>
+              <AnalyticsProvider>
+                <AuthProvider>
+                  <RootLayoutContent />
+                </AuthProvider>
+              </AnalyticsProvider>
             </ThemeProvider>
           </PersistQueryClientProvider>
         </SafeAreaProvider>

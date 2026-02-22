@@ -52,3 +52,53 @@ export type {
   SyncConflict,
   ConflictResolver,
 } from "./backgroundSync";
+export {
+  PermissionManager,
+  normalizeStatus,
+} from "./permissions/permission-manager";
+export { DEFAULT_PERMISSION_CONFIGS } from "./permissions/types";
+export type {
+  PermissionType,
+  PermissionStatus,
+  PermissionResult,
+  PermissionConfig,
+} from "./permissions/types";
+export { Analytics } from "./analytics/analytics-adapter";
+export { ConsoleAnalyticsAdapter } from "./analytics/adapters/console";
+export type {
+  AnalyticsAdapter as AnalyticsAdapterInterface,
+  AnalyticsConfig,
+} from "./analytics/types";
+export { Payments } from "./payments/payment-adapter";
+export { MockPaymentAdapter, MOCK_PRODUCTS } from "./payments/adapters/mock";
+export type {
+  PaymentAdapter,
+  Product,
+  Purchase,
+  ProductType,
+  SubscriptionPeriod,
+  SubscriptionStatus,
+  SubscriptionInfo,
+} from "./payments/types";
+export { pickFromLibrary, pickFromCamera } from "./media/media-picker";
+export type { PickedMedia, PickOptions } from "./media/media-picker";
+export { compressImage } from "./media/compression";
+export type {
+  CompressionOptions,
+  CompressionResult,
+} from "./media/compression";
+export { uploadFile } from "./media/media-upload";
+export type {
+  UploadProgress,
+  UploadOptions,
+  UploadResult,
+} from "./media/media-upload";
+export { WebSocketManager } from "./realtime/websocket-manager";
+export type {
+  ConnectionStatus,
+  WebSocketConfig,
+  WebSocketMessage,
+  MessageHandler,
+  StatusHandler,
+  PresenceUser,
+} from "./realtime/types";

@@ -52,6 +52,50 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **Badge, Chip, CountBadge**
 - **OptimizedImage** with expo-image
 
+### Animations & Transitions
+
+- **Animation Presets** (timing, spring, bounce)
+- **Screen Transitions** (slide, fade, modal) for Expo Router
+- **useAnimatedEntry** & **useStaggeredEntry** hooks
+- **useParallax** scroll effect hook
+- **AnimatedScreen** & **AnimatedListItem** components
+
+### Permissions
+
+- **Centralized Permission Manager** for all Expo permissions
+- **usePermission** hook with auto-refresh on app resume
+- **PermissionGate** component for declarative permission UI
+
+### Social Login
+
+- **Google Sign-In** via expo-auth-session with PKCE
+- **Apple Sign-In** via expo-apple-authentication (iOS)
+- **SocialLoginButtons** component with platform-aware display
+
+### Analytics
+
+- **Analytics Adapter Pattern** — pluggable providers (PostHog, Mixpanel, etc.)
+- **Auto screen tracking** via Expo Router
+- **useTrackEvent** hook for custom events
+
+### Payments & Subscriptions
+
+- **Payment Adapter Pattern** — pluggable providers (RevenueCat, Stripe, etc.)
+- **Paywall** component with product listing
+- **useSubscription** hook for subscription status
+
+### File Upload & Media
+
+- **Image picker** (camera + library) with compression
+- **Upload with progress** tracking, cancel, retry
+- **ImagePickerButton** & **UploadProgress** components
+
+### Real-time / WebSockets
+
+- **WebSocketManager** with auto-reconnect & exponential backoff
+- **useChannel** & **usePresence** hooks
+- Offline queue & auth token injection
+
 ### DevOps & Quality
 
 - **GitHub Actions** CI/CD workflows

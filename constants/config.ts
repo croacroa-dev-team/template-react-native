@@ -26,6 +26,8 @@ export const FEATURES = {
   ENABLE_PUSH_NOTIFICATIONS: true,
   ENABLE_BIOMETRIC_AUTH: true,
   ENABLE_PERFORMANCE_MONITORING: IS_DEV || IS_PREVIEW,
+  ENABLE_SOCIAL_LOGIN: true,
+  ENABLE_PAYMENTS: false,
 } as const;
 
 // Export individual flags for convenience
@@ -35,6 +37,8 @@ export const ENABLE_PUSH_NOTIFICATIONS = FEATURES.ENABLE_PUSH_NOTIFICATIONS;
 export const ENABLE_BIOMETRIC_AUTH = FEATURES.ENABLE_BIOMETRIC_AUTH;
 export const ENABLE_PERFORMANCE_MONITORING =
   FEATURES.ENABLE_PERFORMANCE_MONITORING;
+export const ENABLE_SOCIAL_LOGIN = FEATURES.ENABLE_SOCIAL_LOGIN;
+export const ENABLE_PAYMENTS = FEATURES.ENABLE_PAYMENTS;
 
 // Timing Constants
 export const TIMING = {
@@ -51,6 +55,17 @@ export const STORAGE_KEYS = {
   THEME: "theme_mode",
   ONBOARDING_COMPLETED: "onboarding_completed",
   PUSH_TOKEN: "push_token",
+  PERMISSION_PREFIX: "@permission_asked_",
+  ANALYTICS_USER_ID: "@analytics_user_id",
+} as const;
+
+// Social Auth Configuration
+export const socialAuth = {
+  google: {
+    clientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID || "",
+    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || "",
+    androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID || "",
+  },
 } as const;
 
 // Security Configuration

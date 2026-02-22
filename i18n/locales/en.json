@@ -97,5 +97,35 @@
     "passwordMin": "Password must be at least 8 characters",
     "passwordMatch": "Passwords do not match",
     "nameMin": "Name must be at least 2 characters"
+  },
+  "permissions": {
+    "camera": "Camera access is needed to take photos.",
+    "location": "Location access is needed to show nearby results.",
+    "contacts": "Contacts access is needed to find friends.",
+    "mediaLibrary": "Photo library access is needed to select images.",
+    "microphone": "Microphone access is needed to record audio.",
+    "notifications": "Notification permission is needed to send you alerts.",
+    "openSettings": "Open Settings",
+    "allowAccess": "Allow Access",
+    "blocked": "Permission was denied. Please enable it in Settings."
+  },
+  "socialAuth": {
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple",
+    "orContinueWith": "Or continue with"
+  },
+  "payments": {
+    "upgradeToPremium": "Upgrade to Premium",
+    "subscribe": "Subscribe",
+    "restore": "Restore purchases",
+    "perMonth": "/mo",
+    "perYear": "/yr"
+  },
+  "upload": {
+    "uploading": "Uploading...",
+    "complete": "Complete",
+    "failed": "Upload failed",
+    "retry": "Retry",
+    "addPhoto": "Add Photo"
   }
 }

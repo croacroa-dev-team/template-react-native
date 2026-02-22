@@ -5,6 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-02-22
+
+### Added — Phase 6: Template Completion
+
+- **Permission Management** (turnkey)
+  - Centralized `PermissionManager` service for all Expo permissions
+  - `usePermission` hook with auto-refresh on app resume
+  - `PermissionGate` component for declarative permission-gated UI
+  - Support: camera, location, contacts, media library, microphone, notifications
+- **Animations / UX Polish** (turnkey)
+  - Animation presets (timing, spring) and entry animation configs
+  - Screen transition presets for Expo Router (slide, fade, modal, etc.)
+  - `useAnimatedEntry` and `useStaggeredEntry` hooks
+  - `useParallax` hook for scroll parallax effects
+  - `AnimatedScreen` and `AnimatedListItem` components
+- **Social Login** (turnkey)
+  - Google Sign-In via `expo-auth-session` with PKCE
+  - Apple Sign-In via `expo-apple-authentication` (iOS)
+  - `SocialAuth` orchestrator with configurable providers
+  - `SocialLoginButtons` component with platform-aware display
+- **Analytics** (adapter pattern)
+  - `AnalyticsAdapter` interface following auth adapter pattern
+  - Console adapter for development
+  - `useTrackScreen` hook (auto-tracks Expo Router navigation)
+  - `useTrackEvent` hook for custom events
+  - `AnalyticsProvider` with automatic initialization
+- **Payment Infrastructure** (adapter pattern)
+  - `PaymentAdapter` interface with mock implementation
+  - `useProducts`, `usePurchase`, `useSubscription` hooks
+  - `Paywall` and `PurchaseButton` components
+- **File Upload / Media**
+  - Media picker service (camera + library)
+  - Image compression service via `expo-image-manipulator`
+  - Upload service with progress tracking, cancel, retry
+  - `useImagePicker` and `useUpload` hooks
+  - `ImagePickerButton` and `UploadProgress` components
+- **WebSockets / Real-time**
+  - `WebSocketManager` with auto-reconnect and exponential backoff
+  - Heartbeat, offline queue, auth token injection
+  - `useWebSocket`, `useChannel`, `usePresence` hooks
+
+### Dependencies Added
+
+- `expo-camera`
+- `expo-location`
+- `expo-contacts`
+- `expo-media-library`
+- `expo-auth-session`
+- `expo-web-browser`
+- `expo-apple-authentication`
+- `expo-crypto`
+- `expo-image-manipulator`
+
+---
+
 ## [Unreleased]
 
 ### Added

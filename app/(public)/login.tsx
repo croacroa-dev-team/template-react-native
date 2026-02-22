@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { FormInput } from "@/components/forms/FormInput";
+import { SocialLoginButtons } from "@/components/auth/SocialLoginButtons";
 import { AnimatedButton } from "@/components/ui/AnimatedButton";
 import { useAuth } from "@/hooks/useAuth";
 import { loginSchema, LoginFormData } from "@/utils/validation";
@@ -97,9 +98,30 @@ export default function LoginScreen() {
             </AnimatedButton>
           </Animated.View>
 
-          {/* Footer */}
+          {/* Divider */}
           <Animated.View
             entering={FadeInDown.delay(300).springify()}
+            className="my-6 flex-row items-center"
+          >
+            <View className="h-px flex-1 bg-muted-light/30 dark:bg-muted-dark/30" />
+            <Text className="mx-4 text-muted-light dark:text-muted-dark">
+              or
+            </Text>
+            <View className="h-px flex-1 bg-muted-light/30 dark:bg-muted-dark/30" />
+          </Animated.View>
+
+          {/* Social Login */}
+          <Animated.View entering={FadeInDown.delay(400).springify()}>
+            <SocialLoginButtons
+              onSuccess={(result) => {
+                // TODO: Send idToken to your backend, then sign in with the returned session
+              }}
+            />
+          </Animated.View>
+
+          {/* Footer */}
+          <Animated.View
+            entering={FadeInDown.delay(500).springify()}
             className="mt-8 flex-row justify-center"
           >
             <Text className="text-muted-light dark:text-muted-dark">

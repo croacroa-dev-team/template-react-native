@@ -36,6 +36,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     infoPlist: {
       UIBackgroundModes: ["remote-notification", "fetch", "processing"],
       ITSAppUsesNonExemptEncryption: false,
+      NSCameraUsageDescription:
+        "This app uses the camera to take photos.",
+      NSPhotoLibraryUsageDescription:
+        "This app accesses your photo library to select images.",
+      NSLocationWhenInUseUsageDescription:
+        "This app uses your location to show nearby results.",
+      NSContactsUsageDescription:
+        "This app accesses your contacts to find friends.",
+      NSMicrophoneUsageDescription:
+        "This app uses the microphone to record audio.",
     },
   },
   android: {
@@ -48,6 +58,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "NOTIFICATIONS",
       "RECEIVE_BOOT_COMPLETED",
       "FOREGROUND_SERVICE",
+      "CAMERA",
+      "READ_CONTACTS",
+      "ACCESS_FINE_LOCATION",
+      "ACCESS_COARSE_LOCATION",
+      "READ_MEDIA_IMAGES",
+      "READ_MEDIA_VIDEO",
+      "RECORD_AUDIO",
     ],
   },
   web: {
@@ -106,6 +123,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     "expo-task-manager",
+    [
+      "expo-camera",
+      {
+        cameraPermission: "This app uses the camera to take photos.",
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,

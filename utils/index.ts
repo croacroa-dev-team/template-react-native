@@ -50,3 +50,14 @@ export {
   A11yContext,
   auditAccessibility,
 } from "./withAccessibility";
+
+// Animation presets and transitions
+export {
+  TIMING,
+  SPRING,
+  ENTRY_CONFIGS,
+  staggerDelay,
+} from "./animations/presets";
+export type { EntryAnimation, EntryConfig } from "./animations/presets";
+export { screenTransitions } from "./animations/transitions";
+export type { ScreenTransitionName } from "./animations/transitions";
