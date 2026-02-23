@@ -6,7 +6,7 @@ import { RemoteConfig } from "@/services/config/config-adapter";
  */
 export function useRemoteConfig<T>(
   key: string,
-  defaultValue: T,
+  defaultValue: T
 ): { value: T; isLoading: boolean } {
   const [value, setValue] = useState<T>(defaultValue);
   const [isLoading, setIsLoading] = useState(true);

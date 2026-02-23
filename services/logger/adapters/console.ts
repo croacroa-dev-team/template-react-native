@@ -32,7 +32,7 @@ export class ConsoleLoggerAdapter implements LoggerAdapter {
   private formatMessage(
     level: LogLevel,
     message: string,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): string {
     const timestamp = new Date().toISOString();
     const merged = { ...this.context, ...context };
@@ -59,7 +59,7 @@ export class ConsoleLoggerAdapter implements LoggerAdapter {
   error(
     message: string,
     error?: Error,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): void {
     if (!this.shouldLog("error")) return;
     const ctx = error
@@ -71,7 +71,7 @@ export class ConsoleLoggerAdapter implements LoggerAdapter {
   fatal(
     message: string,
     error?: Error,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): void {
     if (!this.shouldLog("fatal")) return;
     const ctx = error
@@ -83,7 +83,7 @@ export class ConsoleLoggerAdapter implements LoggerAdapter {
   addBreadcrumb(
     category: string,
     message: string,
-    data?: Record<string, unknown>,
+    data?: Record<string, unknown>
   ): void {
     this.breadcrumbs.push({
       timestamp: Date.now(),

@@ -13,24 +13,15 @@ export class MockDatabaseAdapter implements DatabaseAdapter {
     // No-op
   }
 
-  async execute(
-    _sql: string,
-    _params?: unknown[],
-  ): Promise<void> {
+  async execute(_sql: string, _params?: unknown[]): Promise<void> {
     // No-op for mock
   }
 
-  async query<T>(
-    _sql: string,
-    _params?: unknown[],
-  ): Promise<T[]> {
+  async query<T>(_sql: string, _params?: unknown[]): Promise<T[]> {
     return [] as T[];
   }
 
-  async insert(
-    table: string,
-    data: Record<string, unknown>,
-  ): Promise<number> {
+  async insert(table: string, data: Record<string, unknown>): Promise<number> {
     if (!this.tables[table]) this.tables[table] = [];
     const id = this.nextId++;
     this.tables[table].push({ id, ...data });
@@ -41,7 +32,7 @@ export class MockDatabaseAdapter implements DatabaseAdapter {
     table: string,
     data: Record<string, unknown>,
     _where: string,
-    _params?: unknown[],
+    _params?: unknown[]
   ): Promise<number> {
     if (!this.tables[table]) return 0;
     this.tables[table] = this.tables[table].map((row) => ({
@@ -54,16 +45,14 @@ export class MockDatabaseAdapter implements DatabaseAdapter {
   async delete(
     table: string,
     _where: string,
-    _params?: unknown[],
+    _params?: unknown[]
   ): Promise<number> {
     const count = this.tables[table]?.length ?? 0;
     this.tables[table] = [];
     return count;
   }
 
-  async transaction<T>(
-    fn: (tx: TransactionContext) => Promise<T>,
-  ): Promise<T> {
+  async transaction<T>(fn: (tx: TransactionContext) => Promise<T>): Promise<T> {
     return fn({
       execute: async () => {},
       query: async () => [],

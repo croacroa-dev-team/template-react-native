@@ -20,7 +20,7 @@ function hashBody(body?: unknown): string {
 export function getDeduplicationKey(
   method: string,
   url: string,
-  body?: unknown,
+  body?: unknown
 ): string {
   return `${method}:${url}:${hashBody(body)}`;
 }
@@ -28,10 +28,7 @@ export function getDeduplicationKey(
 /**
  * Deduplicates concurrent identical requests.
  */
-export function deduplicate<T>(
-  key: string,
-  fn: () => Promise<T>,
-): Promise<T> {
+export function deduplicate<T>(key: string, fn: () => Promise<T>): Promise<T> {
   const existing = inflight.get(key) as Promise<T> | undefined;
   if (existing) return existing;
 

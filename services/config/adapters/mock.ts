@@ -7,7 +7,7 @@ import type { RemoteConfigAdapter } from "../types";
 
 export class MockRemoteConfigAdapter implements RemoteConfigAdapter {
   private config: Record<string, unknown> = {};
-  private listeners: Array<(keys: string[]) => void> = [];
+  private listeners: ((keys: string[]) => void)[] = [];
 
   async initialize(): Promise<void> {
     // No-op for mock

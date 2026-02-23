@@ -14,21 +14,21 @@ export interface RequestConfig {
 }
 
 export type RequestInterceptor = (
-  config: RequestConfig,
+  config: RequestConfig
 ) => RequestConfig | Promise<RequestConfig>;
 export type ResponseInterceptor = (
   response: Response,
-  config: RequestConfig,
+  config: RequestConfig
 ) => Response | Promise<Response>;
 
-const requestInterceptors: Array<{
+const requestInterceptors: {
   id: number;
   fn: RequestInterceptor;
-}> = [];
-const responseInterceptors: Array<{
+}[] = [];
+const responseInterceptors: {
   id: number;
   fn: ResponseInterceptor;
-}> = [];
+}[] = [];
 let nextId = 0;
 
 export const InterceptorManager = {
@@ -36,9 +36,7 @@ export const InterceptorManager = {
     const id = nextId++;
     requestInterceptors.push({ id, fn: interceptor });
     return () => {
-      const idx = requestInterceptors.findIndex(
-        (i) => i.id === id,
-      );
+      const idx = requestInterceptors.findIndex((i) => i.id === id);
       if (idx !== -1) requestInterceptors.splice(idx, 1);
     };
   },
@@ -47,16 +45,12 @@ export const InterceptorManager = {
     const id = nextId++;
     responseInterceptors.push({ id, fn: interceptor });
     return () => {
-      const idx = responseInterceptors.findIndex(
-        (i) => i.id === id,
-      );
+      const idx = responseInterceptors.findIndex((i) => i.id === id);
       if (idx !== -1) responseInterceptors.splice(idx, 1);
     };
   },
 
-  async runRequest(
-    config: RequestConfig,
-  ): Promise<RequestConfig> {
+  async runRequest(config: RequestConfig): Promise<RequestConfig> {
     let current = config;
     for (const { fn } of requestInterceptors) {
       current = await fn(current);
@@ -66,7 +60,7 @@ export const InterceptorManager = {
 
   async runResponse(
     response: Response,
-    config: RequestConfig,
+    config: RequestConfig
   ): Promise<Response> {
     let current = response;
     for (const { fn } of responseInterceptors) {
@@ -81,20 +75,15 @@ export const InterceptorManager = {
 // ============================================================================
 
 function generateUUID(): string {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-    /[xy]/g,
-    (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === "x" ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    },
-  );
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
 /** Adds X-Correlation-ID header to every request */
-export const correlationIdInterceptor: RequestInterceptor = (
-  config,
-) => ({
+export const correlationIdInterceptor: RequestInterceptor = (config) => ({
   ...config,
   headers: {
     ...config.headers,
@@ -103,9 +92,7 @@ export const correlationIdInterceptor: RequestInterceptor = (
 });
 
 /** Adds standardized User-Agent header */
-export const userAgentInterceptor: RequestInterceptor = (
-  config,
-) => ({
+export const userAgentInterceptor: RequestInterceptor = (config) => ({
   ...config,
   headers: {
     ...config.headers,
@@ -116,7 +103,7 @@ export const userAgentInterceptor: RequestInterceptor = (
 /** Logs request duration */
 export const requestTimingInterceptor: ResponseInterceptor = (
   response,
-  config,
+  config
 ) => {
   Logger.addBreadcrumb("http", `${config.method} ${config.url}`, {
     status: response.status,
@@ -125,16 +112,13 @@ export const requestTimingInterceptor: ResponseInterceptor = (
 };
 
 /** HMAC request signing (when enabled) */
-export const requestSigningInterceptor: RequestInterceptor = (
-  config,
-) => {
+export const requestSigningInterceptor: RequestInterceptor = (config) => {
   if (!SECURITY.REQUEST_SIGNING.ENABLED) return config;
   return {
     ...config,
     headers: {
       ...config.headers,
-      [SECURITY.REQUEST_SIGNING.HEADER_NAME]:
-        "placeholder-signature",
+      [SECURITY.REQUEST_SIGNING.HEADER_NAME]: "placeholder-signature",
     },
   };
 };

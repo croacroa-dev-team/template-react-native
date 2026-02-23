@@ -8,6 +8,6 @@ import { Logger } from "@/services/logger/logger-adapter";
 export function useLogger(componentName: string) {
   return useMemo(
     () => Logger.withContext({ component: componentName }),
-    [componentName],
+    [componentName]
   );
 }

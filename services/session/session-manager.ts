@@ -35,10 +35,7 @@ class SessionManagerClass {
 
   /** Remaining time in milliseconds */
   getRemainingMs(): number {
-    return Math.max(
-      0,
-      SESSION.TIMEOUT_MS - (Date.now() - this.lastActivity),
-    );
+    return Math.max(0, SESSION.TIMEOUT_MS - (Date.now() - this.lastActivity));
   }
 
   /** Register event callbacks */

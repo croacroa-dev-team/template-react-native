@@ -2,11 +2,7 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { useDeviceInfo } from "@/hooks/useDeviceInfo";
 import { getBuildInfo } from "@/utils/buildInfo";
-import {
-  IS_DEV,
-  IS_PREVIEW,
-  API_URL,
-} from "@/constants/config";
+import { IS_DEV, IS_PREVIEW, API_URL } from "@/constants/config";
 
 export function EnvPanel() {
   const deviceInfo = useDeviceInfo();
@@ -55,10 +51,7 @@ export function EnvPanel() {
           <Text className="text-sm font-medium text-gray-600 dark:text-gray-400">
             {label}
           </Text>
-          <Text
-            className="text-sm text-gray-900 dark:text-white"
-            selectable
-          >
+          <Text className="text-sm text-gray-900 dark:text-white" selectable>
             {value}
           </Text>
         </View>

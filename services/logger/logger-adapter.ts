@@ -36,7 +36,7 @@ export const Logger = {
   error(
     message: string,
     error?: Error,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): void {
     if (!LOGGER.ENABLED) return;
     adapter.error(message, error, context);
@@ -45,7 +45,7 @@ export const Logger = {
   fatal(
     message: string,
     error?: Error,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): void {
     if (!LOGGER.ENABLED) return;
     adapter.fatal(message, error, context);
@@ -54,7 +54,7 @@ export const Logger = {
   addBreadcrumb(
     category: string,
     message: string,
-    data?: Record<string, unknown>,
+    data?: Record<string, unknown>
   ): void {
     if (!LOGGER.ENABLED) return;
     adapter.addBreadcrumb(category, message, data);

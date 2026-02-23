@@ -22,10 +22,7 @@ const DEFAULT_CONFIG: RetryConfig = {
   retryableStatuses: [408, 429, 500, 502, 503, 504],
 };
 
-function calculateDelay(
-  attempt: number,
-  config: RetryConfig,
-): number {
+function calculateDelay(attempt: number, config: RetryConfig): number {
   const exponential = config.baseDelayMs * Math.pow(2, attempt);
   const capped = Math.min(exponential, config.maxDelayMs);
   if (!config.jitter) return capped;
@@ -37,7 +34,7 @@ function calculateDelay(
  */
 export async function withRetry<T>(
   fn: () => Promise<T>,
-  config?: Partial<RetryConfig>,
+  config?: Partial<RetryConfig>
 ): Promise<T> {
   const cfg = { ...DEFAULT_CONFIG, ...config };
 
@@ -56,7 +53,7 @@ export async function withRetry<T>(
       const delay = calculateDelay(attempt, cfg);
       Logger.warn(
         `Retry attempt ${attempt + 1}/${cfg.maxAttempts} in ${Math.round(delay)}ms`,
-        { error: (error as Error).message },
+        { error: (error as Error).message }
       );
       await new Promise((resolve) => setTimeout(resolve, delay));
     }

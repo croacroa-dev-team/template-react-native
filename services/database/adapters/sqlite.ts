@@ -5,10 +5,7 @@
 
 import * as SQLite from "expo-sqlite";
 import type { SQLiteBindParams } from "expo-sqlite";
-import type {
-  DatabaseAdapter,
-  TransactionContext,
-} from "../types";
+import type { DatabaseAdapter, TransactionContext } from "../types";
 import { migrations } from "../migrations";
 import { DATABASE } from "@/constants/config";
 import { Logger } from "@/services/logger/logger-adapter";
@@ -24,9 +21,7 @@ export class SQLiteAdapter implements DatabaseAdapter {
 
   private async getDb(): Promise<SQLite.SQLiteDatabase> {
     if (!this.db)
-      throw new Error(
-        "Database not initialized. Call initialize() first.",
-      );
+      throw new Error("Database not initialized. Call initialize() first.");
     return this.db;
   }
 
@@ -42,22 +37,20 @@ export class SQLiteAdapter implements DatabaseAdapter {
     `);
 
     const applied = await db.getAllAsync<{ version: number }>(
-      "SELECT version FROM _migrations ORDER BY version",
+      "SELECT version FROM _migrations ORDER BY version"
     );
     const appliedVersions = new Set(applied.map((m) => m.version));
 
-    const sorted = [...migrations].sort(
-      (a, b) => a.version - b.version,
-    );
+    const sorted = [...migrations].sort((a, b) => a.version - b.version);
     for (const migration of sorted) {
       if (!appliedVersions.has(migration.version)) {
         await db.execAsync(migration.up);
         await db.runAsync(
           "INSERT INTO _migrations (version, name) VALUES (?, ?)",
-          [migration.version, migration.name],
+          [migration.version, migration.name]
         );
         Logger.info(
-          `Migration applied: ${migration.name} (v${migration.version})`,
+          `Migration applied: ${migration.name} (v${migration.version})`
         );
       }
     }
@@ -73,17 +66,14 @@ export class SQLiteAdapter implements DatabaseAdapter {
     return db.getAllAsync<T>(sql, (params ?? []) as SQLiteBindParams);
   }
 
-  async insert(
-    table: string,
-    data: Record<string, unknown>,
-  ): Promise<number> {
+  async insert(table: string, data: Record<string, unknown>): Promise<number> {
     const db = await this.getDb();
     const keys = Object.keys(data);
     const placeholders = keys.map(() => "?").join(", ");
     const values = Object.values(data);
     const result = await db.runAsync(
       `INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders})`,
-      values as SQLiteBindParams,
+      values as SQLiteBindParams
     );
     return result.lastInsertRowId;
   }
@@ -92,7 +82,7 @@ export class SQLiteAdapter implements DatabaseAdapter {
     table: string,
     data: Record<string, unknown>,
     where: string,
-    params?: unknown[],
+    params?: unknown[]
   ): Promise<number> {
     const db = await this.getDb();
     const sets = Object.keys(data)
@@ -101,7 +91,7 @@ export class SQLiteAdapter implements DatabaseAdapter {
     const values = [...Object.values(data), ...(params ?? [])];
     const result = await db.runAsync(
       `UPDATE ${table} SET ${sets} WHERE ${where}`,
-      values as SQLiteBindParams,
+      values as SQLiteBindParams
     );
     return result.changes;
   }
@@ -109,19 +99,17 @@ export class SQLiteAdapter implements DatabaseAdapter {
   async delete(
     table: string,
     where: string,
-    params?: unknown[],
+    params?: unknown[]
   ): Promise<number> {
     const db = await this.getDb();
     const result = await db.runAsync(
       `DELETE FROM ${table} WHERE ${where}`,
-      (params ?? []) as SQLiteBindParams,
+      (params ?? []) as SQLiteBindParams
     );
     return result.changes;
   }
 
-  async transaction<T>(
-    fn: (tx: TransactionContext) => Promise<T>,
-  ): Promise<T> {
+  async transaction<T>(fn: (tx: TransactionContext) => Promise<T>): Promise<T> {
     const db = await this.getDb();
     let result: T;
     await db.execAsync("BEGIN TRANSACTION");

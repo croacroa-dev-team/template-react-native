@@ -27,11 +27,7 @@ export function useDebugMenu(): DebugMenuContextValue {
  * Provider that wraps the app and provides the debug menu in dev mode.
  * In production, this is a pass-through (no-op).
  */
-export function DebugMenuProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function DebugMenuProvider({ children }: { children: ReactNode }) {
   const [visible, setVisible] = useState(false);
 
   const open = useCallback(() => setVisible(true), []);

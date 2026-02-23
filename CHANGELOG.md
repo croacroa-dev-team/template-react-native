@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-02-23
+
+### Added — Phase 9: Production Hardening
+
+- **Logger Service** — Structured logging with adapter pattern (`ConsoleLoggerAdapter`), breadcrumb buffer (max 100), scoped loggers via `Logger.withContext()`, `useLogger` hook
+- **Remote Config** — `RemoteConfigAdapter` interface with `MockRemoteConfigAdapter`, `RemoteConfig` facade, `useRemoteConfig` hook with real-time updates
+- **App Lifecycle** — `useAppLifecycle` hook wrapping `AppState.addEventListener` with transition detection and automatic Logger breadcrumbs
+- **Device Info** — `getDeviceDiagnostics()` utility (OS, device, screen, emulator detection) using expo-device/expo-application, `useDeviceInfo` hook
+- **SQLite Database** — `DatabaseAdapter` interface, `SQLiteAdapter` wrapping expo-sqlite with auto-migration system, `MockDatabaseAdapter`, `Database` facade, `useDatabase` hook
+- **Retry & Circuit Breaker** — `withRetry()` (exponential backoff + jitter), `CircuitBreaker` class (closed/open/half-open states), request deduplicator
+- **Session Management** — `SessionManager` with activity tracking and timeout monitoring, `useSessionTimeout` hook, `SessionTimeoutModal` component with i18n (5 locales)
+- **Request Interceptors** — `InterceptorManager` pipeline with built-in interceptors: correlation ID, user agent, request timing, request signing
+- **PII Scrubbing** — `scrub()` and `scrubString()` utilities for redacting emails, phone numbers, credit cards, JWTs, and sensitive fields
+- **Permission Rationale** — `PermissionRationale` modal component for pre-permission dialogs with i18n (5 locales, 6 permission types)
+- **Network Quality** — `useNetworkQuality` hook using NetInfo to derive quality levels (excellent/good/poor/offline)
+- **Analytics Session** — `AnalyticsSession` manager tracking session ID, duration, events, screens visited with auto-renewal on 30min gaps
+- **Build Metadata** — `getBuildInfo()` and `getExtendedBuildInfo()` utilities via expo-application
+- **Version Gate** — `compareVersions()`, `isVersionAtLeast()`, `parseVersion()` semver utilities
+- **Debug Menu** — Dev-only `DebugMenuProvider` with 4 panels: Environment info, Network requests, AsyncStorage viewer, Feature flags viewer
+
+### Dependencies Added
+
+- `expo-sqlite`
+- `expo-application`
+
+---
+
 ## [3.2.0] - 2026-02-23
 
 ### Added — Phase 8: Additional Features

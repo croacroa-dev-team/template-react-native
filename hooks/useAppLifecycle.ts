@@ -11,11 +11,11 @@ interface AppLifecycleCallbacks {
 /**
  * Hook that tracks app lifecycle transitions and logs breadcrumbs.
  */
-export function useAppLifecycle(
-  callbacks?: AppLifecycleCallbacks,
-): { appState: AppStateStatus } {
+export function useAppLifecycle(callbacks?: AppLifecycleCallbacks): {
+  appState: AppStateStatus;
+} {
   const [appState, setAppState] = useState<AppStateStatus>(
-    AppState.currentState,
+    AppState.currentState
   );
   const previousState = useRef<AppStateStatus>(AppState.currentState);
 
@@ -23,10 +23,7 @@ export function useAppLifecycle(
     const handleChange = (nextState: AppStateStatus) => {
       const prev = previousState.current;
 
-      Logger.addBreadcrumb(
-        "lifecycle",
-        `App state: ${prev} → ${nextState}`,
-      );
+      Logger.addBreadcrumb("lifecycle", `App state: ${prev} → ${nextState}`);
 
       if (prev !== "active" && nextState === "active") {
         callbacks?.onForeground?.();

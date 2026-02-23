@@ -9,14 +9,11 @@ import { Logger } from "@/services/logger/logger-adapter";
 const SESSION_GAP_MS = 30 * 60 * 1000;
 
 function generateSessionId(): string {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-    /[xy]/g,
-    (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === "x" ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    },
-  );
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
 class AnalyticsSessionManager {
@@ -31,7 +28,7 @@ class AnalyticsSessionManager {
   start(): void {
     this.subscription = AppState.addEventListener(
       "change",
-      this.handleAppStateChange,
+      this.handleAppStateChange
     );
     Logger.info("Analytics session started", {
       sessionId: this.sessionId,
@@ -44,9 +41,7 @@ class AnalyticsSessionManager {
     this.subscription = null;
   }
 
-  private handleAppStateChange = (
-    state: AppStateStatus,
-  ): void => {
+  private handleAppStateChange = (state: AppStateStatus): void => {
     if (state === "active") {
       const gap = Date.now() - this.lastActiveTime;
       if (gap >= SESSION_GAP_MS) {

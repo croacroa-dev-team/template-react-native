@@ -7,7 +7,7 @@ import { Database } from "@/services/database/database-adapter";
 export function useDatabase<T>(
   query: string,
   params?: unknown[],
-  deps: unknown[] = [],
+  deps: unknown[] = []
 ): {
   data: T[];
   isLoading: boolean;

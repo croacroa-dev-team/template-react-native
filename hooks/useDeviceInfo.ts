@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  getDeviceDiagnostics,
-  DeviceDiagnostics,
-} from "@/utils/deviceInfo";
+import { getDeviceDiagnostics, DeviceDiagnostics } from "@/utils/deviceInfo";
 
 /**
  * Hook that fetches device diagnostics once on mount.

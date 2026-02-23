@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function StoragePanel() {
-  const [keys, setKeys] = useState<
-    Array<{ key: string; value: string }>
-  >([]);
+  const [keys, setKeys] = useState<{ key: string; value: string }[]>([]);
 
   const loadKeys = async () => {
     const allKeys = await AsyncStorage.getAllKeys();
-    const entries = await AsyncStorage.multiGet(
-      allKeys as string[],
-    );
+    const entries = await AsyncStorage.multiGet(allKeys as string[]);
     setKeys(
       entries.map(([key, value]) => ({
         key,
         value: value ?? "",
-      })),
+      }))
     );
   };
 
@@ -40,17 +31,13 @@ export function StoragePanel() {
         onPress={loadKeys}
         className="mb-3 items-center rounded-lg bg-blue-500 py-2"
       >
-        <Text className="text-sm font-semibold text-white">
-          Refresh
-        </Text>
+        <Text className="text-sm font-semibold text-white">Refresh</Text>
       </Pressable>
       <Pressable
         onPress={clearAll}
         className="mb-4 items-center rounded-lg bg-red-500 py-2"
       >
-        <Text className="text-sm font-semibold text-white">
-          Clear All
-        </Text>
+        <Text className="text-sm font-semibold text-white">Clear All</Text>
       </Pressable>
       {keys.length === 0 ? (
         <Text className="text-center text-sm text-gray-500 dark:text-gray-400">

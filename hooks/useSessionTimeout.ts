@@ -15,7 +15,7 @@ export function useSessionTimeout(): {
   const [isWarning, setIsWarning] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(
-    Math.floor(SESSION.TIMEOUT_MS / 1000),
+    Math.floor(SESSION.TIMEOUT_MS / 1000)
   );
 
   const extend = useCallback(() => {
@@ -40,9 +40,7 @@ export function useSessionTimeout(): {
     SessionManager.startMonitoring();
 
     const tick = setInterval(() => {
-      setRemainingSeconds(
-        Math.floor(SessionManager.getRemainingMs() / 1000),
-      );
+      setRemainingSeconds(Math.floor(SessionManager.getRemainingMs() / 1000));
     }, 1000);
 
     return () => {

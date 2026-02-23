@@ -19,17 +19,17 @@ export interface LoggerAdapter {
   error(
     message: string,
     error?: Error,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): void;
   fatal(
     message: string,
     error?: Error,
-    context?: Record<string, unknown>,
+    context?: Record<string, unknown>
   ): void;
   addBreadcrumb(
     category: string,
     message: string,
-    data?: Record<string, unknown>,
+    data?: Record<string, unknown>
   ): void;
   getBreadcrumbs(): Breadcrumb[];
   setContext(key: string, value: unknown): void;

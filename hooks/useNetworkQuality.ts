@@ -4,11 +4,7 @@ import NetInfo, {
   NetInfoStateType,
 } from "@react-native-community/netinfo";
 
-export type NetworkQuality =
-  | "excellent"
-  | "good"
-  | "poor"
-  | "offline";
+export type NetworkQuality = "excellent" | "good" | "poor" | "offline";
 
 interface NetworkQualityInfo {
   quality: NetworkQuality;
@@ -27,9 +23,8 @@ function deriveQuality(state: NetInfoState): NetworkQuality {
   }
 
   if (state.type === NetInfoStateType.cellular) {
-    const gen = (
-      state.details as { cellularGeneration?: string }
-    )?.cellularGeneration;
+    const gen = (state.details as { cellularGeneration?: string })
+      ?.cellularGeneration;
     if (gen === "5g" || gen === "4g") return "good";
     return "poor";
   }

@@ -15,12 +15,8 @@ export class CircuitBreaker {
   private threshold: number;
   private resetTimeoutMs: number;
 
-  constructor(options?: {
-    threshold?: number;
-    resetTimeoutMs?: number;
-  }) {
-    this.threshold =
-      options?.threshold ?? CIRCUIT_BREAKER.THRESHOLD;
+  constructor(options?: { threshold?: number; resetTimeoutMs?: number }) {
+    this.threshold = options?.threshold ?? CIRCUIT_BREAKER.THRESHOLD;
     this.resetTimeoutMs =
       options?.resetTimeoutMs ?? CIRCUIT_BREAKER.RESET_TIMEOUT_MS;
   }
@@ -37,9 +33,7 @@ export class CircuitBreaker {
 
   async execute<T>(fn: () => Promise<T>): Promise<T> {
     if (this.state === "open") {
-      throw new Error(
-        "Circuit breaker is open — request rejected",
-      );
+      throw new Error("Circuit breaker is open — request rejected");
     }
 
     try {
@@ -54,9 +48,7 @@ export class CircuitBreaker {
 
   private onSuccess(): void {
     if (this._state === "half-open") {
-      Logger.info(
-        "Circuit breaker closed after successful test request",
-      );
+      Logger.info("Circuit breaker closed after successful test request");
     }
     this.failureCount = 0;
     this._state = "closed";
@@ -68,9 +60,7 @@ export class CircuitBreaker {
 
     if (this.failureCount >= this.threshold) {
       this._state = "open";
-      Logger.warn(
-        `Circuit breaker opened after ${this.failureCount} failures`,
-      );
+      Logger.warn(`Circuit breaker opened after ${this.failureCount} failures`);
     }
   }
 

@@ -35,9 +35,7 @@ export function DebugMenu({ visible, onClose }: DebugMenuProps) {
             accessibilityRole="button"
             accessibilityLabel="Close"
           >
-            <Text className="text-base font-semibold text-blue-500">
-              Close
-            </Text>
+            <Text className="text-base font-semibold text-blue-500">Close</Text>
           </Pressable>
         </View>
 
