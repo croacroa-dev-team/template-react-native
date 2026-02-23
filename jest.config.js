@@ -27,6 +27,6 @@ module.exports = {
       statements: 70,
     },
   },
-  testPathIgnorePatterns: ["/node_modules/", "/.expo/"],
+  testPathIgnorePatterns: ["/node_modules/", "/.expo/", "__tests__/helpers/"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
 };

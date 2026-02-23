@@ -66,3 +66,5 @@ export { useRateLimit } from "./useRateLimit";
 export { useForceUpdate } from "./useForceUpdate";
 export type { UseForceUpdateReturn } from "./useForceUpdate";
 export { useInAppReview } from "./useInAppReview";
+export { useFeatureFlag, useFeatureFlagValue } from "./useFeatureFlag";
+export { useExperiment } from "./useExperiment";

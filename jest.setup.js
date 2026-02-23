@@ -85,6 +85,18 @@ jest.mock("expo-router", () => ({
   },
 }));
 
+// Mock @expo/vector-icons
+jest.mock("@expo/vector-icons", () => {
+  const mockIcon = "View";
+  return {
+    Ionicons: mockIcon,
+    MaterialIcons: mockIcon,
+    FontAwesome: mockIcon,
+    Feather: mockIcon,
+    AntDesign: mockIcon,
+  };
+});
+
 // Mock reanimated
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
