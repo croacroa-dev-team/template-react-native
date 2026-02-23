@@ -102,3 +102,9 @@ export type {
   StatusHandler,
   PresenceUser,
 } from "./realtime/types";
+export { checkForUpdate, isVersionLessThan } from "./force-update";
+export type {
+  ForceUpdateConfig,
+  ForceUpdateResponse,
+  ForceUpdateResult,
+} from "./force-update";
