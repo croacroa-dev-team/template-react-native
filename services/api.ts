@@ -1,7 +1,8 @@
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 import Bottleneck from "bottleneck";
-import { API_URL } from "@/constants/config";
+import i18next from "i18next";
+import { API_URL, API_CONFIG } from "@/constants/config";
 import { toast } from "@/utils/toast";
 import type { AuthTokens } from "@/types";
 
@@ -55,6 +56,16 @@ interface RequestOptions {
 interface ApiError extends Error {
   status: number;
   data?: unknown;
+}
+
+interface RateLimitError extends Error {
+  status: 429;
+  retryAfter: number;
+}
+
+interface ETagCacheEntry {
+  etag: string;
+  data: unknown;
 }
 
 const TOKEN_KEY = "auth_tokens";
@@ -164,6 +175,12 @@ class ApiClient {
   private defaultTimeout: number;
   private enableRateLimiting: boolean;
 
+  /** Timestamp (ms) until which we are rate limited by the server */
+  rateLimitedUntil: number = 0;
+
+  /** ETag cache: maps URL to cached ETag + response data */
+  private etagCache: Map<string, ETagCacheEntry> = new Map();
+
   constructor(baseUrl: string, timeout = 30000, enableRateLimiting = true) {
     this.baseUrl = baseUrl;
     this.defaultTimeout = timeout;
@@ -192,6 +209,19 @@ class ApiClient {
       skipRefresh = false,
     } = options;
 
+    // ---- Part A: Pre-request rate limit check ----
+    if (Date.now() < this.rateLimitedUntil) {
+      const secondsLeft = Math.ceil(
+        (this.rateLimitedUntil - Date.now()) / 1000
+      );
+      const error = new Error(
+        `Rate limited — retry in ${secondsLeft}s`
+      ) as RateLimitError;
+      error.status = 429;
+      error.retryAfter = secondsLeft;
+      throw error;
+    }
+
     const requestHeaders: Record<string, string> = {
       "Content-Type": "application/json",
       ...headers,
@@ -203,6 +233,17 @@ class ApiClient {
       if (token) {
         requestHeaders.Authorization = `Bearer ${token}`;
       }
+    }
+
+    // ---- Part B: ETag — add If-None-Match for GET requests ----
+    const fullUrl = `${this.baseUrl}${endpoint}`;
+    if (
+      method === "GET" &&
+      API_CONFIG.ENABLE_ETAG_CACHE &&
+      this.etagCache.has(fullUrl)
+    ) {
+      const cached = this.etagCache.get(fullUrl)!;
+      requestHeaders["If-None-Match"] = cached.etag;
     }
 
     // Setup abort controller for timeout
@@ -221,7 +262,7 @@ class ApiClient {
       }
 
       const response = await this.executeWithRateLimiting(() =>
-        fetch(`${this.baseUrl}${endpoint}`, config)
+        fetch(fullUrl, config)
       );
 
       // Handle 401 - try refresh once
@@ -234,15 +275,38 @@ class ApiClient {
         throw new Error("Authentication failed");
       }
 
-      // Handle rate limiting (429)
+      // ---- Part A: Handle rate limiting (429) with UI feedback ----
       if (response.status === 429) {
-        const retryAfter = response.headers.get("Retry-After");
-        rateLimitRetryAfter = retryAfter
-          ? parseInt(retryAfter, 10) * 1000
-          : 1000;
-        const error = new Error("Rate limited - too many requests") as ApiError;
+        const retryAfterHeader = response.headers.get("Retry-After");
+        const retryAfterSeconds = retryAfterHeader
+          ? parseInt(retryAfterHeader, 10)
+          : 30;
+        rateLimitRetryAfter = retryAfterSeconds * 1000;
+
+        // Store expiry timestamp so subsequent requests are blocked locally
+        this.rateLimitedUntil = Date.now() + retryAfterSeconds * 1000;
+
+        // Show user-facing toast via i18n
+        toast.error(i18next.t("errors.rateLimited"));
+
+        const error = new Error(
+          "Rate limited - too many requests"
+        ) as RateLimitError;
         error.status = 429;
+        error.retryAfter = retryAfterSeconds;
         throw error;
+      }
+
+      // ---- Part B: ETag — handle 304 Not Modified ----
+      if (
+        response.status === 304 &&
+        method === "GET" &&
+        API_CONFIG.ENABLE_ETAG_CACHE
+      ) {
+        const cached = this.etagCache.get(fullUrl);
+        if (cached) {
+          return cached.data as T;
+        }
       }
 
       // Handle other errors
@@ -265,7 +329,17 @@ class ApiClient {
         return {} as T;
       }
 
-      return JSON.parse(text);
+      const parsed = JSON.parse(text) as T;
+
+      // ---- Part B: ETag — cache response if ETag header present ----
+      if (method === "GET" && API_CONFIG.ENABLE_ETAG_CACHE) {
+        const etagValue = response.headers.get("ETag");
+        if (etagValue) {
+          this.etagCache.set(fullUrl, { etag: etagValue, data: parsed });
+        }
+      }
+
+      return parsed;
     } catch (error) {
       if (error instanceof Error) {
         // Handle abort (timeout)

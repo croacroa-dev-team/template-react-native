@@ -62,3 +62,4 @@ export { useChannel } from "./useChannel";
 export type { UseChannelReturn } from "./useChannel";
 export { usePresence } from "./usePresence";
 export type { UsePresenceReturn } from "./usePresence";
+export { useRateLimit } from "./useRateLimit";
