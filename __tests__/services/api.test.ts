@@ -12,8 +12,13 @@ jest.mock("@/utils/toast", () => ({
   },
 }));
 
+jest.mock("i18next", () => ({
+  t: jest.fn((key: string) => key),
+}));
+
 jest.mock("@/constants/config", () => ({
   API_URL: "https://api.example.com",
+  API_CONFIG: { ENABLE_ETAG_CACHE: false },
 }));
 
 const mockSecureStore = SecureStore as jest.Mocked<typeof SecureStore>;
