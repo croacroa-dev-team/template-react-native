@@ -336,6 +336,11 @@ class ApiClient {
         const etagValue = response.headers.get("ETag");
         if (etagValue) {
           this.etagCache.set(fullUrl, { etag: etagValue, data: parsed });
+          // Evict oldest entry when cache exceeds max size
+          if (this.etagCache.size > 100) {
+            const oldest = this.etagCache.keys().next().value;
+            if (oldest) this.etagCache.delete(oldest);
+          }
         }
       }
 

@@ -126,7 +126,9 @@
   "forceUpdate": {
     "title": "Aktualisierung erforderlich",
     "message": "Eine neue Version der App ist verfügbar. Bitte aktualisiere, um fortzufahren.",
-    "button": "Jetzt aktualisieren"
+    "button": "Jetzt aktualisieren",
+    "currentVersion": "Aktuelle Version",
+    "minimumVersion": "Mindestversion"
   },
   "validation": {
     "required": "Dieses Feld ist erforderlich",

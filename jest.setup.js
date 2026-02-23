@@ -51,6 +51,13 @@ jest.mock("expo-device", () => ({
   isDevice: true,
 }));
 
+// Mock expo-store-review
+jest.mock("expo-store-review", () => ({
+  isAvailableAsync: jest.fn(() => Promise.resolve(true)),
+  requestReview: jest.fn(() => Promise.resolve()),
+  hasAction: jest.fn(() => Promise.resolve(true)),
+}));
+
 // Mock expo-constants
 jest.mock("expo-constants", () => ({
   expoConfig: {

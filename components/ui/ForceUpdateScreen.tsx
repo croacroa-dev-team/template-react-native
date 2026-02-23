@@ -82,7 +82,7 @@ export function ForceUpdateScreen({
       <View className="mb-8 w-full rounded-xl bg-gray-100 p-4 dark:bg-gray-800">
         <View className="mb-2 flex-row items-center justify-between">
           <Text className="text-sm text-gray-500 dark:text-gray-400">
-            Current version
+            {t("forceUpdate.currentVersion")}
           </Text>
           <Text className="text-sm font-semibold text-gray-700 dark:text-gray-300">
             {currentVersion}
@@ -90,7 +90,7 @@ export function ForceUpdateScreen({
         </View>
         <View className="flex-row items-center justify-between">
           <Text className="text-sm text-gray-500 dark:text-gray-400">
-            Minimum version
+            {t("forceUpdate.minimumVersion")}
           </Text>
           <Text className="text-sm font-semibold text-gray-700 dark:text-gray-300">
             {minimumVersion}

@@ -12,6 +12,11 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { Modal } from "@/components/ui/Modal";
 import { Card } from "@/components/ui/Card";
 import { Text } from "react-native";
+import {
+  expectAccessibleButton,
+  expectAccessibleInput,
+  expectAccessibleDisabledState,
+} from "../helpers/a11y";
 
 jest.mock("@/hooks/useTheme", () => ({
   useTheme: () => ({
@@ -88,6 +93,23 @@ describe("Button - accessibility", () => {
       expect(getByText(variant)).toBeTruthy();
     });
   });
+
+  it("has correct accessibilityRole and accessibilityLabel", () => {
+    const { getByRole } = render(
+      <Button accessibilityLabel="Submit form">Submit</Button>
+    );
+    const btn = getByRole("button");
+    expectAccessibleButton(btn);
+  });
+
+  it("communicates disabled state to assistive technology", () => {
+    const { getByRole } = render(
+      <Button accessibilityLabel="Submit form" disabled>
+        Submit
+      </Button>
+    );
+    expectAccessibleDisabledState(getByRole("button"));
+  });
 });
 
 // ──────────────────────────────────────────────────────────────────
@@ -126,6 +148,13 @@ describe("Input - accessibility", () => {
     );
     expect(getByText("Too short")).toBeTruthy();
     expect(queryByText("Must be 8 characters")).toBeNull();
+  });
+
+  it("has an accessible label via placeholder", () => {
+    const { getByPlaceholderText } = render(
+      <Input placeholder="Enter your email" />
+    );
+    expectAccessibleInput(getByPlaceholderText("Enter your email"));
   });
 });
 

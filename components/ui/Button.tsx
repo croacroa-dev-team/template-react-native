@@ -68,6 +68,8 @@ export const Button = forwardRef<View, ButtonProps>(
       <Pressable
         ref={ref}
         disabled={isDisabled}
+        accessibilityRole="button"
+        accessibilityState={{ disabled: isDisabled }}
         className={cn(
           "flex-row items-center justify-center rounded-xl",
           variantStyles[variant],

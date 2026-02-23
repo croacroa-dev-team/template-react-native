@@ -126,7 +126,9 @@
   "forceUpdate": {
     "title": "تحديث مطلوب",
     "message": "يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة.",
-    "button": "تحديث الآن"
+    "button": "تحديث الآن",
+    "currentVersion": "الإصدار الحالي",
+    "minimumVersion": "الحد الأدنى للإصدار"
   },
   "validation": {
     "required": "هذا الحقل مطلوب",

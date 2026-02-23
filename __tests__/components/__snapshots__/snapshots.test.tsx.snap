@@ -2,6 +2,7 @@
 
 exports[`UI Components Snapshots Button renders danger variant correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -43,6 +44,7 @@ exports[`UI Components Snapshots Button renders danger variant correctly 1`] = `
 
 exports[`UI Components Snapshots Button renders disabled state correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -84,6 +86,7 @@ exports[`UI Components Snapshots Button renders disabled state correctly 1`] = `
 
 exports[`UI Components Snapshots Button renders ghost variant correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -125,6 +128,7 @@ exports[`UI Components Snapshots Button renders ghost variant correctly 1`] = `
 
 exports[`UI Components Snapshots Button renders large size correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -166,6 +170,7 @@ exports[`UI Components Snapshots Button renders large size correctly 1`] = `
 
 exports[`UI Components Snapshots Button renders loading state correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -206,6 +211,7 @@ exports[`UI Components Snapshots Button renders loading state correctly 1`] = `
 
 exports[`UI Components Snapshots Button renders outline variant correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -247,6 +253,7 @@ exports[`UI Components Snapshots Button renders outline variant correctly 1`] = 
 
 exports[`UI Components Snapshots Button renders primary variant correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -288,6 +295,7 @@ exports[`UI Components Snapshots Button renders primary variant correctly 1`] = 
 
 exports[`UI Components Snapshots Button renders secondary variant correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -329,6 +337,7 @@ exports[`UI Components Snapshots Button renders secondary variant correctly 1`] 
 
 exports[`UI Components Snapshots Button renders small size correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -370,6 +379,7 @@ exports[`UI Components Snapshots Button renders small size correctly 1`] = `
 
 exports[`UI Components Snapshots Button renders with custom children correctly 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -420,6 +430,7 @@ exports[`UI Components Snapshots Card renders complex content correctly 1`] = `
     Description text here
   </Text>
   <View
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
