@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 import { FormInput } from "@/components/forms/FormInput";
 import { SocialLoginButtons } from "@/components/auth/SocialLoginButtons";
@@ -13,6 +14,7 @@ import { loginSchema, LoginFormData } from "@/utils/validation";
 
 export default function LoginScreen() {
   const { signIn } = useAuth();
+  const { t } = useTranslation();
 
   const {
     control,
@@ -48,10 +50,10 @@ export default function LoginScreen() {
             className="mb-8"
           >
             <Text className="text-3xl font-bold text-text-light dark:text-text-dark">
-              Welcome back
+              {t('auth.welcomeBack')}
             </Text>
             <Text className="mt-2 text-muted-light dark:text-muted-dark">
-              Sign in to your account
+              {t('auth.signInToContinue')}
             </Text>
           </Animated.View>
 
@@ -63,8 +65,8 @@ export default function LoginScreen() {
             <FormInput
               name="email"
               control={control}
-              label="Email"
-              placeholder="Enter your email"
+              label={t('auth.email')}
+              placeholder={t('auth.enterEmail')}
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
@@ -74,8 +76,8 @@ export default function LoginScreen() {
             <FormInput
               name="password"
               control={control}
-              label="Password"
-              placeholder="Enter your password"
+              label={t('auth.password')}
+              placeholder={t('auth.enterPassword')}
               secureTextEntry
               autoComplete="password"
               leftIcon="lock-closed-outline"
@@ -84,7 +86,7 @@ export default function LoginScreen() {
             <Link href="/(public)/forgot-password" asChild>
               <Pressable className="self-end">
                 <Text className="text-primary-600 dark:text-primary-400">
-                  Forgot password?
+                  {t('auth.forgotPassword')}
                 </Text>
               </Pressable>
             </Link>
@@ -94,7 +96,7 @@ export default function LoginScreen() {
               isLoading={isSubmitting}
               className="mt-4"
             >
-              Sign In
+              {t('auth.signIn')}
             </AnimatedButton>
           </Animated.View>
 
@@ -105,7 +107,7 @@ export default function LoginScreen() {
           >
             <View className="h-px flex-1 bg-muted-light/30 dark:bg-muted-dark/30" />
             <Text className="mx-4 text-muted-light dark:text-muted-dark">
-              or
+              {t('socialAuth.orContinueWith')}
             </Text>
             <View className="h-px flex-1 bg-muted-light/30 dark:bg-muted-dark/30" />
           </Animated.View>
@@ -126,12 +128,12 @@ export default function LoginScreen() {
             className="mt-8 flex-row justify-center"
           >
             <Text className="text-muted-light dark:text-muted-dark">
-              Don't have an account?{" "}
+              {t('auth.noAccount')}{" "}
             </Text>
             <Link href="/(public)/register" asChild>
               <Pressable>
                 <Text className="font-semibold text-primary-600 dark:text-primary-400">
-                  Sign Up
+                  {t('auth.signUp')}
                 </Text>
               </Pressable>
             </Link>

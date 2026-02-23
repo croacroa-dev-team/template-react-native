@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 import { FormInput } from "@/components/forms/FormInput";
 import { AnimatedButton } from "@/components/ui/AnimatedButton";
@@ -12,6 +13,7 @@ import { registerSchema, RegisterFormData } from "@/utils/validation";
 
 export default function RegisterScreen() {
   const { signUp } = useAuth();
+  const { t } = useTranslation();
 
   const {
     control,
@@ -53,10 +55,10 @@ export default function RegisterScreen() {
               className="mb-8"
             >
               <Text className="text-3xl font-bold text-text-light dark:text-text-dark">
-                Create account
+                {t('auth.createAccount')}
               </Text>
               <Text className="mt-2 text-muted-light dark:text-muted-dark">
-                Sign up to get started
+                {t('auth.joinUs')}
               </Text>
             </Animated.View>
 
@@ -68,8 +70,8 @@ export default function RegisterScreen() {
               <FormInput
                 name="name"
                 control={control}
-                label="Name"
-                placeholder="Enter your name"
+                label={t('auth.name')}
+                placeholder={t('auth.enterName')}
                 autoComplete="name"
                 leftIcon="person-outline"
               />
@@ -77,8 +79,8 @@ export default function RegisterScreen() {
               <FormInput
                 name="email"
                 control={control}
-                label="Email"
-                placeholder="Enter your email"
+                label={t('auth.email')}
+                placeholder={t('auth.enterEmail')}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoComplete="email"
@@ -88,19 +90,19 @@ export default function RegisterScreen() {
               <FormInput
                 name="password"
                 control={control}
-                label="Password"
-                placeholder="Create a password"
+                label={t('auth.password')}
+                placeholder={t('auth.createPasswordPlaceholder')}
                 secureTextEntry
                 autoComplete="new-password"
                 leftIcon="lock-closed-outline"
-                hint="Min 8 chars, 1 uppercase, 1 lowercase, 1 number"
+                hint={t('auth.passwordHintFull')}
               />
 
               <FormInput
                 name="confirmPassword"
                 control={control}
-                label="Confirm Password"
-                placeholder="Confirm your password"
+                label={t('auth.confirmPassword')}
+                placeholder={t('auth.confirmPasswordPlaceholder')}
                 secureTextEntry
                 autoComplete="new-password"
                 leftIcon="lock-closed-outline"
@@ -111,7 +113,7 @@ export default function RegisterScreen() {
                 isLoading={isSubmitting}
                 className="mt-4"
               >
-                Create Account
+                {t('auth.createAccount')}
               </AnimatedButton>
             </Animated.View>
 
@@ -121,12 +123,12 @@ export default function RegisterScreen() {
               className="mt-8 flex-row justify-center"
             >
               <Text className="text-muted-light dark:text-muted-dark">
-                Already have an account?{" "}
+                {t('auth.haveAccount')}{" "}
               </Text>
               <Link href="/(public)/login" asChild>
                 <Pressable>
                   <Text className="font-semibold text-primary-600 dark:text-primary-400">
-                    Sign In
+                    {t('auth.signIn')}
                   </Text>
                 </Pressable>
               </Link>

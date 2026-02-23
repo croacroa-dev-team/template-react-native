@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Pressable } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -11,6 +12,7 @@ import { useTheme } from "@/hooks/useTheme";
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
   const { isDark } = useTheme();
+  const { t } = useTranslation();
 
   const handleSignOut = async () => {
     await signOut();
@@ -30,7 +32,7 @@ export default function ProfileScreen() {
             />
           </Pressable>
           <Text className="text-xl font-semibold text-text-light dark:text-text-dark">
-            Profile
+            {t('profile.title')}
           </Text>
         </View>
 
@@ -60,7 +62,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Edit Profile
+                  {t('profile.editProfile')}
                 </Text>
               </View>
               <Ionicons
@@ -80,7 +82,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Notifications
+                  {t('navigation.notifications')}
                 </Text>
               </View>
               <Ionicons
@@ -100,7 +102,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Privacy & Security
+                  {t('profile.privacySecurity')}
                 </Text>
               </View>
               <Ionicons
@@ -120,7 +122,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Help & Support
+                  {t('profile.helpSupport')}
                 </Text>
               </View>
               <Ionicons
@@ -143,7 +145,7 @@ export default function ProfileScreen() {
               color="#ef4444"
               style={{ marginRight: 8 }}
             />
-            <Text className="text-red-500">Sign Out</Text>
+            <Text className="text-red-500">{t('auth.signOut')}</Text>
           </Button>
         </View>
       </ScrollView>

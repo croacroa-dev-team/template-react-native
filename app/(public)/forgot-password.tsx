@@ -3,6 +3,7 @@ import { View, Text, Pressable, KeyboardAvoidingView, Platform } from "react-nat
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -12,10 +13,11 @@ export default function ForgotPasswordScreen() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleResetPassword = async () => {
     if (!email) {
-      setError("Please enter your email");
+      setError(t('forgotPassword.emailRequired'));
       return;
     }
 
@@ -28,7 +30,7 @@ export default function ForgotPasswordScreen() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSuccess(true);
     } catch (err) {
-      setError("Failed to send reset email. Please try again.");
+      setError(t('forgotPassword.sendFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -42,16 +44,16 @@ export default function ForgotPasswordScreen() {
             <Ionicons name="mail-outline" size={40} color="#22c55e" />
           </View>
           <Text className="text-center text-2xl font-bold text-text-light dark:text-text-dark">
-            Check your email
+            {t('forgotPassword.checkEmail')}
           </Text>
           <Text className="mt-2 text-center text-muted-light dark:text-muted-dark">
-            We've sent a password reset link to {email}
+            {t('forgotPassword.resetSent', { email })}
           </Text>
           <Button
             onPress={() => router.replace("/(public)/login")}
             className="mt-8"
           >
-            Back to Sign In
+            {t('forgotPassword.backToSignIn')}
           </Button>
         </View>
       </SafeAreaView>
@@ -70,15 +72,15 @@ export default function ForgotPasswordScreen() {
             className="mb-8 flex-row items-center"
           >
             <Ionicons name="arrow-back" size={24} color="#64748b" />
-            <Text className="ml-2 text-muted-light dark:text-muted-dark">Back</Text>
+            <Text className="ml-2 text-muted-light dark:text-muted-dark">{t('common.back')}</Text>
           </Pressable>
 
           <View className="mb-8">
             <Text className="text-3xl font-bold text-text-light dark:text-text-dark">
-              Reset password
+              {t('forgotPassword.title')}
             </Text>
             <Text className="mt-2 text-muted-light dark:text-muted-dark">
-              Enter your email and we'll send you a reset link
+              {t('forgotPassword.subtitle')}
             </Text>
           </View>
 
@@ -90,8 +92,8 @@ export default function ForgotPasswordScreen() {
 
           <View className="gap-4">
             <Input
-              label="Email"
-              placeholder="Enter your email"
+              label={t('auth.email')}
+              placeholder={t('auth.enterEmail')}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
@@ -104,18 +106,18 @@ export default function ForgotPasswordScreen() {
               isLoading={isLoading}
               className="mt-4"
             >
-              Send Reset Link
+              {t('forgotPassword.sendResetLink')}
             </Button>
           </View>
 
           <View className="mt-8 flex-row justify-center">
             <Text className="text-muted-light dark:text-muted-dark">
-              Remember your password?{" "}
+              {t('forgotPassword.rememberPassword')}{" "}
             </Text>
             <Link href="/(public)/login" asChild>
               <Pressable>
                 <Text className="font-semibold text-primary-600 dark:text-primary-400">
-                  Sign In
+                  {t('auth.signIn')}
                 </Text>
               </Pressable>
             </Link>

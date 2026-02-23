@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Pressable, Switch } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 import { Card } from "@/components/ui/Card";
 import { useTheme } from "@/hooks/useTheme";
@@ -10,6 +11,7 @@ import { useNotificationStore } from "@/stores/notificationStore";
 export default function SettingsScreen() {
   const { isDark, toggleTheme } = useTheme();
   const { isEnabled, toggleNotifications } = useNotificationStore();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView className="flex-1 bg-background-light dark:bg-background-dark">
@@ -24,14 +26,14 @@ export default function SettingsScreen() {
             />
           </Pressable>
           <Text className="text-xl font-semibold text-text-light dark:text-text-dark">
-            Settings
+            {t('settings.title')}
           </Text>
         </View>
 
         <View className="px-4 pt-4">
           {/* Appearance */}
           <Text className="mb-3 text-sm font-medium uppercase text-muted-light dark:text-muted-dark">
-            Appearance
+            {t('settings.appearance')}
           </Text>
           <Card className="mb-6">
             <View className="flex-row items-center justify-between p-4">
@@ -42,7 +44,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Dark Mode
+                  {t('settings.darkMode')}
                 </Text>
               </View>
               <Switch
@@ -56,7 +58,7 @@ export default function SettingsScreen() {
 
           {/* Notifications */}
           <Text className="mb-3 text-sm font-medium uppercase text-muted-light dark:text-muted-dark">
-            Notifications
+            {t('settings.notifications')}
           </Text>
           <Card className="mb-6">
             <View className="flex-row items-center justify-between p-4">
@@ -67,7 +69,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Push Notifications
+                  {t('settings.pushNotifications')}
                 </Text>
               </View>
               <Switch
@@ -81,7 +83,7 @@ export default function SettingsScreen() {
 
           {/* About */}
           <Text className="mb-3 text-sm font-medium uppercase text-muted-light dark:text-muted-dark">
-            About
+            {t('settings.about')}
           </Text>
           <Card className="mb-6">
             <Pressable className="flex-row items-center justify-between p-4">
@@ -92,7 +94,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  App Version
+                  {t('settings.appVersion')}
                 </Text>
               </View>
               <Text className="text-muted-light dark:text-muted-dark">
@@ -110,7 +112,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Terms of Service
+                  {t('settings.terms')}
                 </Text>
               </View>
               <Ionicons
@@ -130,7 +132,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  Privacy Policy
+                  {t('settings.privacy')}
                 </Text>
               </View>
               <Ionicons

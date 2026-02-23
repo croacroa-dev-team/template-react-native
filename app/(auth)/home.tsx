@@ -2,6 +2,7 @@ import { View, Text, ScrollView } from "react-native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -11,6 +12,7 @@ import { useTheme } from "@/hooks/useTheme";
 export default function HomeScreen() {
   const { user } = useAuth();
   const { isDark } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView className="flex-1 bg-background-light dark:bg-background-dark">
@@ -19,7 +21,7 @@ export default function HomeScreen() {
         <View className="mb-6 flex-row items-center justify-between">
           <View>
             <Text className="text-muted-light dark:text-muted-dark">
-              Welcome back,
+              {t('home.welcomeBack', { name: user?.name || "User" })}
             </Text>
             <Text className="text-2xl font-bold text-text-light dark:text-text-dark">
               {user?.name || "User"}
@@ -38,7 +40,7 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <Text className="mb-3 text-lg font-semibold text-text-light dark:text-text-dark">
-          Quick Actions
+          {t('home.quickActions')}
         </Text>
         <View className="mb-6 flex-row gap-3">
           <Card className="flex-1 items-center p-4">
@@ -50,7 +52,7 @@ export default function HomeScreen() {
               />
             </View>
             <Text className="text-sm text-text-light dark:text-text-dark">
-              New Item
+              {t('home.newItem')}
             </Text>
           </Card>
           <Card className="flex-1 items-center p-4">
@@ -62,7 +64,7 @@ export default function HomeScreen() {
               />
             </View>
             <Text className="text-sm text-text-light dark:text-text-dark">
-              Search
+              {t('common.search')}
             </Text>
           </Card>
           <Card className="flex-1 items-center p-4">
@@ -74,14 +76,14 @@ export default function HomeScreen() {
               />
             </View>
             <Text className="text-sm text-text-light dark:text-text-dark">
-              Stats
+              {t('home.stats')}
             </Text>
           </Card>
         </View>
 
         {/* Recent Activity */}
         <Text className="mb-3 text-lg font-semibold text-text-light dark:text-text-dark">
-          Recent Activity
+          {t('home.recentActivity')}
         </Text>
         <Card className="mb-4 p-4">
           <View className="items-center py-8">
@@ -91,10 +93,10 @@ export default function HomeScreen() {
               color={isDark ? "#64748b" : "#94a3b8"}
             />
             <Text className="mt-2 text-muted-light dark:text-muted-dark">
-              No recent activity
+              {t('home.noRecentActivity')}
             </Text>
             <Text className="mt-1 text-sm text-muted-light dark:text-muted-dark">
-              Your activity will appear here
+              {t('home.activityWillAppear')}
             </Text>
           </View>
         </Card>
@@ -108,7 +110,7 @@ export default function HomeScreen() {
               color={isDark ? "#f8fafc" : "#0f172a"}
               style={{ marginRight: 8 }}
             />
-            Settings
+            {t('settings.title')}
           </Button>
         </Link>
       </ScrollView>
