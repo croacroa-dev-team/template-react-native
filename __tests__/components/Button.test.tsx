@@ -10,16 +10,14 @@ describe("Button", () => {
 
   it("calls onPress when pressed", () => {
     const onPress = jest.fn();
-    const { getByText } = render(
-      <Button onPress={onPress}>Press me</Button>
-    );
+    const { getByText } = render(<Button onPress={onPress}>Press me</Button>);
 
     fireEvent.press(getByText("Press me"));
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
   it("shows loading indicator when isLoading is true", () => {
-    const { queryByText, getByTestId } = render(
+    const { queryByText, getByTestId: _getByTestId } = render(
       <Button isLoading testID="button">
         Loading
       </Button>

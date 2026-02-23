@@ -1,5 +1,8 @@
 import { Easing } from "react-native-reanimated";
-import type { WithTimingConfig, WithSpringConfig } from "react-native-reanimated";
+import type {
+  WithTimingConfig,
+  WithSpringConfig,
+} from "react-native-reanimated";
 
 // ============================================================================
 // Types

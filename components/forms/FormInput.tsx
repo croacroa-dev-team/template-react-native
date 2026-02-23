@@ -10,8 +10,10 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Ionicons } from "@expo/vector-icons";
 
-interface FormInputProps<T extends FieldValues>
-  extends Omit<TextInputProps, "value" | "onChangeText"> {
+interface FormInputProps<T extends FieldValues> extends Omit<
+  TextInputProps,
+  "value" | "onChangeText"
+> {
   name: Path<T>;
   control: Control<T>;
   rules?: RegisterOptions<T, Path<T>>;
@@ -29,7 +31,7 @@ interface FormInputProps<T extends FieldValues>
  * Automatically handles validation errors and form state
  */
 export const FormInput = forwardRef(function FormInputInner<
-  T extends FieldValues
+  T extends FieldValues,
 >(
   {
     name,

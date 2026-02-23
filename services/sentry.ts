@@ -32,9 +32,7 @@ export function initSentry() {
     // replaysOnErrorSampleRate: 1.0,
 
     // Integrations
-    integrations: [
-      Sentry.reactNativeTracingIntegration(),
-    ],
+    integrations: [Sentry.reactNativeTracingIntegration()],
 
     // Filter out certain errors
     beforeSend(event) {
@@ -89,7 +87,9 @@ export function captureMessage(
 /**
  * Set user context for error tracking
  */
-export function setUser(user: { id: string; email?: string; name?: string } | null) {
+export function setUser(
+  user: { id: string; email?: string; name?: string } | null
+) {
   if (user) {
     Sentry.setUser({
       id: user.id,

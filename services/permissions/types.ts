@@ -24,7 +24,11 @@ export type PermissionType =
  * - 'denied': Permission was denied but can be requested again
  * - 'blocked': Permission was denied and cannot be requested again (must open Settings)
  */
-export type PermissionStatus = "undetermined" | "granted" | "denied" | "blocked";
+export type PermissionStatus =
+  | "undetermined"
+  | "granted"
+  | "denied"
+  | "blocked";
 
 /**
  * Result of a permission check or request
@@ -52,7 +56,10 @@ export interface PermissionConfig {
  * Default UI configurations for each permission type.
  * These can be overridden per-usage via the usePermission hook or PermissionGate component.
  */
-export const DEFAULT_PERMISSION_CONFIGS: Record<PermissionType, PermissionConfig> = {
+export const DEFAULT_PERMISSION_CONFIGS: Record<
+  PermissionType,
+  PermissionConfig
+> = {
   camera: {
     title: "Camera Access",
     message: "We need access to your camera to take photos and scan codes.",
@@ -72,7 +79,8 @@ export const DEFAULT_PERMISSION_CONFIGS: Record<PermissionType, PermissionConfig
   },
   contacts: {
     title: "Contacts Access",
-    message: "We need access to your contacts to help you connect with friends.",
+    message:
+      "We need access to your contacts to help you connect with friends.",
     icon: "people-outline",
   },
   mediaLibrary: {

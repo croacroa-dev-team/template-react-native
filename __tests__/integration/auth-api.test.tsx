@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { render, waitFor, act } from "@testing-library/react-native";
+import { render, waitFor } from "@testing-library/react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider, useAuth, getAuthToken } from "@/hooks/useAuth";
 import { api } from "@/services/api";
@@ -94,13 +94,10 @@ describe("Auth + API Integration", () => {
 
   describe("Authentication Flow", () => {
     it("starts with loading state then transitions to unauthenticated", async () => {
-      const states: Array<{ isLoading: boolean; isAuthenticated: boolean }> =
-        [];
+      const states: { isLoading: boolean; isAuthenticated: boolean }[] = [];
 
       render(
-        <TestAuthComponent
-          onAuthState={(state) => states.push(state)}
-        />,
+        <TestAuthComponent onAuthState={(state) => states.push(state)} />,
         { wrapper: createWrapper() }
       );
 

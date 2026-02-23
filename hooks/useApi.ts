@@ -38,14 +38,15 @@ export const queryKeys = {
   },
   posts: {
     all: ["posts"] as const,
-    list: (filters: Record<string, unknown>) => ["posts", "list", filters] as const,
+    list: (filters: Record<string, unknown>) =>
+      ["posts", "list", filters] as const,
     detail: (id: string) => ["posts", id] as const,
   },
   // Add more query keys as needed
 } as const;
 
 // Generic types for API responses
-interface PaginatedResponse<T> {
+interface _PaginatedResponse<T> {
   data: T[];
   page: number;
   pageSize: number;
@@ -222,7 +223,7 @@ export function useUpdateUser() {
 // Generic CRUD Hooks Factory
 // ===========================================
 
-interface CrudHooksConfig<T, CreateDTO, UpdateDTO> {
+interface CrudHooksConfig<_T, _CreateDTO, _UpdateDTO> {
   baseKey: readonly string[];
   endpoint: string;
   entityName: string;
@@ -264,7 +265,7 @@ interface CrudHooksConfig<T, CreateDTO, UpdateDTO> {
 export function createCrudHooks<
   T extends { id: string },
   CreateDTO = Omit<T, "id">,
-  UpdateDTO = Partial<T>
+  UpdateDTO = Partial<T>,
 >(config: CrudHooksConfig<T, CreateDTO, UpdateDTO>) {
   const { baseKey, endpoint, entityName } = config;
 

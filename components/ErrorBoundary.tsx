@@ -94,7 +94,7 @@ export class ErrorBoundary extends Component<Props, State> {
           crashCount: 0,
         });
       }
-    } catch (e) {
+    } catch {
       // Last resort: reset error state so user isn't stuck
       this.setState({
         hasError: false,

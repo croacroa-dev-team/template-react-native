@@ -70,7 +70,11 @@ export const toast = {
   /**
    * Show a native alert dialog
    */
-  alert: (title: string, message?: string, preset?: "done" | "error" | "heart") => {
+  alert: (
+    title: string,
+    message?: string,
+    preset?: "done" | "error" | "heart"
+  ) => {
     Burnt.alert({
       title,
       message,
@@ -89,7 +93,10 @@ export const toast = {
 /**
  * Handle API errors and show appropriate toast
  */
-export const handleApiError = (error: unknown, fallbackMessage = "Something went wrong") => {
+export const handleApiError = (
+  error: unknown,
+  fallbackMessage = "Something went wrong"
+) => {
   if (error instanceof Error) {
     // Check for network errors
     if (error.message.includes("Network") || error.message.includes("fetch")) {

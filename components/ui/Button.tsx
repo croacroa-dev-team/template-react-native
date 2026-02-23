@@ -22,8 +22,10 @@ interface ButtonProps extends PressableProps {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: "bg-primary-600 active:bg-primary-700",
-  secondary: "bg-gray-200 dark:bg-gray-700 active:bg-gray-300 dark:active:bg-gray-600",
-  outline: "border-2 border-gray-300 dark:border-gray-600 bg-transparent active:bg-gray-100 dark:active:bg-gray-800",
+  secondary:
+    "bg-gray-200 dark:bg-gray-700 active:bg-gray-300 dark:active:bg-gray-600",
+  outline:
+    "border-2 border-gray-300 dark:border-gray-600 bg-transparent active:bg-gray-100 dark:active:bg-gray-800",
   ghost: "bg-transparent active:bg-gray-100 dark:active:bg-gray-800",
   danger: "bg-red-600 active:bg-red-700",
 };
@@ -81,7 +83,11 @@ export const Button = forwardRef<View, ButtonProps>(
       >
         {isLoading ? (
           <ActivityIndicator
-            color={variant === "primary" || variant === "danger" ? "#ffffff" : "#3b82f6"}
+            color={
+              variant === "primary" || variant === "danger"
+                ? "#ffffff"
+                : "#3b82f6"
+            }
             size="small"
           />
         ) : typeof children === "string" ? (

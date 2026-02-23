@@ -54,9 +54,7 @@ export interface GoogleAuthConfig {
  * Configuration for Apple Sign-In.
  * Apple Sign-In requires no additional configuration beyond platform support.
  */
-export interface AppleAuthConfig {
-  /** Reserved for future Apple-specific configuration */
-}
+export type AppleAuthConfig = Record<string, never>;
 
 /**
  * Combined social auth configuration.

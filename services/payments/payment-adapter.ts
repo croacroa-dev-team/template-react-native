@@ -19,7 +19,12 @@
  * @module services/payments/payment-adapter
  */
 
-import type { PaymentAdapter, Product, Purchase, SubscriptionInfo } from "./types";
+import type {
+  PaymentAdapter,
+  Product,
+  Purchase,
+  SubscriptionInfo,
+} from "./types";
 import { MockPaymentAdapter } from "./adapters/mock";
 
 // ============================================================================

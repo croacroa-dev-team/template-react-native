@@ -9,7 +9,10 @@ import { View, Text, Pressable, ActivityIndicator } from "react-native";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/useTheme";
-import { useImagePicker, type UseImagePickerOptions } from "@/hooks/useImagePicker";
+import {
+  useImagePicker,
+  type UseImagePickerOptions,
+} from "@/hooks/useImagePicker";
 import type { PickedMedia } from "@/services/media/media-picker";
 import { cn } from "@/utils/cn";
 

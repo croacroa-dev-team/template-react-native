@@ -91,16 +91,8 @@ export const AllStates: Story = {
         placeholder="Enter text..."
         hint="This is a helpful hint"
       />
-      <Input
-        label="Password"
-        placeholder="Enter password"
-        secureTextEntry
-      />
-      <Input
-        label="With Icon"
-        placeholder="Search..."
-        leftIcon="search"
-      />
+      <Input label="Password" placeholder="Enter password" secureTextEntry />
+      <Input label="With Icon" placeholder="Search..." leftIcon="search" />
     </View>
   ),
 };

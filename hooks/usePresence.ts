@@ -118,12 +118,9 @@ export function usePresence(
     };
   }, [manager, channel]);
 
-  const isUserOnline = useCallback(
-    (userId: string): boolean => {
-      return usersRef.current.has(userId);
-    },
-    []
-  );
+  const isUserOnline = useCallback((userId: string): boolean => {
+    return usersRef.current.has(userId);
+  }, []);
 
   return {
     onlineUsers,

@@ -153,7 +153,10 @@ export function useImagePicker(
           height: result.height,
         };
       } catch (err) {
-        console.warn("[useImagePicker] Compression failed, using original:", err);
+        console.warn(
+          "[useImagePicker] Compression failed, using original:",
+          err
+        );
         return media;
       }
     },
@@ -196,10 +199,7 @@ export function useImagePicker(
   const pickFromCamera = useCallback(async (): Promise<PickedMedia | null> => {
     setIsLoading(true);
     try {
-      const hasPermission = await ensurePermission(
-        cameraPermission,
-        "Camera"
-      );
+      const hasPermission = await ensurePermission(cameraPermission, "Camera");
       if (!hasPermission) {
         return null;
       }

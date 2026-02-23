@@ -56,10 +56,7 @@ export const FeatureFlags = {
     activeAdapter = adapter;
 
     if (__DEV__) {
-      console.log(
-        "[FeatureFlags] Adapter set:",
-        adapter.constructor.name,
-      );
+      console.log("[FeatureFlags] Adapter set:", adapter.constructor.name);
     }
   },
 
@@ -158,7 +155,7 @@ export const FeatureFlags = {
 
     if (__DEV__) {
       console.log(
-        `[FeatureFlags] Auto-refresh started (every ${FEATURE_FLAGS.REFRESH_INTERVAL_MS}ms)`,
+        `[FeatureFlags] Auto-refresh started (every ${FEATURE_FLAGS.REFRESH_INTERVAL_MS}ms)`
       );
     }
   },

@@ -24,9 +24,7 @@ import {
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   withTiming,
-  runOnJS,
   SlideInUp,
   SlideOutUp,
 } from "react-native-reanimated";
@@ -142,7 +140,9 @@ function ToastItem({ config, onDismiss }: ToastItemProps) {
 
   useEffect(() => {
     // Announce to screen readers
-    AccessibilityInfo.announceForAccessibility(`${type}: ${title}. ${message || ""}`);
+    AccessibilityInfo.announceForAccessibility(
+      `${type}: ${title}. ${message || ""}`
+    );
 
     if (duration > 0) {
       // Start progress animation
@@ -243,7 +243,11 @@ function ToastItem({ config, onDismiss }: ToastItemProps) {
       {duration > 0 && (
         <View className="absolute bottom-0 left-4 right-4 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
           <Animated.View
-            style={[styles.progressBar, progressStyle, { backgroundColor: iconColor }]}
+            style={[
+              styles.progressBar,
+              progressStyle,
+              { backgroundColor: iconColor },
+            ]}
           />
         </View>
       )}
@@ -307,17 +311,20 @@ export function ToastProvider({ children, maxToasts = 3 }: ToastProviderProps) {
   );
 
   const success = useCallback(
-    (title: string, message?: string) => show({ type: "success", title, message }),
+    (title: string, message?: string) =>
+      show({ type: "success", title, message }),
     [show]
   );
 
   const error = useCallback(
-    (title: string, message?: string) => show({ type: "error", title, message }),
+    (title: string, message?: string) =>
+      show({ type: "error", title, message }),
     [show]
   );
 
   const warning = useCallback(
-    (title: string, message?: string) => show({ type: "warning", title, message }),
+    (title: string, message?: string) =>
+      show({ type: "warning", title, message }),
     [show]
   );
 
@@ -409,9 +416,11 @@ export function setToastRef(ref: ToastContextValue | null) {
  */
 export const toastManager = {
   show: (config: Omit<ToastConfig, "id">) => toastRef?.show(config),
-  success: (title: string, message?: string) => toastRef?.success(title, message),
+  success: (title: string, message?: string) =>
+    toastRef?.success(title, message),
   error: (title: string, message?: string) => toastRef?.error(title, message),
-  warning: (title: string, message?: string) => toastRef?.warning(title, message),
+  warning: (title: string, message?: string) =>
+    toastRef?.warning(title, message),
   info: (title: string, message?: string) => toastRef?.info(title, message),
   dismiss: (id: string) => toastRef?.dismiss(id),
   dismissAll: () => toastRef?.dismissAll(),

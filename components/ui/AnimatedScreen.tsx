@@ -76,10 +76,7 @@ export function AnimatedScreen({
   });
 
   return (
-    <Animated.View
-      style={[styles.container, animatedStyle, style]}
-      {...props}
-    >
+    <Animated.View style={[styles.container, animatedStyle, style]} {...props}>
       {children}
     </Animated.View>
   );

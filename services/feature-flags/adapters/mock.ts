@@ -32,7 +32,7 @@ export class MockFeatureFlagAdapter implements FeatureFlagAdapter {
    */
   constructor(
     initialFlags?: Record<string, unknown>,
-    initialExperiments?: Record<string, string>,
+    initialExperiments?: Record<string, string>
   ) {
     if (initialFlags) {
       for (const [key, value] of Object.entries(initialFlags)) {
@@ -50,7 +50,7 @@ export class MockFeatureFlagAdapter implements FeatureFlagAdapter {
   async initialize(): Promise<void> {
     if (__DEV__) {
       console.log(
-        `[FeatureFlags] Initialized (mock adapter — ${this.flags.size} flags, ${this.experiments.size} experiments)`,
+        `[FeatureFlags] Initialized (mock adapter — ${this.flags.size} flags, ${this.experiments.size} experiments)`
       );
     }
   }

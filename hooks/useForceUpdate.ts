@@ -74,8 +74,7 @@ export function useForceUpdate(): UseForceUpdateReturn {
       return;
     }
 
-    const currentVersion =
-      Constants.expoConfig?.version ?? "1.0.0";
+    const currentVersion = Constants.expoConfig?.version ?? "1.0.0";
 
     checkForUpdate({
       checkUrl: FORCE_UPDATE.CHECK_URL,

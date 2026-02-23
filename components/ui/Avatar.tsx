@@ -4,6 +4,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils/cn";
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const avatarPlaceholder = require("@/assets/images/icon.png");
+
 type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 interface AvatarProps {
@@ -135,7 +138,7 @@ export function Avatar({
           }}
           contentFit="cover"
           transition={200}
-          placeholder={require("@/assets/images/icon.png")}
+          placeholder={avatarPlaceholder}
         />
       );
     }

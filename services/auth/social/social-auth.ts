@@ -6,7 +6,7 @@
  */
 
 import { signInWithGoogle } from "./google";
-import { signInWithApple, isAppleSignInAvailable } from "./apple";
+import { signInWithApple } from "./apple";
 
 import type {
   SocialProvider,

@@ -6,7 +6,11 @@ import { useProducts } from "@/hooks/useProducts";
 import { usePurchase } from "@/hooks/usePurchase";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Payments } from "@/services/payments/payment-adapter";
-import type { Product, Purchase, SubscriptionInfo } from "@/services/payments/types";
+import type {
+  Product,
+  Purchase,
+  SubscriptionInfo,
+} from "@/services/payments/types";
 
 // Mock Payments facade
 jest.mock("@/services/payments/payment-adapter", () => ({
@@ -91,23 +95,23 @@ describe("useProducts", () => {
   it("should handle loading state", () => {
     mockPayments.getProducts.mockReturnValue(new Promise(() => {})); // Never resolves
 
-    const { result } = renderHook(
-      () => useProducts(["premium_monthly"]),
-      { wrapper }
-    );
+    const { result } = renderHook(() => useProducts(["premium_monthly"]), {
+      wrapper,
+    });
 
     expect(result.current.isLoading).toBe(true);
     expect(result.current.data).toBeUndefined();
   });
 
   it("should handle error state", async () => {
-    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    const consoleSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     mockPayments.getProducts.mockRejectedValue(new Error("Store unavailable"));
 
-    const { result } = renderHook(
-      () => useProducts(["premium_monthly"]),
-      { wrapper }
-    );
+    const { result } = renderHook(() => useProducts(["premium_monthly"]), {
+      wrapper,
+    });
 
     await waitFor(() => {
       expect(result.current.isError).toBe(true);

@@ -1,4 +1,10 @@
-import { View, Text, Pressable, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm } from "react-hook-form";
@@ -50,10 +56,10 @@ export default function LoginScreen() {
             className="mb-8"
           >
             <Text className="text-3xl font-bold text-text-light dark:text-text-dark">
-              {t('auth.welcomeBack')}
+              {t("auth.welcomeBack")}
             </Text>
             <Text className="mt-2 text-muted-light dark:text-muted-dark">
-              {t('auth.signInToContinue')}
+              {t("auth.signInToContinue")}
             </Text>
           </Animated.View>
 
@@ -65,8 +71,8 @@ export default function LoginScreen() {
             <FormInput
               name="email"
               control={control}
-              label={t('auth.email')}
-              placeholder={t('auth.enterEmail')}
+              label={t("auth.email")}
+              placeholder={t("auth.enterEmail")}
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
@@ -76,8 +82,8 @@ export default function LoginScreen() {
             <FormInput
               name="password"
               control={control}
-              label={t('auth.password')}
-              placeholder={t('auth.enterPassword')}
+              label={t("auth.password")}
+              placeholder={t("auth.enterPassword")}
               secureTextEntry
               autoComplete="password"
               leftIcon="lock-closed-outline"
@@ -86,7 +92,7 @@ export default function LoginScreen() {
             <Link href="/(public)/forgot-password" asChild>
               <Pressable className="self-end">
                 <Text className="text-primary-600 dark:text-primary-400">
-                  {t('auth.forgotPassword')}
+                  {t("auth.forgotPassword")}
                 </Text>
               </Pressable>
             </Link>
@@ -96,7 +102,7 @@ export default function LoginScreen() {
               isLoading={isSubmitting}
               className="mt-4"
             >
-              {t('auth.signIn')}
+              {t("auth.signIn")}
             </AnimatedButton>
           </Animated.View>
 
@@ -107,7 +113,7 @@ export default function LoginScreen() {
           >
             <View className="h-px flex-1 bg-muted-light/30 dark:bg-muted-dark/30" />
             <Text className="mx-4 text-muted-light dark:text-muted-dark">
-              {t('socialAuth.orContinueWith')}
+              {t("socialAuth.orContinueWith")}
             </Text>
             <View className="h-px flex-1 bg-muted-light/30 dark:bg-muted-dark/30" />
           </Animated.View>
@@ -116,7 +122,12 @@ export default function LoginScreen() {
           <Animated.View entering={FadeInDown.delay(400).springify()}>
             <SocialLoginButtons
               onSuccess={(result) => {
-                if (__DEV__) console.log('Social login succeeded:', result.provider, result.user.email);
+                if (__DEV__)
+                  console.log(
+                    "Social login succeeded:",
+                    result.provider,
+                    result.user.email
+                  );
                 // TODO: Send result.idToken to your backend
               }}
             />
@@ -128,12 +139,12 @@ export default function LoginScreen() {
             className="mt-8 flex-row justify-center"
           >
             <Text className="text-muted-light dark:text-muted-dark">
-              {t('auth.noAccount')}{" "}
+              {t("auth.noAccount")}{" "}
             </Text>
             <Link href="/(public)/register" asChild>
               <Pressable>
                 <Text className="font-semibold text-primary-600 dark:text-primary-400">
-                  {t('auth.signUp')}
+                  {t("auth.signUp")}
                 </Text>
               </Pressable>
             </Link>

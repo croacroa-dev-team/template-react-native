@@ -1,4 +1,4 @@
-import { renderHook, act, waitFor } from "@testing-library/react-native";
+import { renderHook, act } from "@testing-library/react-native";
 
 import { useImagePicker } from "@/hooks/useImagePicker";
 import { useUpload } from "@/hooks/useUpload";
@@ -80,7 +80,11 @@ describe("useImagePicker", () => {
       isGranted: true,
       isBlocked: false,
       isLoading: false,
-      config: { title: `${type} Access`, message: "Test message", icon: "test" },
+      config: {
+        title: `${type} Access`,
+        message: "Test message",
+        icon: "test",
+      },
       request: mockRequest,
       openSettings: mockOpenSettings,
       refresh: jest.fn(),
@@ -161,7 +165,11 @@ describe("useImagePicker", () => {
       isGranted: false,
       isBlocked: false,
       isLoading: false,
-      config: { title: `${type} Access`, message: "Test message", icon: "test" },
+      config: {
+        title: `${type} Access`,
+        message: "Test message",
+        icon: "test",
+      },
       request: mockRequest,
       openSettings: mockOpenSettings,
       refresh: jest.fn(),

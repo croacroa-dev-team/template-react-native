@@ -1,7 +1,12 @@
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 
-import { ApiClient, getTokens, saveTokens, getValidAccessToken } from "@/services/api";
+import {
+  ApiClient,
+  getTokens,
+  saveTokens,
+  getValidAccessToken,
+} from "@/services/api";
 
 // Mock dependencies
 jest.mock("@/utils/toast", () => ({
@@ -31,7 +36,7 @@ const mockTokens = {
   expiresAt: Date.now() + 60 * 60 * 1000, // 1 hour from now
 };
 
-const expiredTokens = {
+const _expiredTokens = {
   accessToken: "expired_access_token",
   refreshToken: "expired_refresh_token",
   expiresAt: Date.now() - 1000, // Already expired
@@ -267,7 +272,9 @@ describe("ApiClient", () => {
         "Authentication failed"
       );
 
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith("auth_tokens");
+      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith(
+        "auth_tokens"
+      );
       expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith("auth_user");
       expect(toast.error).toHaveBeenCalledWith(
         "Session expired",
@@ -451,7 +458,9 @@ describe("ApiClient", () => {
         text: () => Promise.resolve(""),
       });
 
-      const result = await apiClient.delete("/users/1", { requiresAuth: false });
+      const result = await apiClient.delete("/users/1", {
+        requiresAuth: false,
+      });
 
       expect(result).toEqual({});
     });
@@ -496,7 +505,9 @@ describe("Token Utilities", () => {
     });
 
     it("should return parsed tokens when stored", async () => {
-      mockSecureStore.getItemAsync.mockResolvedValue(JSON.stringify(mockTokens));
+      mockSecureStore.getItemAsync.mockResolvedValue(
+        JSON.stringify(mockTokens)
+      );
 
       const tokens = await getTokens();
 
@@ -530,7 +541,9 @@ describe("Token Utilities", () => {
     });
 
     it("should return token when not expired", async () => {
-      mockSecureStore.getItemAsync.mockResolvedValue(JSON.stringify(mockTokens));
+      mockSecureStore.getItemAsync.mockResolvedValue(
+        JSON.stringify(mockTokens)
+      );
 
       const token = await getValidAccessToken();
 

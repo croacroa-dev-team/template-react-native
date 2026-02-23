@@ -7,6 +7,8 @@ import React from "react";
 import { render } from "@testing-library/react-native";
 import { View, Text } from "react-native";
 
+import { VirtualizedList } from "@/components/ui/VirtualizedList";
+
 // Mock FlashList since it requires native modules
 jest.mock("@shopify/flash-list", () => {
   const { FlatList } = require("react-native");
@@ -26,12 +28,12 @@ jest.mock("@/hooks/useTheme", () => ({
   }),
 }));
 
-import { VirtualizedList } from "@/components/ui/VirtualizedList";
-
 /**
  * Generate test data
  */
-function generateTestData(count: number): Array<{ id: string; title: string; value: number }> {
+function generateTestData(
+  count: number
+): { id: string; title: string; value: number }[] {
   return Array.from({ length: count }, (_, index) => ({
     id: `item-${index}`,
     title: `Item ${index}`,
@@ -42,7 +44,11 @@ function generateTestData(count: number): Array<{ id: string; title: string; val
 /**
  * Simple render item component
  */
-function TestItem({ item }: { item: { id: string; title: string; value: number } }) {
+function TestItem({
+  item,
+}: {
+  item: { id: string; title: string; value: number };
+}) {
   return (
     <View testID={`item-${item.id}`} style={{ height: 50, padding: 10 }}>
       <Text>{item.title}</Text>
@@ -102,7 +108,9 @@ describe("VirtualizedList Performance", () => {
       const renderTime = performance.now() - startTime;
 
       expect(renderTime).toBeLessThan(PERFORMANCE_THRESHOLDS.SMALL_LIST_RENDER);
-      console.log(`Small list (100 items) render time: ${renderTime.toFixed(2)}ms`);
+      console.log(
+        `Small list (100 items) render time: ${renderTime.toFixed(2)}ms`
+      );
     });
 
     it("renders medium list (1000 items) within threshold", () => {
@@ -120,8 +128,12 @@ describe("VirtualizedList Performance", () => {
 
       const renderTime = performance.now() - startTime;
 
-      expect(renderTime).toBeLessThan(PERFORMANCE_THRESHOLDS.MEDIUM_LIST_RENDER);
-      console.log(`Medium list (1000 items) render time: ${renderTime.toFixed(2)}ms`);
+      expect(renderTime).toBeLessThan(
+        PERFORMANCE_THRESHOLDS.MEDIUM_LIST_RENDER
+      );
+      console.log(
+        `Medium list (1000 items) render time: ${renderTime.toFixed(2)}ms`
+      );
     });
 
     it("renders large list (10000 items) within threshold", () => {
@@ -140,7 +152,9 @@ describe("VirtualizedList Performance", () => {
       const renderTime = performance.now() - startTime;
 
       expect(renderTime).toBeLessThan(PERFORMANCE_THRESHOLDS.LARGE_LIST_RENDER);
-      console.log(`Large list (10000 items) render time: ${renderTime.toFixed(2)}ms`);
+      console.log(
+        `Large list (10000 items) render time: ${renderTime.toFixed(2)}ms`
+      );
     });
   });
 
@@ -190,10 +204,13 @@ describe("VirtualizedList Performance", () => {
       );
 
       // Append 100 more items
-      const appendedData = [...initialData, ...generateTestData(100).map((item, i) => ({
-        ...item,
-        id: `appended-${i}`,
-      }))];
+      const appendedData = [
+        ...initialData,
+        ...generateTestData(100).map((item, i) => ({
+          ...item,
+          id: `appended-${i}`,
+        })),
+      ];
 
       const startTime = performance.now();
 
@@ -217,7 +234,11 @@ describe("VirtualizedList Performance", () => {
     it("maintains stable render count with static data", () => {
       let renderCount = 0;
 
-      const CountingItem = ({ item }: { item: { id: string; title: string; value: number } }) => {
+      const CountingItem = ({
+        item,
+      }: {
+        item: { id: string; title: string; value: number };
+      }) => {
         renderCount++;
         return <TestItem item={item} />;
       };
@@ -248,7 +269,9 @@ describe("VirtualizedList Performance", () => {
       // With proper memoization, render count should not double
       // Allow some flexibility for visible items being re-rendered
       expect(renderCount).toBeLessThan(initialRenderCount * 2);
-      console.log(`Initial renders: ${initialRenderCount}, After re-render: ${renderCount}`);
+      console.log(
+        `Initial renders: ${initialRenderCount}, After re-render: ${renderCount}`
+      );
     });
   });
 

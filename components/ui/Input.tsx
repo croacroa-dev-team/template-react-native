@@ -1,11 +1,5 @@
 import { forwardRef, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TextInputProps,
-  Pressable,
-} from "react-native";
+import { View, Text, TextInput, TextInputProps, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { cn } from "@/utils/cn";
 import { useTheme } from "@/hooks/useTheme";
@@ -100,9 +94,7 @@ export const Input = forwardRef<TextInput, InputProps>(
           ) : null}
         </View>
 
-        {error && (
-          <Text className="mt-1 text-sm text-red-500">{error}</Text>
-        )}
+        {error && <Text className="mt-1 text-sm text-red-500">{error}</Text>}
 
         {hint && !error && (
           <Text className="mt-1 text-sm text-muted-light dark:text-muted-dark">

@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback } from "react";
-import { api } from "@/services/api";
+import { api as _api } from "@/services/api";
 import { storage } from "@/services/storage";
 import { toast } from "@/utils/toast";
 
@@ -233,7 +233,8 @@ export function useMFA(): UseMFAReturn {
       // Mock implementation
       // In real implementation, this would fetch from your API
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to check MFA status";
+      const message =
+        err instanceof Error ? err.message : "Failed to check MFA status";
       setError(message);
     } finally {
       setIsLoading(false);
@@ -272,7 +273,8 @@ export function useMFA(): UseMFAReturn {
         setPendingSetupSecret(mockSecret);
         return mockSetupData;
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Failed to begin MFA setup";
+        const message =
+          err instanceof Error ? err.message : "Failed to begin MFA setup";
         setError(message);
         toast.error("Setup failed", message);
         return null;
@@ -322,7 +324,8 @@ export function useMFA(): UseMFAReturn {
         toast.success("MFA enabled", "Two-factor authentication is now active");
         return true;
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Verification failed";
+        const message =
+          err instanceof Error ? err.message : "Verification failed";
         setError(message);
         toast.error("Verification failed", message);
         return false;
@@ -358,7 +361,8 @@ export function useMFA(): UseMFAReturn {
       toast.success("Verified", "Authentication successful");
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Verification failed";
+      const message =
+        err instanceof Error ? err.message : "Verification failed";
       setError(message);
       toast.error("Invalid code", "Please try again");
       return false;
@@ -381,7 +385,8 @@ export function useMFA(): UseMFAReturn {
       toast.success("Code sent", "Check your phone or email");
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to send code";
+      const message =
+        err instanceof Error ? err.message : "Failed to send code";
       setError(message);
       toast.error("Failed to send code", message);
       return false;
@@ -415,10 +420,14 @@ export function useMFA(): UseMFAReturn {
       setState(newState);
       await storage.set(MFA_STORAGE_KEY, newState);
 
-      toast.success("MFA disabled", "Two-factor authentication has been turned off");
+      toast.success(
+        "MFA disabled",
+        "Two-factor authentication has been turned off"
+      );
       return true;
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to disable MFA";
+      const message =
+        err instanceof Error ? err.message : "Failed to disable MFA";
       setError(message);
       toast.error("Failed to disable MFA", message);
       return false;
@@ -453,7 +462,8 @@ export function useMFA(): UseMFAReturn {
         toast.success("Backup code accepted", "You are now logged in");
         return true;
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Invalid backup code";
+        const message =
+          err instanceof Error ? err.message : "Invalid backup code";
         setError(message);
         toast.error("Invalid backup code", message);
         return false;

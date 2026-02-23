@@ -207,7 +207,10 @@ export const SSL_PINNING_CONFIG = {
     const pinEntries = Object.entries(SECURITY.SSL_PINS)
       .map(([domain, pins]) => {
         const pinElements = pins
-          .map((pin) => `        <pin digest="SHA-256">${pin.replace("sha256/", "")}</pin>`)
+          .map(
+            (pin) =>
+              `        <pin digest="SHA-256">${pin.replace("sha256/", "")}</pin>`
+          )
           .join("\n");
 
         return `    <domain-config cleartextTrafficPermitted="false">

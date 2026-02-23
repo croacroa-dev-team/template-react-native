@@ -128,7 +128,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Check if tokens are expired
         if (parsedTokens.expiresAt < Date.now()) {
           // Try to refresh
-          const refreshed = await tryRefreshWithToken(parsedTokens.refreshToken);
+          const refreshed = await tryRefreshWithToken(
+            parsedTokens.refreshToken
+          );
           if (!refreshed) {
             await clearAuth();
             return;
@@ -146,7 +148,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const tryRefreshWithToken = async (refreshToken: string): Promise<boolean> => {
+  const tryRefreshWithToken = async (
+    _refreshToken: string
+  ): Promise<boolean> => {
     try {
       // TODO: Replace with your actual API call
       // const response = await api.post('/auth/refresh', { refreshToken });
@@ -190,7 +194,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
-  const signIn = useCallback(async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, _password: string) => {
     try {
       // TODO: Replace with your actual API call
       // const response = await api.post('/auth/login', { email, password });

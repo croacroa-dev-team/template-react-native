@@ -49,7 +49,11 @@ export function useRateLimit(): UseRateLimitReturn {
         setState((prev) => {
           const retryAfter = Math.ceil((until - now) / 1000);
           if (prev.isRateLimited && prev.retryAfter === retryAfter) return prev;
-          return { isRateLimited: true, retryAfter, resetTime: new Date(until) };
+          return {
+            isRateLimited: true,
+            retryAfter,
+            resetTime: new Date(until),
+          };
         });
       } else {
         setState((prev) => {

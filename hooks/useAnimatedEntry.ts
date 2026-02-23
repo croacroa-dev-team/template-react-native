@@ -157,8 +157,10 @@ export function useAnimatedEntry(
 // Staggered Entry
 // ============================================================================
 
-export interface UseStaggeredEntryOptions
-  extends Omit<UseAnimatedEntryOptions, "delay"> {
+export interface UseStaggeredEntryOptions extends Omit<
+  UseAnimatedEntryOptions,
+  "delay"
+> {
   /**
    * Base delay between each staggered item (ms)
    * @default 50

@@ -68,8 +68,10 @@ describe("useAuth", () => {
 
     it("should load stored auth on mount", async () => {
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -85,8 +87,10 @@ describe("useAuth", () => {
 
     it("should attempt refresh if stored tokens are expired", async () => {
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(expiredTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(expiredTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -102,9 +106,13 @@ describe("useAuth", () => {
     });
 
     it("should handle storage errors gracefully", async () => {
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = jest
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
-      mockSecureStore.getItemAsync.mockRejectedValue(new Error("Storage error"));
+      mockSecureStore.getItemAsync.mockRejectedValue(
+        new Error("Storage error")
+      );
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
@@ -173,7 +181,10 @@ describe("useAuth", () => {
         await result.current.signIn("test@example.com", "password123");
       });
 
-      expect(toast.success).toHaveBeenCalledWith("Welcome back!", expect.any(String));
+      expect(toast.success).toHaveBeenCalledWith(
+        "Welcome back!",
+        expect.any(String)
+      );
     });
 
     it("should show error toast on failed sign in", async () => {
@@ -192,7 +203,10 @@ describe("useAuth", () => {
         }
       });
 
-      expect(toast.error).toHaveBeenCalledWith("Sign in failed", expect.any(String));
+      expect(toast.error).toHaveBeenCalledWith(
+        "Sign in failed",
+        expect.any(String)
+      );
     });
   });
 
@@ -205,7 +219,11 @@ describe("useAuth", () => {
       });
 
       await act(async () => {
-        await result.current.signUp("newuser@example.com", "password123", "New User");
+        await result.current.signUp(
+          "newuser@example.com",
+          "password123",
+          "New User"
+        );
       });
 
       expect(result.current.isAuthenticated).toBe(true);
@@ -225,7 +243,10 @@ describe("useAuth", () => {
         await result.current.signUp("new@example.com", "password", "Test");
       });
 
-      expect(toast.success).toHaveBeenCalledWith("Account created!", expect.any(String));
+      expect(toast.success).toHaveBeenCalledWith(
+        "Account created!",
+        expect.any(String)
+      );
     });
   });
 
@@ -233,8 +254,10 @@ describe("useAuth", () => {
     it("should sign out and clear storage", async () => {
       // Start with authenticated state
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -250,14 +273,18 @@ describe("useAuth", () => {
 
       expect(result.current.isAuthenticated).toBe(false);
       expect(result.current.user).toBeNull();
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith("auth_tokens");
+      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith(
+        "auth_tokens"
+      );
       expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith("auth_user");
     });
 
     it("should redirect to login after sign out", async () => {
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -278,8 +305,10 @@ describe("useAuth", () => {
       const { toast } = require("@/utils/toast");
 
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -300,8 +329,10 @@ describe("useAuth", () => {
   describe("updateUser", () => {
     it("should update user data", async () => {
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -337,15 +368,19 @@ describe("useAuth", () => {
 
       expect(result.current.user).toBeNull();
       // setItemAsync should not have been called for user update
-      expect(mockSecureStore.setItemAsync.mock.calls.length).toBe(setItemCallsBefore);
+      expect(mockSecureStore.setItemAsync.mock.calls.length).toBe(
+        setItemCallsBefore
+      );
     });
   });
 
   describe("refreshSession", () => {
     it("should refresh session when tokens exist", async () => {
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -390,8 +425,10 @@ describe("useAuth", () => {
 
     it("should setup refresh interval when tokens exist", async () => {
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(mockTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(mockTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -412,8 +449,10 @@ describe("useAuth", () => {
       };
 
       mockSecureStore.getItemAsync.mockImplementation((key) => {
-        if (key === "auth_tokens") return Promise.resolve(JSON.stringify(soonToExpireTokens));
-        if (key === "auth_user") return Promise.resolve(JSON.stringify(mockUser));
+        if (key === "auth_tokens")
+          return Promise.resolve(JSON.stringify(soonToExpireTokens));
+        if (key === "auth_user")
+          return Promise.resolve(JSON.stringify(mockUser));
         return Promise.resolve(null);
       });
 
@@ -434,7 +473,9 @@ describe("useAuth", () => {
   describe("error handling", () => {
     it("should throw error when useAuth is used outside AuthProvider", () => {
       // Suppress console.error for this test
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = jest
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       expect(() => {
         renderHook(() => useAuth());
@@ -483,7 +524,9 @@ describe("getAuthToken", () => {
   });
 
   it("should handle storage errors gracefully", async () => {
-    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    const consoleSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
     (SecureStore.getItemAsync as jest.Mock).mockRejectedValue(
       new Error("Storage error")

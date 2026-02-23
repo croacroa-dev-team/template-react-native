@@ -26,14 +26,14 @@ export default function SettingsScreen() {
             />
           </Pressable>
           <Text className="text-xl font-semibold text-text-light dark:text-text-dark">
-            {t('settings.title')}
+            {t("settings.title")}
           </Text>
         </View>
 
         <View className="px-4 pt-4">
           {/* Appearance */}
           <Text className="mb-3 text-sm font-medium uppercase text-muted-light dark:text-muted-dark">
-            {t('settings.appearance')}
+            {t("settings.appearance")}
           </Text>
           <Card className="mb-6">
             <View className="flex-row items-center justify-between p-4">
@@ -44,7 +44,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('settings.darkMode')}
+                  {t("settings.darkMode")}
                 </Text>
               </View>
               <Switch
@@ -58,7 +58,7 @@ export default function SettingsScreen() {
 
           {/* Notifications */}
           <Text className="mb-3 text-sm font-medium uppercase text-muted-light dark:text-muted-dark">
-            {t('settings.notifications')}
+            {t("settings.notifications")}
           </Text>
           <Card className="mb-6">
             <View className="flex-row items-center justify-between p-4">
@@ -69,7 +69,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('settings.pushNotifications')}
+                  {t("settings.pushNotifications")}
                 </Text>
               </View>
               <Switch
@@ -83,7 +83,7 @@ export default function SettingsScreen() {
 
           {/* About */}
           <Text className="mb-3 text-sm font-medium uppercase text-muted-light dark:text-muted-dark">
-            {t('settings.about')}
+            {t("settings.about")}
           </Text>
           <Card className="mb-6">
             <Pressable className="flex-row items-center justify-between p-4">
@@ -94,7 +94,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('settings.appVersion')}
+                  {t("settings.appVersion")}
                 </Text>
               </View>
               <Text className="text-muted-light dark:text-muted-dark">
@@ -112,7 +112,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('settings.terms')}
+                  {t("settings.terms")}
                 </Text>
               </View>
               <Ionicons
@@ -132,7 +132,7 @@ export default function SettingsScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('settings.privacy')}
+                  {t("settings.privacy")}
                 </Text>
               </View>
               <Ionicons

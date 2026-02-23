@@ -15,7 +15,6 @@ import React, {
   useState,
 } from "react";
 import { View, Text, ActivityIndicator, Pressable } from "react-native";
-import { cn } from "@/utils/cn";
 
 // ============================================================================
 // Error Boundary
@@ -76,7 +75,10 @@ export class LocalErrorBoundary extends Component<
     // Log to console in development
     if (__DEV__) {
       console.error("[ErrorBoundary] Caught error:", error);
-      console.error("[ErrorBoundary] Component stack:", errorInfo.componentStack);
+      console.error(
+        "[ErrorBoundary] Component stack:",
+        errorInfo.componentStack
+      );
     }
   }
 
@@ -182,7 +184,7 @@ function DefaultLoadingFallback({ message }: { message?: string }) {
 export function SuspenseBoundary({
   children,
   fallback,
-  minLoadingMs,
+  minLoadingMs: _minLoadingMs,
   LoadingComponent = DefaultLoadingFallback,
   loadingMessage,
 }: SuspenseBoundaryProps) {

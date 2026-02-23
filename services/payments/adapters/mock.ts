@@ -118,9 +118,7 @@ export class MockPaymentAdapter implements PaymentAdapter {
     await randomDelay();
 
     if (__DEV__) {
-      console.log(
-        `[Payments] Restored ${this.purchases.length} purchase(s)`
-      );
+      console.log(`[Payments] Restored ${this.purchases.length} purchase(s)`);
     }
 
     return [...this.purchases];
@@ -132,8 +130,7 @@ export class MockPaymentAdapter implements PaymentAdapter {
     // Check if the user has any premium purchase
     const hasPremium = this.purchases.some(
       (p) =>
-        p.productId === "premium_monthly" ||
-        p.productId === "premium_yearly"
+        p.productId === "premium_monthly" || p.productId === "premium_yearly"
     );
 
     const info: SubscriptionInfo = hasPremium

@@ -5,14 +5,9 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   withTiming,
-  interpolate,
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { cn } from "@/utils/cn";
-
-const AnimatedPressable = Animated.createAnimatedComponent(
-  require("react-native").Pressable
-);
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
@@ -61,10 +56,7 @@ const textSizeStyles: Record<ButtonSize, string> = {
  * - Opacity change on press
  * - Smooth loading state transition
  */
-export const AnimatedButton = forwardRef<
-  Animated.View,
-  AnimatedButtonProps
->(
+export const AnimatedButton = forwardRef<Animated.View, AnimatedButtonProps>(
   (
     {
       variant = "primary",

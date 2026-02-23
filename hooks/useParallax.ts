@@ -82,7 +82,9 @@ export interface UseParallaxReturn {
  * }
  * ```
  */
-export function useParallax(options: UseParallaxOptions = {}): UseParallaxReturn {
+export function useParallax(
+  options: UseParallaxOptions = {}
+): UseParallaxReturn {
   const { speed = 0.5, headerHeight = 250 } = options;
 
   const scrollY = useSharedValue(0);

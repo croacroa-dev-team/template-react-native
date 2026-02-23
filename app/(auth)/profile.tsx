@@ -32,7 +32,7 @@ export default function ProfileScreen() {
             />
           </Pressable>
           <Text className="text-xl font-semibold text-text-light dark:text-text-dark">
-            {t('profile.title')}
+            {t("profile.title")}
           </Text>
         </View>
 
@@ -62,7 +62,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('profile.editProfile')}
+                  {t("profile.editProfile")}
                 </Text>
               </View>
               <Ionicons
@@ -82,7 +82,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('navigation.notifications')}
+                  {t("navigation.notifications")}
                 </Text>
               </View>
               <Ionicons
@@ -102,7 +102,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('profile.privacySecurity')}
+                  {t("profile.privacySecurity")}
                 </Text>
               </View>
               <Ionicons
@@ -122,7 +122,7 @@ export default function ProfileScreen() {
                   color={isDark ? "#94a3b8" : "#64748b"}
                 />
                 <Text className="ml-3 text-text-light dark:text-text-dark">
-                  {t('profile.helpSupport')}
+                  {t("profile.helpSupport")}
                 </Text>
               </View>
               <Ionicons
@@ -145,7 +145,7 @@ export default function ProfileScreen() {
               color="#ef4444"
               style={{ marginRight: 8 }}
             />
-            <Text className="text-red-500">{t('auth.signOut')}</Text>
+            <Text className="text-red-500">{t("auth.signOut")}</Text>
           </Button>
         </View>
       </ScrollView>

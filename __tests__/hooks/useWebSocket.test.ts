@@ -156,9 +156,7 @@ describe("useChannel", () => {
   });
 
   it("should accumulate messages", () => {
-    const { result } = renderHook(() =>
-      useChannel(mockManager, "chat:room-1")
-    );
+    const { result } = renderHook(() => useChannel(mockManager, "chat:room-1"));
 
     const messageHandler = mockManager.subscribe.mock.calls[0][1];
 
@@ -242,9 +240,7 @@ describe("usePresence", () => {
   });
 
   it("should track users from presence_join events", () => {
-    const { result } = renderHook(() =>
-      usePresence(mockManager, "room:lobby")
-    );
+    const { result } = renderHook(() => usePresence(mockManager, "room:lobby"));
 
     const messageHandler = mockManager.subscribe.mock.calls[0][1];
 
@@ -252,7 +248,11 @@ describe("usePresence", () => {
       messageHandler({
         type: "presence_join",
         channel: "room:lobby",
-        payload: { id: "user-1", name: "Alice", lastSeen: "2024-01-01T00:00:00.000Z" },
+        payload: {
+          id: "user-1",
+          name: "Alice",
+          lastSeen: "2024-01-01T00:00:00.000Z",
+        },
         timestamp: "2024-01-01T00:00:00.000Z",
       });
     });
@@ -264,9 +264,7 @@ describe("usePresence", () => {
   });
 
   it("should remove users from presence_leave events", () => {
-    const { result } = renderHook(() =>
-      usePresence(mockManager, "room:lobby")
-    );
+    const { result } = renderHook(() => usePresence(mockManager, "room:lobby"));
 
     const messageHandler = mockManager.subscribe.mock.calls[0][1];
 
@@ -275,7 +273,11 @@ describe("usePresence", () => {
       messageHandler({
         type: "presence_join",
         channel: "room:lobby",
-        payload: { id: "user-1", name: "Alice", lastSeen: "2024-01-01T00:00:00.000Z" },
+        payload: {
+          id: "user-1",
+          name: "Alice",
+          lastSeen: "2024-01-01T00:00:00.000Z",
+        },
         timestamp: "2024-01-01T00:00:00.000Z",
       });
     });
@@ -297,9 +299,7 @@ describe("usePresence", () => {
   });
 
   it("should sync users from presence_sync events", () => {
-    const { result } = renderHook(() =>
-      usePresence(mockManager, "room:lobby")
-    );
+    const { result } = renderHook(() => usePresence(mockManager, "room:lobby"));
 
     const messageHandler = mockManager.subscribe.mock.calls[0][1];
 
@@ -310,7 +310,11 @@ describe("usePresence", () => {
         payload: [
           { id: "user-1", name: "Alice", lastSeen: "2024-01-01T00:00:00.000Z" },
           { id: "user-2", name: "Bob", lastSeen: "2024-01-01T00:00:00.000Z" },
-          { id: "user-3", name: "Charlie", lastSeen: "2024-01-01T00:00:00.000Z" },
+          {
+            id: "user-3",
+            name: "Charlie",
+            lastSeen: "2024-01-01T00:00:00.000Z",
+          },
         ],
         timestamp: "2024-01-01T00:00:00.000Z",
       });

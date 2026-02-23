@@ -35,6 +35,6 @@ export function useTrackScreen(): void {
       Analytics.screen(pathname, { segments });
       previousPathname.current = pathname;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- segments is derived from pathname; using pathname as the sole trigger avoids duplicate fires
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- segments is derived from pathname; using pathname as the sole trigger avoids duplicate fires
   }, [pathname]);
 }

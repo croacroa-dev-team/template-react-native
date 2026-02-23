@@ -90,7 +90,9 @@ export function SkeletonCircle({
   size = 48,
   className,
   ...props
-}: Omit<SkeletonProps, "width" | "height" | "borderRadius"> & { size?: number }) {
+}: Omit<SkeletonProps, "width" | "height" | "borderRadius"> & {
+  size?: number;
+}) {
   return (
     <Skeleton
       width={size}

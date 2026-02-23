@@ -109,12 +109,12 @@ export function isCurrentLanguageRTL(): boolean {
 /**
  * Get all available languages as an array for UI selectors
  */
-export function getAvailableLanguages(): Array<{
+export function getAvailableLanguages(): {
   code: LanguageCode;
   name: string;
   nativeName: string;
   rtl: boolean;
-}> {
+}[] {
   return Object.entries(LANGUAGES).map(([code, config]) => ({
     code: code as LanguageCode,
     ...config,
@@ -156,7 +156,10 @@ export function getFlexDirection(): "row" | "row-reverse" {
  * Get start/end values swapped for RTL
  * Useful for margins, paddings, and positioning
  */
-export function getStartEnd(): { start: "left" | "right"; end: "left" | "right" } {
+export function getStartEnd(): {
+  start: "left" | "right";
+  end: "left" | "right";
+} {
   return I18nManager.isRTL
     ? { start: "right", end: "left" }
     : { start: "left", end: "right" };

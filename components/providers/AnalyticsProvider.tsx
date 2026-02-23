@@ -56,7 +56,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     });
 
     Analytics.initialize().catch((error) => {
-      console.error('[AnalyticsProvider] Initialization failed:', error);
+      console.error("[AnalyticsProvider] Initialization failed:", error);
     });
   }, []);
 

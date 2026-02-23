@@ -10,7 +10,9 @@ interface NotificationState {
   setPushToken: (token: string | null) => void;
   setIsEnabled: (enabled: boolean) => void;
   toggleNotifications: () => void;
-  setLastNotification: (notification: Notifications.Notification | null) => void;
+  setLastNotification: (
+    notification: Notifications.Notification | null
+  ) => void;
 }
 
 export const useNotificationStore = create<NotificationState>()(

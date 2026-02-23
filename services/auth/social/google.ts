@@ -113,9 +113,8 @@ export async function signInWithGoogle(
   });
 
   // Prompt the user to sign in
-  const authResult: AuthSessionResult = await authRequest.promptAsync(
-    GOOGLE_DISCOVERY
-  );
+  const authResult: AuthSessionResult =
+    await authRequest.promptAsync(GOOGLE_DISCOVERY);
 
   // User cancelled or dismissed the dialog
   if (authResult.type !== "success") {

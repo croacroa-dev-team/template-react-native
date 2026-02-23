@@ -21,7 +21,7 @@ export default function HomeScreen() {
         <View className="mb-6 flex-row items-center justify-between">
           <View>
             <Text className="text-muted-light dark:text-muted-dark">
-              {t('home.welcomeBack', { name: user?.name || "User" })}
+              {t("home.welcomeBack", { name: user?.name || "User" })}
             </Text>
             <Text className="text-2xl font-bold text-text-light dark:text-text-dark">
               {user?.name || "User"}
@@ -40,7 +40,7 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <Text className="mb-3 text-lg font-semibold text-text-light dark:text-text-dark">
-          {t('home.quickActions')}
+          {t("home.quickActions")}
         </Text>
         <View className="mb-6 flex-row gap-3">
           <Card className="flex-1 items-center p-4">
@@ -52,7 +52,7 @@ export default function HomeScreen() {
               />
             </View>
             <Text className="text-sm text-text-light dark:text-text-dark">
-              {t('home.newItem')}
+              {t("home.newItem")}
             </Text>
           </Card>
           <Card className="flex-1 items-center p-4">
@@ -64,7 +64,7 @@ export default function HomeScreen() {
               />
             </View>
             <Text className="text-sm text-text-light dark:text-text-dark">
-              {t('common.search')}
+              {t("common.search")}
             </Text>
           </Card>
           <Card className="flex-1 items-center p-4">
@@ -76,14 +76,14 @@ export default function HomeScreen() {
               />
             </View>
             <Text className="text-sm text-text-light dark:text-text-dark">
-              {t('home.stats')}
+              {t("home.stats")}
             </Text>
           </Card>
         </View>
 
         {/* Recent Activity */}
         <Text className="mb-3 text-lg font-semibold text-text-light dark:text-text-dark">
-          {t('home.recentActivity')}
+          {t("home.recentActivity")}
         </Text>
         <Card className="mb-4 p-4">
           <View className="items-center py-8">
@@ -93,10 +93,10 @@ export default function HomeScreen() {
               color={isDark ? "#64748b" : "#94a3b8"}
             />
             <Text className="mt-2 text-muted-light dark:text-muted-dark">
-              {t('home.noRecentActivity')}
+              {t("home.noRecentActivity")}
             </Text>
             <Text className="mt-1 text-sm text-muted-light dark:text-muted-dark">
-              {t('home.activityWillAppear')}
+              {t("home.activityWillAppear")}
             </Text>
           </View>
         </Card>
@@ -110,7 +110,7 @@ export default function HomeScreen() {
               color={isDark ? "#f8fafc" : "#0f172a"}
               style={{ marginRight: 8 }}
             />
-            {t('settings.title')}
+            {t("settings.title")}
           </Button>
         </Link>
       </ScrollView>

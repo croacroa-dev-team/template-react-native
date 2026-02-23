@@ -14,7 +14,11 @@ import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { STORAGE_KEYS } from "@/constants/config";
-import type { PermissionType, PermissionResult, PermissionStatus } from "./types";
+import type {
+  PermissionType,
+  PermissionResult,
+  PermissionStatus,
+} from "./types";
 
 /** AsyncStorage key prefix for tracking asked permissions */
 const PERMISSION_ASKED_PREFIX = STORAGE_KEYS.PERMISSION_PREFIX;
@@ -229,10 +233,7 @@ export const PermissionManager = {
       const result = await handler.request();
 
       // Track that we've asked for this permission
-      await AsyncStorage.setItem(
-        `${PERMISSION_ASKED_PREFIX}${type}`,
-        "true"
-      );
+      await AsyncStorage.setItem(`${PERMISSION_ASKED_PREFIX}${type}`, "true");
 
       return result;
     } catch (error) {

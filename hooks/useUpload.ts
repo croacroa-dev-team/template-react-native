@@ -123,8 +123,7 @@ export function useUpload(options: UseUploadOptions): UseUploadReturn {
         const result = await promise;
         return result;
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : "Upload failed";
+        const message = err instanceof Error ? err.message : "Upload failed";
         setError(message);
         return null;
       } finally {

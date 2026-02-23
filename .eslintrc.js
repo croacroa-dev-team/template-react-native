@@ -37,6 +37,14 @@ module.exports = {
     "prefer-const": "error",
     "no-var": "error",
   },
+  overrides: [
+    {
+      files: ["__tests__/**/*", "jest.setup.js"],
+      rules: {
+        "@typescript-eslint/no-require-imports": "off",
+      },
+    },
+  ],
   ignorePatterns: [
     "node_modules/",
     ".expo/",

@@ -181,12 +181,7 @@ describe("Checkbox - accessibility", () => {
   it("does not call onChange when disabled", () => {
     const onChange = jest.fn();
     const { getByText } = render(
-      <Checkbox
-        checked={false}
-        onChange={onChange}
-        label="Disabled"
-        disabled
-      />
+      <Checkbox checked={false} onChange={onChange} label="Disabled" disabled />
     );
     fireEvent.press(getByText("Disabled"));
     expect(onChange).not.toHaveBeenCalled();

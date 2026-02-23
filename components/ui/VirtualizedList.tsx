@@ -19,7 +19,10 @@ import { cn } from "@/utils/cn";
 /**
  * Props for VirtualizedList component
  */
-interface VirtualizedListProps<T> extends Omit<FlashListProps<T>, "renderItem" | "estimatedItemSize"> {
+interface VirtualizedListProps<T> extends Omit<
+  FlashListProps<T>,
+  "renderItem" | "estimatedItemSize"
+> {
   /**
    * Array of data items to render
    */

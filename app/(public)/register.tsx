@@ -1,4 +1,11 @@
-import { View, Text, Pressable, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm } from "react-hook-form";
@@ -55,10 +62,10 @@ export default function RegisterScreen() {
               className="mb-8"
             >
               <Text className="text-3xl font-bold text-text-light dark:text-text-dark">
-                {t('auth.createAccount')}
+                {t("auth.createAccount")}
               </Text>
               <Text className="mt-2 text-muted-light dark:text-muted-dark">
-                {t('auth.joinUs')}
+                {t("auth.joinUs")}
               </Text>
             </Animated.View>
 
@@ -70,8 +77,8 @@ export default function RegisterScreen() {
               <FormInput
                 name="name"
                 control={control}
-                label={t('auth.name')}
-                placeholder={t('auth.enterName')}
+                label={t("auth.name")}
+                placeholder={t("auth.enterName")}
                 autoComplete="name"
                 leftIcon="person-outline"
               />
@@ -79,8 +86,8 @@ export default function RegisterScreen() {
               <FormInput
                 name="email"
                 control={control}
-                label={t('auth.email')}
-                placeholder={t('auth.enterEmail')}
+                label={t("auth.email")}
+                placeholder={t("auth.enterEmail")}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoComplete="email"
@@ -90,19 +97,19 @@ export default function RegisterScreen() {
               <FormInput
                 name="password"
                 control={control}
-                label={t('auth.password')}
-                placeholder={t('auth.createPasswordPlaceholder')}
+                label={t("auth.password")}
+                placeholder={t("auth.createPasswordPlaceholder")}
                 secureTextEntry
                 autoComplete="new-password"
                 leftIcon="lock-closed-outline"
-                hint={t('auth.passwordHintFull')}
+                hint={t("auth.passwordHintFull")}
               />
 
               <FormInput
                 name="confirmPassword"
                 control={control}
-                label={t('auth.confirmPassword')}
-                placeholder={t('auth.confirmPasswordPlaceholder')}
+                label={t("auth.confirmPassword")}
+                placeholder={t("auth.confirmPasswordPlaceholder")}
                 secureTextEntry
                 autoComplete="new-password"
                 leftIcon="lock-closed-outline"
@@ -113,7 +120,7 @@ export default function RegisterScreen() {
                 isLoading={isSubmitting}
                 className="mt-4"
               >
-                {t('auth.createAccount')}
+                {t("auth.createAccount")}
               </AnimatedButton>
             </Animated.View>
 
@@ -123,12 +130,12 @@ export default function RegisterScreen() {
               className="mt-8 flex-row justify-center"
             >
               <Text className="text-muted-light dark:text-muted-dark">
-                {t('auth.haveAccount')}{" "}
+                {t("auth.haveAccount")}{" "}
               </Text>
               <Link href="/(public)/login" asChild>
                 <Pressable>
                   <Text className="font-semibold text-primary-600 dark:text-primary-400">
-                    {t('auth.signIn')}
+                    {t("auth.signIn")}
                   </Text>
                 </Pressable>
               </Link>

@@ -61,11 +61,7 @@ export function ForceUpdateScreen({
     <View className="flex-1 items-center justify-center bg-white px-8 dark:bg-gray-900">
       {/* Icon */}
       <View className="mb-8 h-24 w-24 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
-        <Ionicons
-          name="cloud-download-outline"
-          size={48}
-          color="#3b82f6"
-        />
+        <Ionicons name="cloud-download-outline" size={48} color="#3b82f6" />
       </View>
 
       {/* Title */}

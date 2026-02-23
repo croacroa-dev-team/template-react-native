@@ -36,8 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     infoPlist: {
       UIBackgroundModes: ["remote-notification", "fetch", "processing"],
       ITSAppUsesNonExemptEncryption: false,
-      NSCameraUsageDescription:
-        "This app uses the camera to take photos.",
+      NSCameraUsageDescription: "This app uses the camera to take photos.",
       NSPhotoLibraryUsageDescription:
         "This app accesses your photo library to select images.",
       NSLocationWhenInUseUsageDescription:

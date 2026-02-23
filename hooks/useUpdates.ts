@@ -349,7 +349,7 @@ export async function forceUpdate(): Promise<void> {
     } else {
       Alert.alert("Up to Date", "You're running the latest version.");
     }
-  } catch (error) {
+  } catch {
     Alert.alert(
       "Update Failed",
       "Could not check for updates. Please try again."

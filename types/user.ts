@@ -44,7 +44,7 @@ export interface RegisterRequest {
   password: string;
 }
 
-export interface RegisterResponse extends LoginResponse {}
+export type RegisterResponse = LoginResponse;
 
 export interface RefreshTokenRequest {
   refreshToken: string;

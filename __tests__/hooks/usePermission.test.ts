@@ -29,12 +29,14 @@ const mockRemove = jest.fn();
 // Override AppState.addEventListener to capture the callback
 const originalAddEventListener = AppState.addEventListener;
 beforeAll(() => {
-  (AppState as any).addEventListener = jest.fn((event: string, callback: any) => {
-    if (event === "change") {
-      appStateCallback = callback;
+  (AppState as any).addEventListener = jest.fn(
+    (event: string, callback: any) => {
+      if (event === "change") {
+        appStateCallback = callback;
+      }
+      return { remove: mockRemove };
     }
-    return { remove: mockRemove };
-  });
+  );
 });
 
 afterAll(() => {
@@ -210,9 +212,7 @@ describe("usePermission", () => {
       message: "Custom message for camera access",
     };
 
-    const { result } = renderHook(() =>
-      usePermission("camera", customConfig)
-    );
+    const { result } = renderHook(() => usePermission("camera", customConfig));
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);

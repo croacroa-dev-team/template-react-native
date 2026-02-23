@@ -116,11 +116,7 @@ function ProductCard({
         )}
       </View>
 
-      <Button
-        className="mt-3"
-        isLoading={isLoading}
-        onPress={onPress}
-      >
+      <Button className="mt-3" isLoading={isLoading} onPress={onPress}>
         {isYearly ? "Subscribe & Save" : "Subscribe"}
       </Button>
     </Pressable>
@@ -168,11 +164,7 @@ export function Paywall({
     "Unlock all features and take your experience to the next level.";
   const { data: products, isLoading: productsLoading } =
     useProducts(productIds);
-  const {
-    purchase,
-    restore,
-    isLoading: purchaseLoading,
-  } = usePurchase();
+  const { purchase, restore, isLoading: purchaseLoading } = usePurchase();
 
   const handlePurchase = async (productId: string) => {
     const result = await purchase(productId);

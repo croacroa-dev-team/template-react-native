@@ -65,7 +65,7 @@ export async function compressImage(
 ): Promise<CompressionResult> {
   const {
     maxWidth = 1080,
-    maxHeight = 1080,
+    maxHeight: _maxHeight = 1080,
     quality = 0.7,
     format = "jpeg",
   } = options;

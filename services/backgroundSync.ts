@@ -44,9 +44,7 @@ export interface SyncConflict {
 /**
  * Conflict resolver function type
  */
-export type ConflictResolver = (
-  conflict: SyncConflict
-) => Promise<{
+export type ConflictResolver = (conflict: SyncConflict) => Promise<{
   action: "retry" | "discard" | "merge";
   mergedData?: Record<string, unknown>;
 }>;
@@ -141,7 +139,10 @@ const pendingConflicts: SyncConflict[] = [];
  * ```
  */
 export async function queueMutation(
-  mutation: Omit<QueuedMutation, "id" | "timestamp" | "retryCount" | "maxRetries">
+  mutation: Omit<
+    QueuedMutation,
+    "id" | "timestamp" | "retryCount" | "maxRetries"
+  >
 ): Promise<string> {
   const queue = await getMutationQueue();
 
@@ -261,7 +262,10 @@ export function clearPendingConflict(mutationId: string): void {
 async function resolveConflictWithStrategy(
   conflict: SyncConflict,
   strategy: ConflictResolutionStrategy
-): Promise<{ action: "retry" | "discard" | "merge"; mergedData?: Record<string, unknown> }> {
+): Promise<{
+  action: "retry" | "discard" | "merge";
+  mergedData?: Record<string, unknown>;
+}> {
   switch (strategy) {
     case "last-write-wins":
     case "client-wins":
@@ -299,12 +303,19 @@ async function resolveConflictWithStrategy(
 /**
  * Check if an error indicates a conflict (409 or version mismatch)
  */
-function isConflictError(error: unknown): { isConflict: boolean; statusCode?: number; serverData?: Record<string, unknown> } {
+function isConflictError(error: unknown): {
+  isConflict: boolean;
+  statusCode?: number;
+  serverData?: Record<string, unknown>;
+} {
   if (error && typeof error === "object" && "status" in error) {
     const status = (error as { status: number }).status;
     if (status === 409 || status === 412) {
       // 409 Conflict or 412 Precondition Failed
-      const serverData = "data" in error ? (error as { data?: Record<string, unknown> }).data : undefined;
+      const serverData =
+        "data" in error
+          ? (error as { data?: Record<string, unknown> }).data
+          : undefined;
       return { isConflict: true, statusCode: status, serverData };
     }
   }
@@ -382,7 +393,13 @@ export async function processQueue(): Promise<{
   const queue = await getMutationQueue();
 
   if (queue.length === 0) {
-    return { processed: 0, succeeded: 0, failed: 0, conflicts: 0, remaining: 0 };
+    return {
+      processed: 0,
+      succeeded: 0,
+      failed: 0,
+      conflicts: 0,
+      remaining: 0,
+    };
   }
 
   if (IS_DEV) {
@@ -409,12 +426,18 @@ export async function processQueue(): Promise<{
           ? conflictHandlers.get(mutation.metadata.type)
           : null;
 
-        let resolution: { action: "retry" | "discard" | "merge"; mergedData?: Record<string, unknown> };
+        let resolution: {
+          action: "retry" | "discard" | "merge";
+          mergedData?: Record<string, unknown>;
+        };
 
         if (customResolver) {
           resolution = await customResolver(result.conflict);
         } else {
-          resolution = await resolveConflictWithStrategy(result.conflict, strategy);
+          resolution = await resolveConflictWithStrategy(
+            result.conflict,
+            strategy
+          );
         }
 
         if (IS_DEV) {
@@ -433,7 +456,10 @@ export async function processQueue(): Promise<{
             }
             break;
           case "merge":
-            if (resolution.mergedData && mutation.retryCount < mutation.maxRetries) {
+            if (
+              resolution.mergedData &&
+              mutation.retryCount < mutation.maxRetries
+            ) {
               updatedQueue.push({
                 ...mutation,
                 body: resolution.mergedData,

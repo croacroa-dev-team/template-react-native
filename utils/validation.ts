@@ -13,7 +13,10 @@ export const passwordSchema = z
   .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[a-z]/, "Password must contain at least one lowercase letter")
   .regex(/[0-9]/, "Password must contain at least one number")
-  .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, "Password must contain at least one special character");
+  .regex(
+    /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/,
+    "Password must contain at least one special character"
+  );
 
 export const nameSchema = z
   .string()

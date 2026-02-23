@@ -14,8 +14,10 @@ import type { PressableProps } from "react-native";
 // Props
 // ============================================================================
 
-interface PurchaseButtonProps
-  extends Omit<PressableProps, "onPress" | "children"> {
+interface PurchaseButtonProps extends Omit<
+  PressableProps,
+  "onPress" | "children"
+> {
   /** The product ID to purchase */
   productId: string;
   /** Button label text */

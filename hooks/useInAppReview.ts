@@ -25,7 +25,9 @@ export function useInAppReview(): UseInAppReviewReturn {
   const sessionCount = useAppStore((s) => s.sessionCount);
 
   useEffect(() => {
-    StoreReview.isAvailableAsync().then(setIsAvailable).catch(() => setIsAvailable(false));
+    StoreReview.isAvailableAsync()
+      .then(setIsAvailable)
+      .catch(() => setIsAvailable(false));
   }, []);
 
   const requestReview = useCallback(async () => {
@@ -39,10 +41,13 @@ export function useInAppReview(): UseInAppReviewReturn {
     if (sessionCount < IN_APP_REVIEW.MIN_SESSIONS) return;
 
     // Check throttle window
-    const lastPromptDate = await storage.get<string>(LAST_REVIEW_PROMPT_DATE_KEY);
+    const lastPromptDate = await storage.get<string>(
+      LAST_REVIEW_PROMPT_DATE_KEY
+    );
     if (lastPromptDate) {
       const daysSinceLastPrompt =
-        (Date.now() - new Date(lastPromptDate).getTime()) / (1000 * 60 * 60 * 24);
+        (Date.now() - new Date(lastPromptDate).getTime()) /
+        (1000 * 60 * 60 * 24);
       if (daysSinceLastPrompt < IN_APP_REVIEW.DAYS_BETWEEN_PROMPTS) return;
     }
 

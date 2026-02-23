@@ -13,7 +13,10 @@ import { useTranslation } from "react-i18next";
 import { usePermission } from "@/hooks/usePermission";
 import { useTheme } from "@/hooks";
 import { Button } from "@/components/ui/Button";
-import type { PermissionType, PermissionConfig } from "@/services/permissions/types";
+import type {
+  PermissionType,
+  PermissionConfig,
+} from "@/services/permissions/types";
 
 interface PermissionGateProps {
   /** The permission type required to show children */

@@ -70,7 +70,7 @@ export const socialAuth = {
 
 // Force Update Configuration
 export const FORCE_UPDATE = {
-  CHECK_URL: '', // Empty by default — set to your API endpoint
+  CHECK_URL: "", // Empty by default — set to your API endpoint
   ENABLED: false,
 } as const;
 
