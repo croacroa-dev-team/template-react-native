@@ -108,3 +108,9 @@ export type {
   ForceUpdateResponse,
   ForceUpdateResult,
 } from "./force-update";
+export { FeatureFlags } from "./feature-flags/feature-flag-adapter";
+export { MockFeatureFlagAdapter } from "./feature-flags/adapters/mock";
+export type {
+  FeatureFlagAdapter,
+  FeatureFlagConfig,
+} from "./feature-flags/types";
