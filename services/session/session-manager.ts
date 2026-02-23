@@ -13,10 +13,12 @@ class SessionManagerClass {
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private onWarningCallback: SessionCallback | null = null;
   private onExpiredCallback: SessionCallback | null = null;
+  private warningEmitted = false;
 
   /** Update the last activity timestamp */
   touch(): void {
     this.lastActivity = Date.now();
+    this.warningEmitted = false;
   }
 
   /** Check if the session has expired */
@@ -57,7 +59,8 @@ class SessionManagerClass {
         Logger.warn("Session expired");
         this.onExpiredCallback?.();
         this.stopMonitoring();
-      } else if (this.isWarning()) {
+      } else if (this.isWarning() && !this.warningEmitted) {
+        this.warningEmitted = true;
         this.onWarningCallback?.();
       }
     }, 1000);

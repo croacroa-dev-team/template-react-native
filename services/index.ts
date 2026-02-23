@@ -141,7 +141,7 @@ export {
   InterceptorManager,
   correlationIdInterceptor,
   userAgentInterceptor,
-  requestTimingInterceptor,
+  requestLoggingInterceptor,
   requestSigningInterceptor,
 } from "./api/interceptors";
 export type {

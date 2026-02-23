@@ -4,7 +4,7 @@
  */
 
 import { Logger } from "@/services/logger/logger-adapter";
-import { SECURITY } from "@/constants/config";
+import { SECURITY, APP_VERSION } from "@/constants/config";
 
 export interface RequestConfig {
   url: string;
@@ -96,12 +96,12 @@ export const userAgentInterceptor: RequestInterceptor = (config) => ({
   ...config,
   headers: {
     ...config.headers,
-    "X-Client": "react-native-template/3.3.0",
+    "X-Client": `react-native-template/${APP_VERSION}`,
   },
 });
 
-/** Logs request duration */
-export const requestTimingInterceptor: ResponseInterceptor = (
+/** Logs request details as a breadcrumb */
+export const requestLoggingInterceptor: ResponseInterceptor = (
   response,
   config
 ) => {

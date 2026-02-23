@@ -10,6 +10,16 @@ import { migrations } from "../migrations";
 import { DATABASE } from "@/constants/config";
 import { Logger } from "@/services/logger/logger-adapter";
 
+const SAFE_IDENTIFIER = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+
+function assertSafeIdentifier(name: string, label: string): void {
+  if (!SAFE_IDENTIFIER.test(name)) {
+    throw new Error(
+      `Unsafe ${label}: "${name}". Only alphanumeric characters and underscores are allowed.`,
+    );
+  }
+}
+
 export class SQLiteAdapter implements DatabaseAdapter {
   private db: SQLite.SQLiteDatabase | null = null;
 
@@ -67,13 +77,15 @@ export class SQLiteAdapter implements DatabaseAdapter {
   }
 
   async insert(table: string, data: Record<string, unknown>): Promise<number> {
+    assertSafeIdentifier(table, "table name");
     const db = await this.getDb();
     const keys = Object.keys(data);
+    keys.forEach((k) => assertSafeIdentifier(k, "column name"));
     const placeholders = keys.map(() => "?").join(", ");
     const values = Object.values(data);
     const result = await db.runAsync(
       `INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders})`,
-      values as SQLiteBindParams
+      values as SQLiteBindParams,
     );
     return result.lastInsertRowId;
   }
@@ -82,16 +94,17 @@ export class SQLiteAdapter implements DatabaseAdapter {
     table: string,
     data: Record<string, unknown>,
     where: string,
-    params?: unknown[]
+    params?: unknown[],
   ): Promise<number> {
+    assertSafeIdentifier(table, "table name");
     const db = await this.getDb();
-    const sets = Object.keys(data)
-      .map((k) => `${k} = ?`)
-      .join(", ");
+    const keys = Object.keys(data);
+    keys.forEach((k) => assertSafeIdentifier(k, "column name"));
+    const sets = keys.map((k) => `${k} = ?`).join(", ");
     const values = [...Object.values(data), ...(params ?? [])];
     const result = await db.runAsync(
       `UPDATE ${table} SET ${sets} WHERE ${where}`,
-      values as SQLiteBindParams
+      values as SQLiteBindParams,
     );
     return result.changes;
   }
@@ -99,12 +112,13 @@ export class SQLiteAdapter implements DatabaseAdapter {
   async delete(
     table: string,
     where: string,
-    params?: unknown[]
+    params?: unknown[],
   ): Promise<number> {
+    assertSafeIdentifier(table, "table name");
     const db = await this.getDb();
     const result = await db.runAsync(
       `DELETE FROM ${table} WHERE ${where}`,
-      (params ?? []) as SQLiteBindParams
+      (params ?? []) as SQLiteBindParams,
     );
     return result.changes;
   }

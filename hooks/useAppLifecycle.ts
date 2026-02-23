@@ -15,9 +15,11 @@ export function useAppLifecycle(callbacks?: AppLifecycleCallbacks): {
   appState: AppStateStatus;
 } {
   const [appState, setAppState] = useState<AppStateStatus>(
-    AppState.currentState
+    AppState.currentState,
   );
   const previousState = useRef<AppStateStatus>(AppState.currentState);
+  const callbacksRef = useRef(callbacks);
+  callbacksRef.current = callbacks;
 
   useEffect(() => {
     const handleChange = (nextState: AppStateStatus) => {
@@ -26,11 +28,11 @@ export function useAppLifecycle(callbacks?: AppLifecycleCallbacks): {
       Logger.addBreadcrumb("lifecycle", `App state: ${prev} → ${nextState}`);
 
       if (prev !== "active" && nextState === "active") {
-        callbacks?.onForeground?.();
+        callbacksRef.current?.onForeground?.();
       } else if (prev === "active" && nextState === "background") {
-        callbacks?.onBackground?.();
+        callbacksRef.current?.onBackground?.();
       } else if (nextState === "inactive") {
-        callbacks?.onInactive?.();
+        callbacksRef.current?.onInactive?.();
       }
 
       previousState.current = nextState;
@@ -39,7 +41,7 @@ export function useAppLifecycle(callbacks?: AppLifecycleCallbacks): {
 
     const subscription = AppState.addEventListener("change", handleChange);
     return () => subscription.remove();
-  }, [callbacks]);
+  }, []);
 
   return { appState };
 }
