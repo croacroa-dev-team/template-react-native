@@ -173,5 +173,33 @@
     "continue": "Fortfahren",
     "logout": "Abmelden",
     "remainingTime": "Verbleibende Zeit: {{seconds}}s"
+  },
+  "permissionRationale": {
+    "camera": {
+      "title": "Kamerazugriff",
+      "description": "Wir benötigen Zugriff auf Ihre Kamera zum Fotografieren."
+    },
+    "photos": {
+      "title": "Fotobibliothek",
+      "description": "Wir benötigen Zugriff auf Ihre Fotos zur Bildauswahl."
+    },
+    "location": {
+      "title": "Standortzugriff",
+      "description": "Wir benötigen Ihren Standort für Ergebnisse in der Nähe."
+    },
+    "contacts": {
+      "title": "Kontaktzugriff",
+      "description": "Wir benötigen Zugriff auf Ihre Kontakte um Freunde zu finden."
+    },
+    "microphone": {
+      "title": "Mikrofonzugriff",
+      "description": "Wir benötigen Mikrofonzugriff für Sprachnachrichten."
+    },
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "description": "Wir möchten Ihnen Benachrichtigungen über wichtige Updates senden."
+    },
+    "allow": "Erlauben",
+    "deny": "Nicht jetzt"
   }
 }

@@ -173,5 +173,33 @@
     "continue": "Continuar",
     "logout": "Cerrar sesión",
     "remainingTime": "Tiempo restante: {{seconds}}s"
+  },
+  "permissionRationale": {
+    "camera": {
+      "title": "Acceso a la cámara",
+      "description": "Necesitamos acceso a tu cámara para tomar fotos."
+    },
+    "photos": {
+      "title": "Biblioteca de fotos",
+      "description": "Necesitamos acceso a tus fotos para seleccionar imágenes."
+    },
+    "location": {
+      "title": "Acceso a la ubicación",
+      "description": "Necesitamos tu ubicación para mostrar resultados cercanos."
+    },
+    "contacts": {
+      "title": "Acceso a contactos",
+      "description": "Necesitamos acceso a tus contactos para encontrar amigos."
+    },
+    "microphone": {
+      "title": "Acceso al micrófono",
+      "description": "Necesitamos acceso al micrófono para grabar mensajes de audio."
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "description": "Nos gustaría enviarte notificaciones sobre actualizaciones importantes."
+    },
+    "allow": "Permitir",
+    "deny": "Ahora no"
   }
 }
