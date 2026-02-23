@@ -70,3 +70,5 @@ export { useFeatureFlag, useFeatureFlagValue } from "./useFeatureFlag";
 export { useExperiment } from "./useExperiment";
 export { useLogger } from "./useLogger";
 export { useAppLifecycle } from "./useAppLifecycle";
+export { useDeviceInfo } from "./useDeviceInfo";
+export { useRemoteConfig } from "./useRemoteConfig";
