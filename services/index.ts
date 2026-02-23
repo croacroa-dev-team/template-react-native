@@ -131,3 +131,4 @@ export { deduplicate, getDeduplicationKey, getInflightCount } from "./api/dedupl
 export { SessionManager } from "./session/session-manager";
 export { InterceptorManager, correlationIdInterceptor, userAgentInterceptor, requestTimingInterceptor, requestSigningInterceptor } from "./api/interceptors";
 export type { RequestConfig, RequestInterceptor, ResponseInterceptor } from "./api/interceptors";
+export { AnalyticsSession } from "./analytics/session";
