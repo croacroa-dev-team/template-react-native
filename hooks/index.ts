@@ -72,3 +72,4 @@ export { useLogger } from "./useLogger";
 export { useAppLifecycle } from "./useAppLifecycle";
 export { useDeviceInfo } from "./useDeviceInfo";
 export { useRemoteConfig } from "./useRemoteConfig";
+export { useDatabase } from "./useDatabase";
