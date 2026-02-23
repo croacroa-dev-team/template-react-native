@@ -122,6 +122,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     "expo-task-manager",
+    "expo-sqlite",
     [
       "expo-camera",
       {

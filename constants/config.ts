@@ -133,3 +133,38 @@ export const SECURITY = {
     HEADER_NAME: "X-Request-Signature",
   },
 } as const;
+
+// Logger Configuration
+export const LOGGER = {
+  ENABLED: true,
+  MIN_LEVEL: IS_DEV ? "debug" : "warn",
+  MAX_BREADCRUMBS: 100,
+} as const;
+
+// Database Configuration
+export const DATABASE = {
+  ENABLED: true,
+  NAME: "app.db",
+  VERSION: 1,
+} as const;
+
+// Retry Configuration
+export const RETRY = {
+  MAX_ATTEMPTS: 3,
+  BASE_DELAY_MS: 1000,
+  MAX_DELAY_MS: 30000,
+  JITTER: true,
+} as const;
+
+// Circuit Breaker Configuration
+export const CIRCUIT_BREAKER = {
+  THRESHOLD: 5,
+  RESET_TIMEOUT_MS: 30000,
+} as const;
+
+// Session Configuration
+export const SESSION = {
+  ENABLED: true,
+  TIMEOUT_MS: 30 * 60 * 1000, // 30 minutes
+  WARNING_BEFORE_MS: 2 * 60 * 1000, // Warn 2 min before
+} as const;
