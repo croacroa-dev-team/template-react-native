@@ -117,3 +117,6 @@ export type {
 export { Logger } from "./logger/logger-adapter";
 export { ConsoleLoggerAdapter } from "./logger/adapters/console";
 export type { LoggerAdapter, LogLevel, Breadcrumb } from "./logger/types";
+export { RemoteConfig } from "./config/config-adapter";
+export { MockRemoteConfigAdapter } from "./config/adapters/mock";
+export type { RemoteConfigAdapter } from "./config/types";
