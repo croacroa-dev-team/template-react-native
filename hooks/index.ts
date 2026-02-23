@@ -68,3 +68,4 @@ export type { UseForceUpdateReturn } from "./useForceUpdate";
 export { useInAppReview } from "./useInAppReview";
 export { useFeatureFlag, useFeatureFlagValue } from "./useFeatureFlag";
 export { useExperiment } from "./useExperiment";
+export { useLogger } from "./useLogger";

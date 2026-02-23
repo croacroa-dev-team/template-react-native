@@ -114,3 +114,6 @@ export type {
   FeatureFlagAdapter,
   FeatureFlagConfig,
 } from "./feature-flags/types";
+export { Logger } from "./logger/logger-adapter";
+export { ConsoleLoggerAdapter } from "./logger/adapters/console";
+export type { LoggerAdapter, LogLevel, Breadcrumb } from "./logger/types";
