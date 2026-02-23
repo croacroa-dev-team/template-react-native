@@ -41,6 +41,9 @@
     "invalidCredentials": "Correo o contraseña inválidos",
     "accountCreated": "¡Cuenta creada exitosamente!",
     "sessionExpired": "Sesión expirada. Por favor inicia sesión nuevamente.",
+    "createPasswordPlaceholder": "Crea una contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu contraseña",
+    "passwordHintFull": "Mín 8 car., 1 mayúscula, 1 minúscula, 1 número",
     "biometric": {
       "title": "Autenticación biométrica",
       "prompt": "Autentícate para continuar",
@@ -49,6 +52,26 @@
       "disabled": "Inicio de sesión biométrico desactivado",
       "notAvailable": "Autenticación biométrica no disponible"
     }
+  },
+  "forgotPassword": {
+    "title": "Contraseña olvidada",
+    "subtitle": "Ingresa tu correo y te enviaremos un enlace de restablecimiento",
+    "sendResetLink": "Enviar enlace de restablecimiento",
+    "checkEmail": "Revisa tu correo",
+    "resetSent": "Hemos enviado un enlace de restablecimiento a {{email}}",
+    "backToSignIn": "Volver a iniciar sesión",
+    "rememberPassword": "¿Recuerdas tu contraseña?",
+    "emailRequired": "Por favor ingresa tu correo electrónico",
+    "sendFailed": "Error al enviar el enlace. Por favor intenta de nuevo."
+  },
+  "home": {
+    "welcomeBack": "¡Bienvenido de nuevo, {{name}}!",
+    "quickActions": "Acciones rápidas",
+    "newItem": "Nuevo elemento",
+    "stats": "Estadísticas",
+    "recentActivity": "Actividad reciente",
+    "noRecentActivity": "Sin actividad reciente",
+    "activityWillAppear": "Tu actividad aparecerá aquí"
   },
   "navigation": {
     "home": "Inicio",
@@ -61,7 +84,9 @@
     "editProfile": "Editar perfil",
     "changePhoto": "Cambiar foto",
     "personalInfo": "Información personal",
-    "memberSince": "Miembro desde {{date}}"
+    "memberSince": "Miembro desde {{date}}",
+    "privacySecurity": "Privacidad y seguridad",
+    "helpSupport": "Ayuda y soporte"
   },
   "settings": {
     "title": "Configuración",
@@ -81,7 +106,9 @@
     "terms": "Términos de servicio",
     "about": "Acerca de",
     "version": "Versión",
-    "deleteAccount": "Eliminar cuenta"
+    "deleteAccount": "Eliminar cuenta",
+    "darkMode": "Modo oscuro",
+    "appVersion": "Versión de la aplicación"
   },
   "errors": {
     "generic": "Algo salió mal",
@@ -97,5 +124,35 @@
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
     "passwordMatch": "Las contraseñas no coinciden",
     "nameMin": "El nombre debe tener al menos 2 caracteres"
+  },
+  "permissions": {
+    "camera": "Se necesita acceso a la cámara para tomar fotos.",
+    "location": "Se necesita acceso a la ubicación para mostrar resultados cercanos.",
+    "contacts": "Se necesita acceso a los contactos para encontrar amigos.",
+    "mediaLibrary": "Se necesita acceso a la galería para seleccionar imágenes.",
+    "microphone": "Se necesita acceso al micrófono para grabar audio.",
+    "notifications": "Se necesita permiso de notificaciones para enviarte alertas.",
+    "openSettings": "Abrir configuración",
+    "allowAccess": "Permitir acceso",
+    "blocked": "El permiso fue denegado. Por favor actívalo en Configuración."
+  },
+  "socialAuth": {
+    "continueWithGoogle": "Continuar con Google",
+    "continueWithApple": "Continuar con Apple",
+    "orContinueWith": "O continuar con"
+  },
+  "payments": {
+    "upgradeToPremium": "Mejorar a Premium",
+    "subscribe": "Suscribirse",
+    "restore": "Restaurar compras",
+    "perMonth": "/mes",
+    "perYear": "/año"
+  },
+  "upload": {
+    "uploading": "Subiendo...",
+    "complete": "Completado",
+    "failed": "Error al subir",
+    "retry": "Reintentar",
+    "addPhoto": "Agregar foto"
   }
 }

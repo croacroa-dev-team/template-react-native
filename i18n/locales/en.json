@@ -41,6 +41,9 @@
     "invalidCredentials": "Invalid email or password",
     "accountCreated": "Account created successfully!",
     "sessionExpired": "Session expired. Please sign in again.",
+    "createPasswordPlaceholder": "Create a password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "passwordHintFull": "Min 8 chars, 1 uppercase, 1 lowercase, 1 number",
     "biometric": {
       "title": "Biometric Authentication",
       "prompt": "Authenticate to continue",
@@ -49,6 +52,26 @@
       "disabled": "Biometric login disabled",
       "notAvailable": "Biometric authentication not available"
     }
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "subtitle": "Enter your email and we'll send you a reset link",
+    "sendResetLink": "Send Reset Link",
+    "checkEmail": "Check Your Email",
+    "resetSent": "We've sent a password reset link to {{email}}",
+    "backToSignIn": "Back to Sign In",
+    "rememberPassword": "Remember your password?",
+    "emailRequired": "Please enter your email address",
+    "sendFailed": "Failed to send reset link. Please try again."
+  },
+  "home": {
+    "welcomeBack": "Welcome back, {{name}}!",
+    "quickActions": "Quick Actions",
+    "newItem": "New Item",
+    "stats": "Stats",
+    "recentActivity": "Recent Activity",
+    "noRecentActivity": "No recent activity",
+    "activityWillAppear": "Your activity will appear here"
   },
   "navigation": {
     "home": "Home",
@@ -61,7 +84,9 @@
     "editProfile": "Edit Profile",
     "changePhoto": "Change Photo",
     "personalInfo": "Personal Information",
-    "memberSince": "Member since {{date}}"
+    "memberSince": "Member since {{date}}",
+    "privacySecurity": "Privacy & Security",
+    "helpSupport": "Help & Support"
   },
   "settings": {
     "title": "Settings",
@@ -81,7 +106,9 @@
     "terms": "Terms of Service",
     "about": "About",
     "version": "Version",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "darkMode": "Dark Mode",
+    "appVersion": "App Version"
   },
   "errors": {
     "generic": "Something went wrong",

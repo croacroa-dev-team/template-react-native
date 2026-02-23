@@ -41,6 +41,9 @@
     "invalidCredentials": "Email ou mot de passe invalide",
     "accountCreated": "Compte créé avec succès !",
     "sessionExpired": "Session expirée. Veuillez vous reconnecter.",
+    "createPasswordPlaceholder": "Créer un mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "passwordHintFull": "Min 8 car., 1 majuscule, 1 minuscule, 1 chiffre",
     "biometric": {
       "title": "Authentification biométrique",
       "prompt": "Authentifiez-vous pour continuer",
@@ -49,6 +52,26 @@
       "disabled": "Connexion biométrique désactivée",
       "notAvailable": "Authentification biométrique non disponible"
     }
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié",
+    "subtitle": "Entrez votre email et nous vous enverrons un lien de réinitialisation",
+    "sendResetLink": "Envoyer le lien de réinitialisation",
+    "checkEmail": "Vérifiez votre email",
+    "resetSent": "Nous avons envoyé un lien de réinitialisation à {{email}}",
+    "backToSignIn": "Retour à la connexion",
+    "rememberPassword": "Vous vous souvenez de votre mot de passe ?",
+    "emailRequired": "Veuillez entrer votre adresse email",
+    "sendFailed": "Échec de l'envoi du lien. Veuillez réessayer."
+  },
+  "home": {
+    "welcomeBack": "Bon retour, {{name}} !",
+    "quickActions": "Actions rapides",
+    "newItem": "Nouvel élément",
+    "stats": "Statistiques",
+    "recentActivity": "Activité récente",
+    "noRecentActivity": "Aucune activité récente",
+    "activityWillAppear": "Votre activité apparaîtra ici"
   },
   "navigation": {
     "home": "Accueil",
@@ -61,7 +84,9 @@
     "editProfile": "Modifier le profil",
     "changePhoto": "Changer la photo",
     "personalInfo": "Informations personnelles",
-    "memberSince": "Membre depuis {{date}}"
+    "memberSince": "Membre depuis {{date}}",
+    "privacySecurity": "Confidentialité et sécurité",
+    "helpSupport": "Aide et assistance"
   },
   "settings": {
     "title": "Paramètres",
@@ -81,7 +106,9 @@
     "terms": "Conditions d'utilisation",
     "about": "À propos",
     "version": "Version",
-    "deleteAccount": "Supprimer le compte"
+    "deleteAccount": "Supprimer le compte",
+    "darkMode": "Mode sombre",
+    "appVersion": "Version de l'application"
   },
   "errors": {
     "generic": "Une erreur s'est produite",

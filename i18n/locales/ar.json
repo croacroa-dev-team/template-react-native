@@ -41,6 +41,9 @@
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "accountCreated": "تم إنشاء الحساب بنجاح!",
     "sessionExpired": "انتهت الجلسة. يرجى تسجيل الدخول مرة أخرى.",
+    "createPasswordPlaceholder": "أنشئ كلمة مرور",
+    "confirmPasswordPlaceholder": "أكّد كلمة المرور",
+    "passwordHintFull": "8 أحرف كحد أدنى، حرف كبير، حرف صغير، رقم واحد",
     "biometric": {
       "title": "المصادقة البيومترية",
       "prompt": "قم بالمصادقة للمتابعة",
@@ -49,6 +52,26 @@
       "disabled": "تم تعطيل تسجيل الدخول البيومتري",
       "notAvailable": "المصادقة البيومترية غير متاحة"
     }
+  },
+  "forgotPassword": {
+    "title": "نسيت كلمة المرور",
+    "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "checkEmail": "تحقق من بريدك الإلكتروني",
+    "resetSent": "لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى {{email}}",
+    "backToSignIn": "العودة إلى تسجيل الدخول",
+    "rememberPassword": "هل تتذكر كلمة المرور؟",
+    "emailRequired": "يرجى إدخال بريدك الإلكتروني",
+    "sendFailed": "فشل إرسال الرابط. يرجى المحاولة مرة أخرى."
+  },
+  "home": {
+    "welcomeBack": "مرحباً بعودتك، {{name}}!",
+    "quickActions": "إجراءات سريعة",
+    "newItem": "عنصر جديد",
+    "stats": "الإحصائيات",
+    "recentActivity": "النشاط الأخير",
+    "noRecentActivity": "لا يوجد نشاط حديث",
+    "activityWillAppear": "سيظهر نشاطك هنا"
   },
   "navigation": {
     "home": "الرئيسية",
@@ -61,7 +84,9 @@
     "editProfile": "تعديل الملف الشخصي",
     "changePhoto": "تغيير الصورة",
     "personalInfo": "المعلومات الشخصية",
-    "memberSince": "عضو منذ {{date}}"
+    "memberSince": "عضو منذ {{date}}",
+    "privacySecurity": "الخصوصية والأمان",
+    "helpSupport": "المساعدة والدعم"
   },
   "settings": {
     "title": "الإعدادات",
@@ -81,7 +106,9 @@
     "terms": "شروط الخدمة",
     "about": "حول",
     "version": "الإصدار",
-    "deleteAccount": "حذف الحساب"
+    "deleteAccount": "حذف الحساب",
+    "darkMode": "الوضع الداكن",
+    "appVersion": "إصدار التطبيق"
   },
   "errors": {
     "generic": "حدث خطأ ما",
@@ -97,5 +124,35 @@
     "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
     "passwordMatch": "كلمات المرور غير متطابقة",
     "nameMin": "يجب أن يكون الاسم حرفين على الأقل"
+  },
+  "permissions": {
+    "camera": "يلزم الوصول إلى الكاميرا لالتقاط الصور.",
+    "location": "يلزم الوصول إلى الموقع لعرض النتائج القريبة.",
+    "contacts": "يلزم الوصول إلى جهات الاتصال للعثور على الأصدقاء.",
+    "mediaLibrary": "يلزم الوصول إلى مكتبة الصور لاختيار الصور.",
+    "microphone": "يلزم الوصول إلى الميكروفون لتسجيل الصوت.",
+    "notifications": "يلزم إذن الإشعارات لإرسال التنبيهات إليك.",
+    "openSettings": "فتح الإعدادات",
+    "allowAccess": "السماح بالوصول",
+    "blocked": "تم رفض الإذن. يرجى تفعيله في الإعدادات."
+  },
+  "socialAuth": {
+    "continueWithGoogle": "المتابعة مع جوجل",
+    "continueWithApple": "المتابعة مع أبل",
+    "orContinueWith": "أو المتابعة مع"
+  },
+  "payments": {
+    "upgradeToPremium": "الترقية إلى بريميوم",
+    "subscribe": "اشتراك",
+    "restore": "استعادة المشتريات",
+    "perMonth": "/شهر",
+    "perYear": "/سنة"
+  },
+  "upload": {
+    "uploading": "جاري الرفع...",
+    "complete": "مكتمل",
+    "failed": "فشل الرفع",
+    "retry": "إعادة المحاولة",
+    "addPhoto": "إضافة صورة"
   }
 }
