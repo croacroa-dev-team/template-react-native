@@ -166,5 +166,12 @@
     "failed": "Upload fehlgeschlagen",
     "retry": "Erneut versuchen",
     "addPhoto": "Foto hinzufügen"
+  },
+  "session": {
+    "expiringSoon": "Ihre Sitzung läuft bald ab",
+    "expired": "Ihre Sitzung ist abgelaufen",
+    "continue": "Fortfahren",
+    "logout": "Abmelden",
+    "remainingTime": "Verbleibende Zeit: {{seconds}}s"
   }
 }

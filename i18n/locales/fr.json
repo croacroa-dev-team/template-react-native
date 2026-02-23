@@ -166,5 +166,12 @@
     "failed": "Échec du téléchargement",
     "retry": "Réessayer",
     "addPhoto": "Ajouter une photo"
+  },
+  "session": {
+    "expiringSoon": "Votre session est sur le point d'expirer",
+    "expired": "Votre session a expiré",
+    "continue": "Continuer",
+    "logout": "Se déconnecter",
+    "remainingTime": "Temps restant : {{seconds}}s"
   }
 }

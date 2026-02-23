@@ -166,5 +166,12 @@
     "failed": "Error al subir",
     "retry": "Reintentar",
     "addPhoto": "Agregar foto"
+  },
+  "session": {
+    "expiringSoon": "Tu sesión está a punto de expirar",
+    "expired": "Tu sesión ha expirado",
+    "continue": "Continuar",
+    "logout": "Cerrar sesión",
+    "remainingTime": "Tiempo restante: {{seconds}}s"
   }
 }

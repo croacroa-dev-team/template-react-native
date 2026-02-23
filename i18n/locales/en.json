@@ -166,5 +166,12 @@
     "failed": "Upload failed",
     "retry": "Retry",
     "addPhoto": "Add Photo"
+  },
+  "session": {
+    "expiringSoon": "Your session is about to expire",
+    "expired": "Your session has expired",
+    "continue": "Continue",
+    "logout": "Log Out",
+    "remainingTime": "Time remaining: {{seconds}}s"
   }
 }

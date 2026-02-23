@@ -166,5 +166,12 @@
     "failed": "فشل الرفع",
     "retry": "إعادة المحاولة",
     "addPhoto": "إضافة صورة"
+  },
+  "session": {
+    "expiringSoon": "جلستك على وشك الانتهاء",
+    "expired": "انتهت جلستك",
+    "continue": "متابعة",
+    "logout": "تسجيل الخروج",
+    "remainingTime": "الوقت المتبقي: {{seconds}} ثانية"
   }
 }

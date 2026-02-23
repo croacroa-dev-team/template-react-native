@@ -128,3 +128,4 @@ export { withRetry } from "./api/retry";
 export type { RetryConfig } from "./api/retry";
 export { CircuitBreaker } from "./api/circuit-breaker";
 export { deduplicate, getDeduplicationKey, getInflightCount } from "./api/deduplicator";
+export { SessionManager } from "./session/session-manager";

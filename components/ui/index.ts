@@ -26,3 +26,4 @@ export { ImagePickerButton } from "./ImagePickerButton";
 export { UploadProgress } from "./UploadProgress";
 export { ForceUpdateScreen } from "./ForceUpdateScreen";
 export { FeatureGate } from "./FeatureGate";
+export { SessionTimeoutModal } from "./SessionTimeoutModal";
