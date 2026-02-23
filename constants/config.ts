@@ -68,6 +68,29 @@ export const socialAuth = {
   },
 } as const;
 
+// Force Update Configuration
+export const FORCE_UPDATE = {
+  CHECK_URL: '', // Empty by default — set to your API endpoint
+  ENABLED: false,
+} as const;
+
+// In-App Review Configuration
+export const IN_APP_REVIEW = {
+  MIN_SESSIONS: 5,
+  DAYS_BETWEEN_PROMPTS: 30,
+} as const;
+
+// Feature Flags (Remote)
+export const FEATURE_FLAGS = {
+  REFRESH_INTERVAL_MS: 5 * 60 * 1000, // 5 minutes
+  ENABLED: true,
+} as const;
+
+// API Advanced Configuration
+export const API_CONFIG = {
+  ENABLE_ETAG_CACHE: true,
+} as const;
+
 // Security Configuration
 export const SECURITY = {
   /**

@@ -116,7 +116,17 @@
     "timeout": "Request timed out. Please try again.",
     "unauthorized": "You are not authorized to perform this action.",
     "notFound": "Resource not found.",
-    "validation": "Please check your input and try again."
+    "validation": "Please check your input and try again.",
+    "rateLimited": "Too many requests. Please wait a moment.",
+    "crashTitle": "Something went wrong",
+    "crashMessage": "The app encountered an unexpected error.",
+    "tryAgain": "Try Again",
+    "restartApp": "Restart App"
+  },
+  "forceUpdate": {
+    "title": "Update Required",
+    "message": "A new version of the app is available. Please update to continue.",
+    "button": "Update Now"
   },
   "validation": {
     "required": "This field is required",

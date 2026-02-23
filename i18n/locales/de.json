@@ -116,7 +116,17 @@
     "timeout": "Zeitüberschreitung. Bitte erneut versuchen.",
     "unauthorized": "Du bist nicht berechtigt, diese Aktion auszuführen.",
     "notFound": "Ressource nicht gefunden.",
-    "validation": "Bitte überprüfe deine Eingaben und versuche es erneut."
+    "validation": "Bitte überprüfe deine Eingaben und versuche es erneut.",
+    "rateLimited": "Zu viele Anfragen. Bitte warte einen Moment.",
+    "crashTitle": "Etwas ist schief gelaufen",
+    "crashMessage": "Die App hat einen unerwarteten Fehler festgestellt.",
+    "tryAgain": "Erneut versuchen",
+    "restartApp": "App neu starten"
+  },
+  "forceUpdate": {
+    "title": "Aktualisierung erforderlich",
+    "message": "Eine neue Version der App ist verfügbar. Bitte aktualisiere, um fortzufahren.",
+    "button": "Jetzt aktualisieren"
   },
   "validation": {
     "required": "Dieses Feld ist erforderlich",

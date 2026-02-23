@@ -116,7 +116,17 @@
     "timeout": "Délai dépassé. Veuillez réessayer.",
     "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
     "notFound": "Ressource introuvable.",
-    "validation": "Veuillez vérifier vos informations et réessayer."
+    "validation": "Veuillez vérifier vos informations et réessayer.",
+    "rateLimited": "Trop de requêtes. Veuillez patienter un moment.",
+    "crashTitle": "Une erreur s'est produite",
+    "crashMessage": "L'application a rencontré une erreur inattendue.",
+    "tryAgain": "Réessayer",
+    "restartApp": "Redémarrer l'application"
+  },
+  "forceUpdate": {
+    "title": "Mise à jour requise",
+    "message": "Une nouvelle version de l'application est disponible. Veuillez mettre à jour pour continuer.",
+    "button": "Mettre à jour"
   },
   "validation": {
     "required": "Ce champ est requis",

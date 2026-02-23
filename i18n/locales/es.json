@@ -116,7 +116,17 @@
     "timeout": "Tiempo de espera agotado. Por favor intenta de nuevo.",
     "unauthorized": "No estás autorizado para realizar esta acción.",
     "notFound": "Recurso no encontrado.",
-    "validation": "Por favor verifica tus datos e intenta de nuevo."
+    "validation": "Por favor verifica tus datos e intenta de nuevo.",
+    "rateLimited": "Demasiadas solicitudes. Por favor espera un momento.",
+    "crashTitle": "Algo salió mal",
+    "crashMessage": "La aplicación encontró un error inesperado.",
+    "tryAgain": "Intentar de nuevo",
+    "restartApp": "Reiniciar aplicación"
+  },
+  "forceUpdate": {
+    "title": "Actualización requerida",
+    "message": "Una nueva versión de la aplicación está disponible. Por favor actualiza para continuar.",
+    "button": "Actualizar ahora"
   },
   "validation": {
     "required": "Este campo es obligatorio",
