@@ -129,3 +129,5 @@ export type { RetryConfig } from "./api/retry";
 export { CircuitBreaker } from "./api/circuit-breaker";
 export { deduplicate, getDeduplicationKey, getInflightCount } from "./api/deduplicator";
 export { SessionManager } from "./session/session-manager";
+export { InterceptorManager, correlationIdInterceptor, userAgentInterceptor, requestTimingInterceptor, requestSigningInterceptor } from "./api/interceptors";
+export type { RequestConfig, RequestInterceptor, ResponseInterceptor } from "./api/interceptors";
