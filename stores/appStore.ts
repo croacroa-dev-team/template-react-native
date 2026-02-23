@@ -15,6 +15,10 @@ interface AppState {
   featureFlags: Record<string, boolean>;
   setFeatureFlag: (key: string, value: boolean) => void;
 
+  // Session tracking
+  sessionCount: number;
+  incrementSessionCount: () => void;
+
   // Reset all state
   reset: () => void;
 }
@@ -23,6 +27,7 @@ const initialState = {
   isLoading: false,
   hasCompletedOnboarding: false,
   featureFlags: {},
+  sessionCount: 0,
 };
 
 export const useAppStore = create<AppState>()(
@@ -40,6 +45,9 @@ export const useAppStore = create<AppState>()(
           featureFlags: { ...state.featureFlags, [key]: value },
         })),
 
+      incrementSessionCount: () =>
+        set((state) => ({ sessionCount: state.sessionCount + 1 })),
+
       reset: () => set(initialState),
     }),
     {
@@ -48,6 +56,7 @@ export const useAppStore = create<AppState>()(
       partialize: (state) => ({
         hasCompletedOnboarding: state.hasCompletedOnboarding,
         featureFlags: state.featureFlags,
+        sessionCount: state.sessionCount,
       }),
     }
   )

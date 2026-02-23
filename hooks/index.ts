@@ -65,3 +65,4 @@ export type { UsePresenceReturn } from "./usePresence";
 export { useRateLimit } from "./useRateLimit";
 export { useForceUpdate } from "./useForceUpdate";
 export type { UseForceUpdateReturn } from "./useForceUpdate";
+export { useInAppReview } from "./useInAppReview";
