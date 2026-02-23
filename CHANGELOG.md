@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-02-23
+
+### Added — Phase 8: Additional Features
+
+- **Rate Limiting UI** — 429 response interception with `Retry-After` parsing, toast feedback, `useRateLimit` hook with countdown
+- **App Force Update** — Version comparison service, `useForceUpdate` hook, non-dismissible `ForceUpdateScreen` component
+- **In-App Review** — `useInAppReview` hook with session counting and throttle via AsyncStorage, powered by `expo-store-review`
+- **Crash Recovery** — Enhanced `ErrorBoundary` with soft reset (re-render) and hard reset (clear stores + `Updates.reloadAsync()`), crash counter with Sentry context
+- **Feature Flags + A/B Testing** — `FeatureFlagAdapter` interface, `FeatureFlags` facade with `setAdapter()`, `MockFeatureFlagAdapter`, `useFeatureFlag`/`useExperiment` hooks, `FeatureGate` component
+- **Accessibility Tests** — 26 a11y tests for Button, Input, Checkbox, Modal, Card with reusable assertion helpers
+- **HTTP ETag Caching** — In-memory ETag cache with LRU eviction in `ApiClient`, `If-None-Match`/304 handling
+- **LaunchDarkly Integration Guide** — Complete adapter implementation guide
+
+### Changed
+
+- `Button` component now includes `accessibilityRole="button"` and `accessibilityState`
+
+### Dependencies Added
+
+- `expo-store-review`
+
+---
+
+## [3.1.0] - 2026-02-23
+
+### Added — Phase 7: Polish & Documentation
+
+- **Screen Internationalization** — All 6 screens (login, register, forgot-password, home, profile, settings) fully migrated to i18n with 56 strings replaced
+- **i18n Completeness** — 23 new keys added to all 5 locales (en, fr, es, de, ar), including `forgotPassword.*` and `home.*` sections
+- **Phase 6 Hook Tests** — 57 unit tests across 6 files covering all 13 Phase 6 hooks (permissions, payments, media, WebSocket, animations, analytics)
+- **Integration Guides** — Copy-paste-ready adapter guides for Supabase (auth), RevenueCat (payments), PostHog (analytics)
+
+---
+
 ## [3.0.0] - 2026-02-22
 
 ### Added — Phase 6: Template Completion
