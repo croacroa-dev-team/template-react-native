@@ -28,12 +28,12 @@ interface OptimizedImageProps {
   /**
    * Image width
    */
-  width?: number | string;
+  width?: number;
 
   /**
    * Image height
    */
-  height?: number | string;
+  height?: number;
 
   /**
    * Aspect ratio (e.g., 16/9, 1, 4/3)
@@ -279,6 +279,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  backgroundContainer: {
+    flex: 1,
+  },
+  backgroundContent: {
+    flex: 1,
+    zIndex: 1,
+  },
 });
 
 /**
@@ -357,13 +364,3 @@ export function ProgressiveImage({
     </View>
   );
 }
-
-Object.assign(styles, {
-  backgroundContainer: {
-    flex: 1,
-  },
-  backgroundContent: {
-    flex: 1,
-    zIndex: 1,
-  },
-});

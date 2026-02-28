@@ -105,7 +105,7 @@ export function withAccessibility<P extends AccessibilityProps>(
 
     return (
       <WrappedComponent
-        {...(restProps as P)}
+        {...(restProps as unknown as P)}
         ref={ref}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole={accessibilityRole}

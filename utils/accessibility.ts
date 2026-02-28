@@ -387,10 +387,8 @@ export function announce(message: string): void {
 /**
  * Set focus to a specific element (requires a ref)
  */
-export function setAccessibilityFocus(ref: React.RefObject<unknown>): void {
-  if (ref.current) {
-    AccessibilityInfo.setAccessibilityFocus(ref.current);
-  }
+export function setAccessibilityFocus(reactTag: number): void {
+  AccessibilityInfo.setAccessibilityFocus(reactTag);
 }
 
 /**

@@ -38,7 +38,9 @@ jest.mock("expo-notifications", () => ({
   getExpoPushTokenAsync: jest.fn(() => ({ data: "mock-push-token" })),
   setNotificationChannelAsync: jest.fn(),
   addNotificationReceivedListener: jest.fn(() => ({ remove: jest.fn() })),
-  addNotificationResponseReceivedListener: jest.fn(() => ({ remove: jest.fn() })),
+  addNotificationResponseReceivedListener: jest.fn(() => ({
+    remove: jest.fn(),
+  })),
   removeNotificationSubscription: jest.fn(),
   scheduleNotificationAsync: jest.fn(),
   cancelAllScheduledNotificationsAsync: jest.fn(),

@@ -612,7 +612,7 @@ export async function isBackgroundSyncRegistered(): Promise<boolean> {
 export async function getBackgroundSyncStatus(): Promise<{
   isAvailable: boolean;
   isRegistered: boolean;
-  status: BackgroundFetch.BackgroundFetchStatus;
+  status: BackgroundFetch.BackgroundFetchStatus | null;
 }> {
   const status = await BackgroundFetch.getStatusAsync();
   const isRegistered = await isBackgroundSyncRegistered();

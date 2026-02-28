@@ -242,14 +242,7 @@ export function useUpdates(options: UseUpdatesOptions = {}): UseUpdatesReturn {
       onError?.(err);
       return false;
     }
-  }, [
-    showAlert,
-    autoUpdate,
-    onUpdateAvailable,
-    onError,
-    downloadUpdate,
-    applyUpdate,
-  ]);
+  }, [showAlert, autoUpdate, onUpdateAvailable, onError, downloadUpdate]);
 
   /**
    * Reset update state

@@ -5,13 +5,7 @@
  */
 
 import React, { useCallback, useMemo } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  RefreshControl,
-  StyleSheet,
-} from "react-native";
+import { View, Text, ActivityIndicator, RefreshControl } from "react-native";
 import { FlashList, FlashListProps } from "@shopify/flash-list";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils/cn";
@@ -258,19 +252,14 @@ export function VirtualizedList<T>({
       estimatedItemSize={estimatedItemSize}
       drawDistance={drawDistance}
       {...flashListProps}
-      contentContainerStyle={[
-        styles.container,
-        flashListProps.contentContainerStyle,
-      ]}
+      contentContainerStyle={{
+        ...(flashListProps.contentContainerStyle as object),
+      }}
     />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-  },
-});
+// FlashList's ContentStyle uses padding-based layout, not flexGrow
 
 /**
  * Horizontal virtualized list variant

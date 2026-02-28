@@ -184,7 +184,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
         index={index}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
-        backdropComponent={enableBackdrop ? renderBackdrop : null}
+        backdropComponent={enableBackdrop ? renderBackdrop : undefined}
         handleComponent={renderHandle}
         enablePanDownToClose
         backgroundStyle={[

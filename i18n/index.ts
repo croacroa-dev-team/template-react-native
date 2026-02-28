@@ -68,7 +68,7 @@ export async function initI18n(): Promise<void> {
     resources,
     lng: initialLanguage,
     fallbackLng: "en",
-    compatibilityJSON: "v3",
+    compatibilityJSON: "v4",
     interpolation: {
       escapeValue: false, // React already escapes values
     },

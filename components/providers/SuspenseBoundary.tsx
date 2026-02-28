@@ -202,9 +202,16 @@ export function SuspenseBoundary({
 // Combined Boundary
 // ============================================================================
 
-interface AsyncBoundaryProps extends SuspenseBoundaryProps, ErrorBoundaryProps {
+interface AsyncBoundaryProps
+  extends
+    Omit<SuspenseBoundaryProps, "fallback">,
+    Omit<ErrorBoundaryProps, "fallback"> {
   /** Unique key to reset boundary on navigation */
   resetKey?: string | number;
+  /** Error fallback - shown when an error is caught */
+  errorFallback?: ErrorBoundaryProps["fallback"];
+  /** Loading fallback - shown while suspending */
+  loadingFallback?: ReactNode;
 }
 
 /**
@@ -215,7 +222,7 @@ interface AsyncBoundaryProps extends SuspenseBoundaryProps, ErrorBoundaryProps {
  * ```tsx
  * <AsyncBoundary
  *   loadingMessage="Loading data..."
- *   fallback={(error, reset) => <ErrorView error={error} onRetry={reset} />}
+ *   errorFallback={(error, reset) => <ErrorView error={error} onRetry={reset} />}
  *   onError={logError}
  * >
  *   <DataFetchingComponent />
@@ -224,14 +231,14 @@ interface AsyncBoundaryProps extends SuspenseBoundaryProps, ErrorBoundaryProps {
  */
 export function AsyncBoundary({
   children,
-  fallback: errorFallback,
+  errorFallback,
   onError,
   showDetails,
   loadingMessage,
   minLoadingMs,
   LoadingComponent,
   resetKey,
-  fallback: loadingFallback,
+  loadingFallback,
 }: AsyncBoundaryProps) {
   return (
     <LocalErrorBoundary
