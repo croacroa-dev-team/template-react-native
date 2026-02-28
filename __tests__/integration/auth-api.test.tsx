@@ -147,8 +147,8 @@ describe("Auth + API Integration", () => {
         expect(finalState).not.toBeNull();
       });
 
-      expect(finalState?.isAuthenticated).toBe(true);
-      expect(finalState?.user).toEqual(user);
+      expect(finalState!.isAuthenticated).toBe(true);
+      expect(finalState!.user).toEqual(user);
     });
 
     it("handles expired tokens by refreshing", async () => {
@@ -188,7 +188,7 @@ describe("Auth + API Integration", () => {
       );
 
       // Should be authenticated after token refresh (mock implementation always succeeds)
-      expect(finalState?.isAuthenticated).toBe(true);
+      expect(finalState!.isAuthenticated).toBe(true);
     });
   });
 

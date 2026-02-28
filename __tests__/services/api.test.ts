@@ -54,7 +54,9 @@ describe("ApiClient", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    apiClient = new ApiClient("https://api.example.com", 5000);
+    // Disable rate limiting in tests to avoid Bottleneck's async scheduling
+    // interfering with deterministic mock response ordering
+    apiClient = new ApiClient("https://api.example.com", 5000, false);
 
     // Default: valid tokens stored
     mockSecureStore.getItemAsync.mockResolvedValue(JSON.stringify(mockTokens));
@@ -318,40 +320,60 @@ describe("ApiClient", () => {
     it("should handle concurrent 401s with single refresh", async () => {
       const newAccessToken = "new_access_token";
 
-      // Setup: both initial requests return 401
-      fetchMock
-        .mockResolvedValueOnce({
-          ok: false,
-          status: 401,
-          statusText: "Unauthorized",
-        })
-        .mockResolvedValueOnce({
-          ok: false,
-          status: 401,
-          statusText: "Unauthorized",
-        })
-        // Single refresh call
-        .mockResolvedValueOnce({
-          ok: true,
-          status: 200,
-          json: () =>
-            Promise.resolve({
-              accessToken: newAccessToken,
-              refreshToken: "new_refresh",
-              expiresIn: 3600,
-            }),
-        })
-        // Retries succeed
-        .mockResolvedValueOnce({
-          ok: true,
-          status: 200,
-          text: () => Promise.resolve(JSON.stringify({ id: 1 })),
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          status: 200,
-          text: () => Promise.resolve(JSON.stringify({ id: 2 })),
-        });
+      // Track call counts per URL to return different responses
+      const callCounts: Record<string, number> = {};
+
+      fetchMock.mockImplementation((url: string) => {
+        callCounts[url] = (callCounts[url] || 0) + 1;
+        const count = callCounts[url];
+
+        // Refresh endpoint — always succeed
+        if (url === "https://api.example.com/auth/refresh") {
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            json: () =>
+              Promise.resolve({
+                accessToken: newAccessToken,
+                refreshToken: "new_refresh",
+                expiresIn: 3600,
+              }),
+          });
+        }
+
+        // Endpoints — first call returns 401, retry returns 200
+        if (url === "https://api.example.com/endpoint1") {
+          if (count === 1) {
+            return Promise.resolve({
+              ok: false,
+              status: 401,
+              statusText: "Unauthorized",
+            });
+          }
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            text: () => Promise.resolve(JSON.stringify({ id: 1 })),
+          });
+        }
+
+        if (url === "https://api.example.com/endpoint2") {
+          if (count === 1) {
+            return Promise.resolve({
+              ok: false,
+              status: 401,
+              statusText: "Unauthorized",
+            });
+          }
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            text: () => Promise.resolve(JSON.stringify({ id: 2 })),
+          });
+        }
+
+        return Promise.reject(new Error(`Unexpected URL: ${url}`));
+      });
 
       // Make concurrent requests
       const [result1, result2] = await Promise.all([
@@ -372,29 +394,40 @@ describe("ApiClient", () => {
 
   describe("Proactive Token Refresh", () => {
     it("should refresh token proactively when about to expire", async () => {
-      mockSecureStore.getItemAsync.mockResolvedValue(
-        JSON.stringify(soonToExpireTokens)
+      // Track stored tokens to simulate real storage behavior
+      let storedTokens = JSON.stringify(soonToExpireTokens);
+      mockSecureStore.getItemAsync.mockImplementation(() =>
+        Promise.resolve(storedTokens)
       );
-
-      // Refresh call
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        status: 200,
-        json: () =>
-          Promise.resolve({
-            accessToken: "fresh_token",
-            expiresIn: 3600,
-          }),
+      mockSecureStore.setItemAsync.mockImplementation((_, value) => {
+        storedTokens = value;
+        return Promise.resolve();
       });
 
-      // Actual request
-      fetchMock.mockResolvedValueOnce({
-        ok: true,
-        status: 200,
-        text: () => Promise.resolve(JSON.stringify({ data: "test" })),
+      // Use URL-based mock to avoid ordering issues
+      fetchMock.mockImplementation((url: string) => {
+        if (url === "https://api.example.com/auth/refresh") {
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            json: () =>
+              Promise.resolve({
+                accessToken: "fresh_token",
+                refreshToken: "new_refresh",
+                expiresIn: 3600,
+              }),
+          });
+        }
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          text: () => Promise.resolve(JSON.stringify({ data: "test" })),
+        });
       });
 
-      await apiClient.get("/data");
+      const result = await apiClient.get("/data");
+
+      expect(result).toEqual({ data: "test" });
 
       // Should have called refresh before the actual request
       expect(fetchMock).toHaveBeenNthCalledWith(
