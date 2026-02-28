@@ -5,6 +5,7 @@
 
 import * as Device from "expo-device";
 import * as Application from "expo-application";
+import * as Localization from "expo-localization";
 import { Dimensions, Platform } from "react-native";
 
 export interface DeviceDiagnostics {
@@ -34,7 +35,7 @@ export async function getDeviceDiagnostics(): Promise<DeviceDiagnostics> {
     deviceModel: Device.modelName ?? "unknown",
     appVersion: Application.nativeApplicationVersion ?? "unknown",
     buildNumber: Application.nativeBuildVersion ?? "unknown",
-    locale: Platform.select({ ios: "en", android: "en", default: "en" }),
+    locale: Localization.getLocales()[0]?.languageTag ?? "en",
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     isEmulator: !Device.isDevice,
     screenWidth: width,

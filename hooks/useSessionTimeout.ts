@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { SessionManager } from "@/services/session/session-manager";
 import { useAppLifecycle } from "./useAppLifecycle";
 import { SESSION } from "@/constants/config";
@@ -24,13 +24,18 @@ export function useSessionTimeout(): {
     setIsExpired(false);
   }, []);
 
-  useAppLifecycle({
-    onBackground: () => SessionManager.stopMonitoring(),
-    onForeground: () => {
-      SessionManager.touch();
-      SessionManager.startMonitoring();
-    },
-  });
+  const lifecycleCallbacks = useMemo(
+    () => ({
+      onBackground: () => SessionManager.stopMonitoring(),
+      onForeground: () => {
+        SessionManager.touch();
+        SessionManager.startMonitoring();
+      },
+    }),
+    []
+  );
+
+  useAppLifecycle(lifecycleCallbacks);
 
   useEffect(() => {
     if (!SESSION.ENABLED) return;

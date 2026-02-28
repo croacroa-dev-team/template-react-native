@@ -6,6 +6,14 @@
 import type { LoggerAdapter, Breadcrumb } from "./types";
 import { ConsoleLoggerAdapter } from "./adapters/console";
 import { LOGGER } from "@/constants/config";
+import { scrubString, scrub } from "@/utils/piiScrubber";
+
+function scrubContext(
+  context?: Record<string, unknown>
+): Record<string, unknown> | undefined {
+  if (!context) return context;
+  return scrub(context) as Record<string, unknown>;
+}
 
 let adapter: LoggerAdapter = new ConsoleLoggerAdapter();
 
@@ -20,17 +28,17 @@ export const Logger = {
 
   debug(message: string, context?: Record<string, unknown>): void {
     if (!LOGGER.ENABLED) return;
-    adapter.debug(message, context);
+    adapter.debug(scrubString(message), scrubContext(context));
   },
 
   info(message: string, context?: Record<string, unknown>): void {
     if (!LOGGER.ENABLED) return;
-    adapter.info(message, context);
+    adapter.info(scrubString(message), scrubContext(context));
   },
 
   warn(message: string, context?: Record<string, unknown>): void {
     if (!LOGGER.ENABLED) return;
-    adapter.warn(message, context);
+    adapter.warn(scrubString(message), scrubContext(context));
   },
 
   error(
@@ -39,7 +47,7 @@ export const Logger = {
     context?: Record<string, unknown>
   ): void {
     if (!LOGGER.ENABLED) return;
-    adapter.error(message, error, context);
+    adapter.error(scrubString(message), error, scrubContext(context));
   },
 
   fatal(
@@ -48,7 +56,7 @@ export const Logger = {
     context?: Record<string, unknown>
   ): void {
     if (!LOGGER.ENABLED) return;
-    adapter.fatal(message, error, context);
+    adapter.fatal(scrubString(message), error, scrubContext(context));
   },
 
   addBreadcrumb(
@@ -57,7 +65,7 @@ export const Logger = {
     data?: Record<string, unknown>
   ): void {
     if (!LOGGER.ENABLED) return;
-    adapter.addBreadcrumb(category, message, data);
+    adapter.addBreadcrumb(category, scrubString(message), scrubContext(data));
   },
 
   getBreadcrumbs(): Breadcrumb[] {

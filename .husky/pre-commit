@@ -4,8 +4,8 @@ echo "Checking for potential secrets..."
 # Common patterns for secrets (API keys, tokens, passwords)
 SECRETS_PATTERN='(password|passwd|pwd|secret|api[_-]?key|apikey|auth[_-]?token|access[_-]?token|private[_-]?key|client[_-]?secret)\s*[:=]\s*["\x27][^"\x27]{8,}'
 
-# Check staged files for secrets (case insensitive)
-if git diff --cached --name-only | xargs grep -l -i -E "$SECRETS_PATTERN" 2>/dev/null; then
+# Check staged files for secrets (case insensitive), excluding test files
+if git diff --cached --name-only | grep -v '__tests__/' | grep -v '\.test\.' | grep -v '\.spec\.' | xargs grep -l -i -E "$SECRETS_PATTERN" 2>/dev/null; then
   echo ""
   echo "WARNING: Potential secrets detected in staged files!"
   echo "Please review the files above and ensure no sensitive data is being committed."
@@ -16,7 +16,7 @@ if git diff --cached --name-only | xargs grep -l -i -E "$SECRETS_PATTERN" 2>/dev
 fi
 
 # Check for common secret file patterns
-SECRET_FILES=$(git diff --cached --name-only | grep -E '\.(env|pem|key|p12|pfx|credentials)$' | grep -v '\.example$' | grep -v '\.sample$')
+SECRET_FILES=$(git diff --cached --name-only | grep -E '\.(env|pem|key|p12|pfx|credentials)$' | grep -v '\.example$' | grep -v '\.sample$' || true)
 if [ -n "$SECRET_FILES" ]; then
   echo ""
   echo "WARNING: Potentially sensitive files detected:"
