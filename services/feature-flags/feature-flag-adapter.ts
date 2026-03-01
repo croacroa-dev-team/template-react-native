@@ -22,6 +22,9 @@
 import type { FeatureFlagAdapter } from "./types";
 import { MockFeatureFlagAdapter } from "./adapters/mock";
 import { FEATURE_FLAGS } from "@/constants/config";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "FeatureFlags" });
 
 // ============================================================================
 // Module-level state
@@ -54,10 +57,9 @@ export const FeatureFlags = {
    */
   setAdapter(adapter: FeatureFlagAdapter): void {
     activeAdapter = adapter;
-
-    if (__DEV__) {
-      console.log("[FeatureFlags] Adapter set:", adapter.constructor.name);
-    }
+    log.debug("[FeatureFlags] Adapter set:", {
+      adapter: adapter.constructor.name,
+    });
   },
 
   // --------------------------------------------------------------------------
@@ -147,17 +149,13 @@ export const FeatureFlags = {
 
     refreshInterval = setInterval(() => {
       activeAdapter.refresh().catch((err) => {
-        if (__DEV__) {
-          console.warn("[FeatureFlags] Auto-refresh failed:", err);
-        }
+        log.warn("[FeatureFlags] Auto-refresh failed:", { error: err });
       });
     }, FEATURE_FLAGS.REFRESH_INTERVAL_MS);
 
-    if (__DEV__) {
-      console.log(
-        `[FeatureFlags] Auto-refresh started (every ${FEATURE_FLAGS.REFRESH_INTERVAL_MS}ms)`
-      );
-    }
+    log.debug(
+      `[FeatureFlags] Auto-refresh started (every ${FEATURE_FLAGS.REFRESH_INTERVAL_MS}ms)`
+    );
   },
 
   /** Stop the auto-refresh interval. */
@@ -165,10 +163,7 @@ export const FeatureFlags = {
     if (refreshInterval) {
       clearInterval(refreshInterval);
       refreshInterval = null;
-
-      if (__DEV__) {
-        console.log("[FeatureFlags] Auto-refresh stopped");
-      }
+      log.debug("[FeatureFlags] Auto-refresh stopped");
     }
   },
 };

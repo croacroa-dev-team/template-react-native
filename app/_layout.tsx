@@ -13,6 +13,8 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ThemeProvider, useTheme } from "@/hooks/useTheme";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useOffline } from "@/hooks/useOffline";
+import { useUpdates } from "@/hooks/useUpdates";
+import { DebugMenuProvider } from "@/components/dev/DebugMenuProvider";
 import {
   queryClient,
   persistOptions,
@@ -36,6 +38,8 @@ function RootLayoutContent() {
 
   // Track offline status with toast notifications
   useOffline({ showToast: true });
+
+  useUpdates();
 
   useEffect(() => {
     if (isLoaded) {
@@ -88,7 +92,9 @@ export default function RootLayout() {
             <ThemeProvider>
               <AnalyticsProvider>
                 <AuthProvider>
-                  <RootLayoutContent />
+                  <DebugMenuProvider>
+                    <RootLayoutContent />
+                  </DebugMenuProvider>
                 </AuthProvider>
               </AnalyticsProvider>
             </ThemeProvider>

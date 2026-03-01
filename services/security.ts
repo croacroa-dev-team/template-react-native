@@ -5,6 +5,7 @@
  */
 
 import { SECURITY, IS_DEV } from "@/constants/config";
+import { Logger } from "@/services/logger/logger-adapter";
 
 /**
  * Validate SSL certificate pins for a given hostname.
@@ -84,9 +85,7 @@ export function generateRequestSignature(
 
   // In production, use a proper HMAC implementation with a secret key
   // This is a placeholder - implement actual signing based on your backend requirements
-  if (IS_DEV) {
-    console.log("[Security] Would sign payload:", payload);
-  }
+  Logger.warn("[Security] Would sign payload:", { payload });
 
   // TODO: Implement actual HMAC signing
   // const hmac = crypto.createHmac(SECURITY.REQUEST_SIGNING.ALGORITHM, SECRET_KEY);

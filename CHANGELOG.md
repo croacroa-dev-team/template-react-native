@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+_No unreleased changes._
+
+---
+
+## [3.4.0] - 2026-02-28
+
+### Added — Phase 10: Wire Everything
+
+- **Layout Integration** — `DebugMenuProvider` wired into root layout, `useUpdates()` OTA check on mount/foreground, `SessionTimeoutModal` with auto-signout in auth layout
+- **Logger Migration** — All 117+ `console.*` calls across 28 source files migrated to structured `Logger` facade with PII scrubbing; only intentional console adapters and JSDoc examples remain
+- **Sentry PII Scrubbing** — `beforeSend` now strips `user.email/username/ip_address`, deletes `Authorization`/`Cookie` headers, and runs `scrub()` on `event.extra`
+- **OptimizedImage Fix** — Shimmer animation fixed: `useState` abuse replaced with proper `useEffect` + `withRepeat`/`cancelAnimation` for continuous animation with cleanup
+- **Documentation** — README updated with accurate test count (172+), Phase 8/9 features, expanded project structure; Firebase Remote Config and SQLite database guides added
+
+### Fixed
+
+- `SkeletonLoader` shimmer now loops continuously instead of firing once
+- `useAuth` test suite mocks updated for Logger compatibility
+- `ApiClient` test suite config mock expanded with `LOGGER` constants
+- TypeScript errors in Logger migration (context object types) resolved
+
+---
+
 ## [3.3.0] - 2026-02-23
 
 ### Added — Phase 9: Production Hardening
@@ -121,13 +146,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [2.0.0] - 2025-01-01
 
 ### Added
 
 - Auth adapter pattern for easy provider switching (Supabase, Firebase, etc.)
 - Internationalization (i18n) support with expo-localization and i18next
-  - English and French translations included
+  - 5 locales included (en, fr, es, de, ar)
   - Language detection and persistence
 - New UI components:
   - `Select` - Dropdown/picker component

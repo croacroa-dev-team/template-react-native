@@ -29,7 +29,7 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 ### Internationalization
 
 - **i18n** with expo-localization + i18next
-- **English & French** translations included
+- **5 locales** included (English, French, Spanish, German, Arabic)
 - **Language detection** and persistence
 
 ### UX Features
@@ -51,6 +51,9 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **Avatar** with initials fallback
 - **Badge, Chip, CountBadge**
 - **OptimizedImage** with expo-image
+- **SessionTimeoutModal** with auto-signout
+- **PermissionRationale** pre-permission dialog
+- **ForceUpdateScreen** non-dismissible update gate
 
 ### Animations & Transitions
 
@@ -96,15 +99,26 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **useChannel** & **usePresence** hooks
 - Offline queue & auth token injection
 
+### Production Services
+
+- **Logger Service** — Structured logging with adapter pattern, PII scrubbing, scoped loggers via `Logger.withContext()`
+- **Remote Config** — Adapter pattern for Firebase/LaunchDarkly, `useRemoteConfig` hook
+- **SQLite Database** — Auto-migration system with `Database` facade and `useDatabase` hook
+- **Session Management** — Activity-based timeout with warning modal and auto-signout
+- **Retry & Circuit Breaker** — Exponential backoff, jitter, circuit breaker states, request deduplication
+- **Request Interceptors** — Correlation ID, user agent, request timing, request signing
+- **PII Scrubbing** — Automatic redaction of emails, phone numbers, credit cards, JWTs in logs and Sentry events
+- **Debug Menu** — Dev-only panel with env info, network requests, AsyncStorage viewer, feature flags
+
 ### DevOps & Quality
 
 - **GitHub Actions** CI/CD workflows
 - **Maestro** E2E tests
-- **Sentry** for crash reporting
+- **Sentry** for crash reporting with PII scrubbing
 - **Analytics Adapter** for multiple providers
 - **Performance Monitoring** hooks
-- **Accessibility** utilities and hooks
-- **Jest + Testing Library** with 58+ tests
+- **Accessibility** utilities, hooks, and 26 a11y tests
+- **Jest + Testing Library** with 172+ tests across 14 suites
 - **Storybook** for component documentation
 - **ESLint + Prettier + Husky** for code quality
 
@@ -160,20 +174,34 @@ npm run android     # Run on Android emulator
 │   ├── (public)/          # Public routes (login, register, forgot-password)
 │   └── _layout.tsx        # Root layout with providers
 ├── components/
-│   ├── ui/                # UI components (Button, Card, Modal, Skeleton)
+│   ├── ui/                # UI components (Button, Card, Modal, Skeleton, etc.)
+│   ├── dev/               # Debug menu (dev-only)
 │   ├── forms/             # Form components (FormInput)
+│   ├── providers/         # AnalyticsProvider, SuspenseBoundary
 │   └── ErrorBoundary.tsx  # Global error handling
-├── hooks/                 # useAuth, useTheme, useNotifications, useApi, useOffline
+├── hooks/                 # useAuth, useTheme, useSessionTimeout, useUpdates, ...
 ├── stores/                # Zustand stores (appStore, notificationStore)
 ├── services/
-│   ├── api.ts            # HTTP client with 401 retry
+│   ├── api.ts            # HTTP client with 401 retry & ETag caching
+│   ├── logger/           # Structured logging with adapter pattern
+│   ├── database/         # SQLite with auto-migration system
+│   ├── session/          # Session timeout management
+│   ├── config/           # Remote config adapter
+│   ├── feature-flags/    # Feature flags & A/B testing
+│   ├── payments/         # Payment adapter (RevenueCat, Stripe, etc.)
+│   ├── analytics/        # Analytics adapter (PostHog, Mixpanel, etc.)
+│   ├── realtime/         # WebSocket manager with reconnect
+│   ├── auth/             # Social login (Google, Apple)
+│   ├── media/            # Image picker, compression, upload
+│   ├── permissions/      # Centralized permission manager
+│   ├── sentry.ts         # Crash reporting with PII scrubbing
 │   ├── queryClient.ts    # TanStack Query with persistence
-│   ├── sentry.ts         # Crash reporting
 │   └── storage.ts        # AsyncStorage & SecureStore helpers
-├── utils/                 # cn, toast, validation schemas
+├── utils/                 # cn, toast, validation, piiScrubber
 ├── constants/             # App configuration
 ├── types/                 # TypeScript types
-├── __tests__/             # Test files (58+ tests)
+├── __tests__/             # Test files (172+ tests, 14 suites)
+├── docs/guides/           # Integration guides (Supabase, RevenueCat, etc.)
 └── scripts/               # Init scripts for template setup
 ```
 
@@ -402,7 +430,7 @@ EXPO_PUBLIC_SENTRY_DSN=your-sentry-dsn
 
 ## 🧪 Testing
 
-58+ tests included:
+172+ tests across 14 suites:
 
 ```bash
 npm test              # Run all tests
@@ -414,7 +442,15 @@ Test coverage:
 
 - `useAuth` hook - 24 tests
 - `ApiClient` - 22 tests
-- UI components - 12 tests
+- `useWebSocket` - 12 tests
+- `usePayments` - 10 tests
+- `usePermission` - 8 tests
+- `useMedia` - 8 tests
+- `useAnimations` - 19 tests
+- `useAnalytics` - 10 tests
+- Accessibility - 26 tests
+- UI components & snapshots - 18 tests
+- Performance - 15 tests
 
 ## 📜 Available Scripts
 

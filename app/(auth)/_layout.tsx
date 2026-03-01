@@ -1,11 +1,22 @@
+import { useEffect } from "react";
 import { Redirect, Stack } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "@/hooks/useTheme";
+import { useSessionTimeout } from "@/hooks/useSessionTimeout";
+import { SessionTimeoutModal } from "@/components/ui/SessionTimeoutModal";
 import { View, ActivityIndicator } from "react-native";
 
 export default function AuthLayout() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, signOut } = useAuth();
   const { isDark } = useTheme();
+  const { isWarning, isExpired, remainingSeconds, extend } =
+    useSessionTimeout();
+
+  useEffect(() => {
+    if (isExpired) {
+      signOut();
+    }
+  }, [isExpired, signOut]);
 
   if (isLoading) {
     return (
@@ -20,17 +31,25 @@ export default function AuthLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        contentStyle: {
-          backgroundColor: isDark ? "#0f172a" : "#ffffff",
-        },
-      }}
-    >
-      <Stack.Screen name="home" />
-      <Stack.Screen name="profile" />
-      <Stack.Screen name="settings" />
-    </Stack>
+    <>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: isDark ? "#0f172a" : "#ffffff",
+          },
+        }}
+      >
+        <Stack.Screen name="home" />
+        <Stack.Screen name="profile" />
+        <Stack.Screen name="settings" />
+      </Stack>
+      <SessionTimeoutModal
+        visible={isWarning}
+        remainingSeconds={remainingSeconds}
+        onContinue={extend}
+        onLogout={signOut}
+      />
+    </>
   );
 }

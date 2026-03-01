@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/react-native";
 import { IS_DEV, IS_PROD, APP_VERSION } from "@/constants/config";
+import { Logger } from "@/services/logger/logger-adapter";
+import { scrub } from "@/utils/piiScrubber";
 
 // TODO: Replace with your actual Sentry DSN
 // Get it from: https://sentry.io -> Project Settings -> Client Keys (DSN)
@@ -11,9 +13,7 @@ const SENTRY_DSN = process.env.EXPO_PUBLIC_SENTRY_DSN || "";
  */
 export function initSentry() {
   if (!SENTRY_DSN) {
-    if (IS_DEV) {
-      console.log("[Sentry] No DSN configured, skipping initialization");
-    }
+    Logger.debug("[Sentry] No DSN configured, skipping initialization");
     return;
   }
 
@@ -36,15 +36,31 @@ export function initSentry() {
 
     // Filter out certain errors
     beforeSend(event) {
-      // Don't send events in dev
       if (IS_DEV) {
-        console.log("[Sentry] Would send event:", event);
+        Logger.debug("[Sentry] Would send event:", { eventId: event.event_id });
         return null;
       }
 
-      // Filter out network errors that are expected
       if (event.message?.includes("Network request failed")) {
         return null;
+      }
+
+      // Strip PII from user context
+      if (event.user) {
+        delete event.user.email;
+        delete event.user.username;
+        delete event.user.ip_address;
+      }
+
+      // Strip sensitive headers from request
+      if (event.request?.headers) {
+        delete event.request.headers["Authorization"];
+        delete event.request.headers["Cookie"];
+      }
+
+      // Scrub extra data
+      if (event.extra) {
+        event.extra = scrub(event.extra) as Record<string, unknown>;
       }
 
       return event;
@@ -60,7 +76,7 @@ export function captureException(
   context?: Record<string, unknown>
 ) {
   if (IS_DEV) {
-    console.error("[Sentry] Exception:", error, context);
+    Logger.error("[Sentry] Exception", error, context);
     return;
   }
 
@@ -77,7 +93,7 @@ export function captureMessage(
   level: Sentry.SeverityLevel = "info"
 ) {
   if (IS_DEV) {
-    console.log(`[Sentry] ${level}: ${message}`);
+    Logger.debug(`[Sentry] ${level}: ${message}`);
     return;
   }
 
@@ -91,11 +107,9 @@ export function setUser(
   user: { id: string; email?: string; name?: string } | null
 ) {
   if (user) {
-    Sentry.setUser({
-      id: user.id,
-      email: user.email,
-      username: user.name,
-    });
+    // Only send non-PII identifier — email/username stripped at source
+    // (beforeSend also strips as defense-in-depth)
+    Sentry.setUser({ id: user.id });
   } else {
     Sentry.setUser(null);
   }

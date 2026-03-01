@@ -13,6 +13,7 @@ import {
 } from "react";
 import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Logger } from "@/services/logger/logger-adapter";
 
 /**
  * Theme mode options
@@ -81,7 +82,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         setModeState(storedMode as ThemeMode);
       }
     } catch (error) {
-      console.error("Failed to load theme:", error);
+      Logger.error("Failed to load theme", error as Error);
     } finally {
       setIsLoaded(true);
     }
@@ -92,7 +93,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       await AsyncStorage.setItem(THEME_KEY, newMode);
     } catch (error) {
-      console.error("Failed to save theme:", error);
+      Logger.error("Failed to save theme", error as Error);
     }
   };
 

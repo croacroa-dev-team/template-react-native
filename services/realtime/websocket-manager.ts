@@ -12,6 +12,9 @@ import type {
   MessageHandler,
   StatusHandler,
 } from "./types";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "WebSocket" });
 
 /** Maximum reconnect delay cap in milliseconds */
 const MAX_RECONNECT_DELAY = 30_000;
@@ -108,7 +111,7 @@ export class WebSocketManager {
       // Set a connection timeout
       this.connectionTimeoutTimer = setTimeout(() => {
         if (this.status === "connecting") {
-          console.warn("[WebSocketManager] Connection timeout");
+          log.warn("Connection timeout");
           this.ws?.close();
           this.attemptReconnect();
         }
@@ -136,11 +139,14 @@ export class WebSocketManager {
       };
 
       this.ws.onerror = (error: Event) => {
-        console.error("[WebSocketManager] WebSocket error:", error);
+        log.error(
+          "WebSocket error",
+          error instanceof Error ? error : new Error(String(error))
+        );
         // onclose will fire after onerror, so reconnect logic is handled there
       };
     } catch (error) {
-      console.error("[WebSocketManager] Failed to connect:", error);
+      log.error("Failed to connect", error as Error);
       this.setStatus("disconnected");
       this.attemptReconnect();
     }
@@ -275,7 +281,7 @@ export class WebSocketManager {
       try {
         handler(newStatus);
       } catch (error) {
-        console.error("[WebSocketManager] Status handler error:", error);
+        log.error("Status handler error", error as Error);
       }
     });
   }
@@ -300,7 +306,7 @@ export class WebSocketManager {
       const parsed: unknown = JSON.parse(event.data as string);
 
       if (!this.isValidMessage(parsed)) {
-        console.warn("[WebSocketManager] Skipping invalid message:", parsed);
+        log.warn("Skipping invalid message");
         return;
       }
 
@@ -316,10 +322,7 @@ export class WebSocketManager {
         try {
           handler(message);
         } catch (error) {
-          console.error(
-            "[WebSocketManager] Global message handler error:",
-            error
-          );
+          log.error("Global message handler error", error as Error);
         }
       });
 
@@ -331,16 +334,13 @@ export class WebSocketManager {
             try {
               handler(message);
             } catch (error) {
-              console.error(
-                "[WebSocketManager] Channel message handler error:",
-                error
-              );
+              log.error("Channel message handler error", error as Error);
             }
           });
         }
       }
     } catch (error) {
-      console.error("[WebSocketManager] Failed to parse message:", error);
+      log.error("Failed to parse message", error as Error);
     }
   }
 
@@ -354,8 +354,8 @@ export class WebSocketManager {
     }
 
     if (this.reconnectAttempts >= this.config.maxReconnectAttempts) {
-      console.warn(
-        `[WebSocketManager] Max reconnect attempts (${this.config.maxReconnectAttempts}) reached`
+      log.warn(
+        `Max reconnect attempts (${this.config.maxReconnectAttempts}) reached`
       );
       this.setStatus("disconnected");
       return;
@@ -368,8 +368,8 @@ export class WebSocketManager {
       MAX_RECONNECT_DELAY
     );
 
-    console.log(
-      `[WebSocketManager] Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts + 1}/${this.config.maxReconnectAttempts})`
+    log.debug(
+      `Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts + 1}/${this.config.maxReconnectAttempts})`
     );
 
     this.reconnectTimer = setTimeout(() => {

@@ -8,7 +8,9 @@ import * as TaskManager from "expo-task-manager";
 import * as BackgroundFetch from "expo-background-fetch";
 import { storage } from "./storage";
 import { api } from "./api";
-import { IS_DEV } from "@/constants/config";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "BackgroundSync" });
 
 // Task names
 const BACKGROUND_SYNC_TASK = "BACKGROUND_SYNC_TASK";
@@ -157,9 +159,7 @@ export async function queueMutation(
   queue.push(queuedMutation);
   await saveMutationQueue(queue);
 
-  if (IS_DEV) {
-    console.log("[BackgroundSync] Queued mutation:", queuedMutation.id);
-  }
+  log.debug("Queued mutation", { mutationId: queuedMutation.id });
 
   return queuedMutation.id;
 }
@@ -402,9 +402,7 @@ export async function processQueue(): Promise<{
     };
   }
 
-  if (IS_DEV) {
-    console.log(`[BackgroundSync] Processing ${queue.length} mutations`);
-  }
+  log.debug(`Processing ${queue.length} mutations`);
 
   const results: SyncResult[] = [];
   const updatedQueue: QueuedMutation[] = [];
@@ -440,11 +438,9 @@ export async function processQueue(): Promise<{
           );
         }
 
-        if (IS_DEV) {
-          console.log(
-            `[BackgroundSync] Conflict for ${mutation.id} resolved with action: ${resolution.action}`
-          );
-        }
+        log.debug(
+          `Conflict for ${mutation.id} resolved with action: ${resolution.action}`
+        );
 
         switch (resolution.action) {
           case "retry":
@@ -480,9 +476,8 @@ export async function processQueue(): Promise<{
           });
         } else {
           // Max retries reached, log and discard
-          console.warn(
-            `[BackgroundSync] Mutation ${mutation.id} failed after ${mutation.maxRetries} retries:`,
-            result.error
+          log.warn(
+            `Mutation ${mutation.id} failed after ${mutation.maxRetries} retries: ${result.error}`
           );
         }
       }
@@ -495,11 +490,9 @@ export async function processQueue(): Promise<{
   const succeeded = results.filter((r) => r.success).length;
   const failed = results.filter((r) => !r.success).length;
 
-  if (IS_DEV) {
-    console.log(
-      `[BackgroundSync] Processed: ${results.length}, Succeeded: ${succeeded}, Failed: ${failed}, Conflicts: ${conflictCount}, Remaining: ${updatedQueue.length}`
-    );
-  }
+  log.debug(
+    `Processed: ${results.length}, Succeeded: ${succeeded}, Failed: ${failed}, Conflicts: ${conflictCount}, Remaining: ${updatedQueue.length}`
+  );
 
   return {
     processed: results.length,
@@ -531,7 +524,7 @@ TaskManager.defineTask(BACKGROUND_SYNC_TASK, async () => {
 
     return BackgroundFetch.BackgroundFetchResult.NewData;
   } catch (error) {
-    console.error("[BackgroundSync] Task error:", error);
+    log.error("Task error", error as Error);
     return BackgroundFetch.BackgroundFetchResult.Failed;
   }
 });
@@ -558,12 +551,12 @@ export async function registerBackgroundSync(): Promise<boolean> {
     const status = await BackgroundFetch.getStatusAsync();
 
     if (status === BackgroundFetch.BackgroundFetchStatus.Restricted) {
-      console.warn("[BackgroundSync] Background fetch is restricted");
+      log.warn("Background fetch is restricted");
       return false;
     }
 
     if (status === BackgroundFetch.BackgroundFetchStatus.Denied) {
-      console.warn("[BackgroundSync] Background fetch is denied");
+      log.warn("Background fetch is denied");
       return false;
     }
 
@@ -574,13 +567,11 @@ export async function registerBackgroundSync(): Promise<boolean> {
       startOnBoot: true,
     });
 
-    if (IS_DEV) {
-      console.log("[BackgroundSync] Background sync registered");
-    }
+    log.debug("Background sync registered");
 
     return true;
   } catch (error) {
-    console.error("[BackgroundSync] Registration failed:", error);
+    log.error("Registration failed", error as Error);
     return false;
   }
 }
@@ -591,11 +582,9 @@ export async function registerBackgroundSync(): Promise<boolean> {
 export async function unregisterBackgroundSync(): Promise<void> {
   try {
     await BackgroundFetch.unregisterTaskAsync(BACKGROUND_SYNC_TASK);
-    if (IS_DEV) {
-      console.log("[BackgroundSync] Background sync unregistered");
-    }
+    log.debug("Background sync unregistered");
   } catch (error) {
-    console.error("[BackgroundSync] Unregistration failed:", error);
+    log.error("Unregistration failed", error as Error);
   }
 }
 

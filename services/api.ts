@@ -4,7 +4,10 @@ import Bottleneck from "bottleneck";
 import i18next from "i18next";
 import { API_URL, API_CONFIG } from "@/constants/config";
 import { toast } from "@/utils/toast";
+import { Logger } from "@/services/logger/logger-adapter";
 import type { AuthTokens } from "@/types";
+
+const log = Logger.withContext({ module: "API" });
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -35,14 +38,14 @@ limiter.on("failed", async (error, _jobInfo) => {
   // If we hit a rate limit, wait and retry
   if (error instanceof Error && error.message.includes("429")) {
     const retryAfter = rateLimitRetryAfter || 1000;
-    console.warn(`Rate limited, retrying in ${retryAfter}ms`);
+    log.warn(`Rate limited, retrying in ${retryAfter}ms`);
     return retryAfter;
   }
   return null;
 });
 
 limiter.on("retry", (error, jobInfo) => {
-  console.log(`Retrying request (attempt ${jobInfo.retryCount + 1})`);
+  log.debug(`Retrying request (attempt ${jobInfo.retryCount + 1})`);
 });
 
 interface RequestOptions {
@@ -142,7 +145,7 @@ async function refreshAccessToken(): Promise<string | null> {
       await saveTokens(newTokens);
       return newTokens.accessToken;
     } catch (error) {
-      console.error("Token refresh failed:", error);
+      log.error("Token refresh failed", error as Error);
       await handleAuthFailure();
       return null;
     } finally {

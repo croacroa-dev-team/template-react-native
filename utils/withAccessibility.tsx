@@ -6,6 +6,9 @@
 
 import React, { ComponentType, forwardRef } from "react";
 import { AccessibilityProps, AccessibilityRole } from "react-native";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "Accessibility" });
 
 /**
  * Required accessibility props that must be provided
@@ -80,17 +83,15 @@ export function withAccessibility<P extends AccessibilityProps>(
     } = props;
 
     // Development-time validation
-    if (__DEV__) {
-      if (!accessibilityLabel) {
-        console.warn(
-          `[A11y] ${WrappedComponent.displayName || "Component"} is missing accessibilityLabel`
-        );
-      }
-      if (requireHint && !accessibilityHint) {
-        console.warn(
-          `[A11y] ${WrappedComponent.displayName || "Component"} is missing accessibilityHint`
-        );
-      }
+    if (!accessibilityLabel) {
+      log.warn(
+        `[A11y] ${WrappedComponent.displayName || "Component"} is missing accessibilityLabel`
+      );
+    }
+    if (requireHint && !accessibilityHint) {
+      log.warn(
+        `[A11y] ${WrappedComponent.displayName || "Component"} is missing accessibilityHint`
+      );
     }
 
     // Auto-generate testID if not provided
@@ -136,12 +137,10 @@ export function useAccessibilityValidation(
   props: Partial<AccessibilityProps>,
   componentName: string
 ): void {
-  if (__DEV__) {
-    if (!props.accessibilityLabel && !props.accessibilityLabelledBy) {
-      console.warn(
-        `[A11y] ${componentName}: Missing accessibilityLabel or accessibilityLabelledBy`
-      );
-    }
+  if (!props.accessibilityLabel && !props.accessibilityLabelledBy) {
+    log.warn(
+      `[A11y] ${componentName}: Missing accessibilityLabel or accessibilityLabelledBy`
+    );
   }
 }
 

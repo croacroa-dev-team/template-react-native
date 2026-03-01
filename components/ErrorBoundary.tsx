@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Updates from "expo-updates";
 import i18next from "i18next";
 import { captureException, addBreadcrumb, Sentry } from "@/services/sentry";
+import { Logger } from "@/services/logger/logger-adapter";
 import { useAppStore } from "@/stores/appStore";
 
 interface Props {
@@ -69,9 +70,10 @@ export class ErrorBoundary extends Component<Props, State> {
       componentStack: errorInfo.componentStack,
     });
 
-    // Also log to console in dev
-    console.error("ErrorBoundary caught an error:", error);
-    console.error("Component stack:", errorInfo.componentStack);
+    // Log via Logger facade
+    Logger.error("ErrorBoundary caught an error", error, {
+      componentStack: errorInfo.componentStack?.slice(0, 500),
+    });
   }
 
   /**

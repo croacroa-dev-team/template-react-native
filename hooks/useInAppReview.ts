@@ -3,6 +3,7 @@ import * as StoreReview from "expo-store-review";
 import { storage } from "@/services/storage";
 import { IN_APP_REVIEW } from "@/constants/config";
 import { useAppStore } from "@/stores/appStore";
+import { Logger } from "@/services/logger/logger-adapter";
 
 const LAST_REVIEW_PROMPT_DATE_KEY = "LAST_REVIEW_PROMPT_DATE";
 
@@ -56,7 +57,7 @@ export function useInAppReview(): UseInAppReviewReturn {
       setHasRequested(true);
       await storage.set(LAST_REVIEW_PROMPT_DATE_KEY, new Date().toISOString());
     } catch (error) {
-      console.error("Failed to request in-app review:", error);
+      Logger.error("Failed to request in-app review:", error as Error);
     }
   }, [hasRequested, isAvailable, sessionCount]);
 

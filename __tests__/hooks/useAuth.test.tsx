@@ -14,6 +14,24 @@ jest.mock("@/utils/toast", () => ({
   },
 }));
 
+// Mock Logger so console.warn/error spies still work
+jest.mock("@/services/logger/logger-adapter", () => ({
+  Logger: {
+    debug: (...args: unknown[]) => console.log(...args),
+    info: (...args: unknown[]) => console.log(...args),
+    warn: (...args: unknown[]) => console.warn(args[0]),
+    error: (...args: unknown[]) => console.error(args[0]),
+    fatal: jest.fn(),
+    withContext: () => ({
+      debug: jest.fn(),
+      info: jest.fn(),
+      warn: (...args: unknown[]) => console.warn(args[0]),
+      error: (...args: unknown[]) => console.error(args[0]),
+      fatal: jest.fn(),
+    }),
+  },
+}));
+
 const mockSecureStore = SecureStore as jest.Mocked<typeof SecureStore>;
 const mockRouter = router as jest.Mocked<typeof router>;
 

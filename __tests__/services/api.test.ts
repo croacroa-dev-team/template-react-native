@@ -24,6 +24,7 @@ jest.mock("i18next", () => ({
 jest.mock("@/constants/config", () => ({
   API_URL: "https://api.example.com",
   API_CONFIG: { ENABLE_ETAG_CACHE: false },
+  LOGGER: { ENABLED: false, MIN_LEVEL: "warn", MAX_BREADCRUMBS: 100 },
 }));
 
 const mockSecureStore = SecureStore as jest.Mocked<typeof SecureStore>;

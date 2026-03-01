@@ -7,6 +7,9 @@
 
 import { IS_DEV, ENABLE_ANALYTICS } from "@/constants/config";
 import { captureException as sentryCapture, addBreadcrumb } from "./sentry";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "Analytics" });
 
 // ============================================================================
 // Types
@@ -256,7 +259,7 @@ class Analytics implements AnalyticsAdapter {
       try {
         adapter.track(event, mergedProperties);
       } catch (error) {
-        console.error(`Analytics track error:`, error);
+        log.error("Analytics track error:", error as Error);
         sentryCapture(error as Error, { event, properties: mergedProperties });
       }
     });
@@ -269,7 +272,7 @@ class Analytics implements AnalyticsAdapter {
       try {
         adapter.identify(userId, traits);
       } catch (error) {
-        console.error(`Analytics identify error:`, error);
+        log.error("Analytics identify error:", error as Error);
         sentryCapture(error as Error, { userId });
       }
     });
@@ -284,7 +287,7 @@ class Analytics implements AnalyticsAdapter {
       try {
         adapter.screen(name, mergedProperties);
       } catch (error) {
-        console.error(`Analytics screen error:`, error);
+        log.error("Analytics screen error:", error as Error);
       }
     });
   }
@@ -297,7 +300,7 @@ class Analytics implements AnalyticsAdapter {
       try {
         adapter.reset();
       } catch (error) {
-        console.error(`Analytics reset error:`, error);
+        log.error("Analytics reset error:", error as Error);
       }
     });
   }
@@ -309,7 +312,7 @@ class Analytics implements AnalyticsAdapter {
       try {
         adapter.setUserProperties?.(properties);
       } catch (error) {
-        console.error(`Analytics setUserProperties error:`, error);
+        log.error("Analytics setUserProperties error:", error as Error);
       }
     });
   }
@@ -326,7 +329,7 @@ class Analytics implements AnalyticsAdapter {
       try {
         adapter.trackRevenue?.(amount, currency, productId, properties);
       } catch (error) {
-        console.error(`Analytics trackRevenue error:`, error);
+        log.error("Analytics trackRevenue error:", error as Error);
       }
     });
 

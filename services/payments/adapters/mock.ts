@@ -11,6 +11,9 @@ import type {
   Purchase,
   SubscriptionInfo,
 } from "../types";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "PaymentsMock" });
 
 // ============================================================================
 // Mock Data
@@ -70,22 +73,16 @@ export class MockPaymentAdapter implements PaymentAdapter {
 
   async initialize(): Promise<void> {
     await randomDelay();
-
-    if (__DEV__) {
-      console.log("[Payments] Initialized (mock adapter)");
-    }
+    log.debug("[Payments] Initialized (mock adapter)");
   }
 
   async getProducts(ids: string[]): Promise<Product[]> {
     await randomDelay();
 
     const products = MOCK_PRODUCTS.filter((p) => ids.includes(p.id));
-
-    if (__DEV__) {
-      console.log(
-        `[Payments] getProducts: requested ${ids.length}, found ${products.length}`
-      );
-    }
+    log.debug(
+      `[Payments] getProducts: requested ${ids.length}, found ${products.length}`
+    );
 
     return products;
   }
@@ -106,20 +103,14 @@ export class MockPaymentAdapter implements PaymentAdapter {
     };
 
     this.purchases.push(purchase);
-
-    if (__DEV__) {
-      console.log(`[Payments] Purchase completed:`, purchase);
-    }
+    log.debug(`[Payments] Purchase completed:`, { purchase });
 
     return purchase;
   }
 
   async restorePurchases(): Promise<Purchase[]> {
     await randomDelay();
-
-    if (__DEV__) {
-      console.log(`[Payments] Restored ${this.purchases.length} purchase(s)`);
-    }
+    log.debug(`[Payments] Restored ${this.purchases.length} purchase(s)`);
 
     return [...this.purchases];
   }
@@ -150,9 +141,7 @@ export class MockPaymentAdapter implements PaymentAdapter {
           willRenew: false,
         };
 
-    if (__DEV__) {
-      console.log(`[Payments] Subscription status:`, info.status);
-    }
+    log.debug(`[Payments] Subscription status:`, { status: info.status });
 
     return info;
   }

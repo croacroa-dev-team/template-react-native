@@ -1,5 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "Storage" });
 
 /**
  * Regular storage for non-sensitive data
@@ -11,7 +14,7 @@ export const storage = {
       const value = await AsyncStorage.getItem(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
-      console.error(`Failed to get ${key} from storage:`, error);
+      log.error(`Failed to get ${key} from storage`, error as Error);
       return null;
     }
   },
@@ -20,7 +23,7 @@ export const storage = {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error(`Failed to set ${key} in storage:`, error);
+      log.error(`Failed to set ${key} in storage`, error as Error);
     }
   },
 
@@ -28,7 +31,7 @@ export const storage = {
     try {
       await AsyncStorage.removeItem(key);
     } catch (error) {
-      console.error(`Failed to remove ${key} from storage:`, error);
+      log.error(`Failed to remove ${key} from storage`, error as Error);
     }
   },
 
@@ -36,7 +39,7 @@ export const storage = {
     try {
       await AsyncStorage.clear();
     } catch (error) {
-      console.error("Failed to clear storage:", error);
+      log.error("Failed to clear storage", error as Error);
     }
   },
 
@@ -44,7 +47,7 @@ export const storage = {
     try {
       return await AsyncStorage.getAllKeys();
     } catch (error) {
-      console.error("Failed to get all keys from storage:", error);
+      log.error("Failed to get all keys from storage", error as Error);
       return [];
     }
   },
@@ -59,7 +62,7 @@ export const secureStorage = {
     try {
       return await SecureStore.getItemAsync(key);
     } catch (error) {
-      console.error(`Failed to get ${key} from secure storage:`, error);
+      log.error(`Failed to get ${key} from secure storage`, error as Error);
       return null;
     }
   },
@@ -68,7 +71,7 @@ export const secureStorage = {
     try {
       await SecureStore.setItemAsync(key, value);
     } catch (error) {
-      console.error(`Failed to set ${key} in secure storage:`, error);
+      log.error(`Failed to set ${key} in secure storage`, error as Error);
     }
   },
 
@@ -76,7 +79,7 @@ export const secureStorage = {
     try {
       await SecureStore.deleteItemAsync(key);
     } catch (error) {
-      console.error(`Failed to remove ${key} from secure storage:`, error);
+      log.error(`Failed to remove ${key} from secure storage`, error as Error);
     }
   },
 };

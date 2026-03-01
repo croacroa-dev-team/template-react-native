@@ -11,6 +11,9 @@ import * as Device from "expo-device";
 import Constants from "expo-constants";
 
 import { useNotificationStore } from "@/stores/notificationStore";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "Notifications" });
 
 // Configure how notifications should be handled when app is in foreground
 Notifications.setNotificationHandler({
@@ -88,12 +91,12 @@ export function useNotifications() {
   const handleNotificationPress = (data: Record<string, unknown>) => {
     // TODO: Handle notification navigation based on data
     // Example: router.push(data.screen as string);
-    console.log("Notification pressed with data:", data);
+    log.debug("Notification pressed with data:", data);
   };
 
   const registerForPushNotifications = async () => {
     if (!Device.isDevice) {
-      console.log("Push notifications require a physical device");
+      log.debug("Push notifications require a physical device");
       return null;
     }
 
@@ -109,7 +112,7 @@ export function useNotifications() {
     }
 
     if (finalStatus !== "granted") {
-      console.log("Push notification permission not granted");
+      log.debug("Push notification permission not granted");
       return null;
     }
 
@@ -134,7 +137,7 @@ export function useNotifications() {
 
       return token.data;
     } catch (error) {
-      console.error("Failed to get push token:", error);
+      log.error("Failed to get push token:", error as Error);
       return null;
     }
   };

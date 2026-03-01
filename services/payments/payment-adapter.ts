@@ -26,6 +26,7 @@ import type {
   SubscriptionInfo,
 } from "./types";
 import { MockPaymentAdapter } from "./adapters/mock";
+import { Logger } from "@/services/logger/logger-adapter";
 
 // ============================================================================
 // Module-level state
@@ -55,10 +56,9 @@ export const Payments = {
    */
   setAdapter(adapter: PaymentAdapter): void {
     activeAdapter = adapter;
-
-    if (__DEV__) {
-      console.log("[Payments] Adapter set:", adapter.constructor.name);
-    }
+    Logger.debug("[Payments] Adapter set:", {
+      adapter: adapter.constructor.name,
+    });
   },
 
   // --------------------------------------------------------------------------

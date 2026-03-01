@@ -7,6 +7,7 @@
 import { useState, useCallback } from "react";
 import { Payments } from "@/services/payments/payment-adapter";
 import type { Purchase } from "@/services/payments/types";
+import { Logger } from "@/services/logger/logger-adapter";
 
 /**
  * Return type for the usePurchase hook.
@@ -65,9 +66,9 @@ export function usePurchase(): UsePurchaseReturn {
           err instanceof Error ? err : new Error("Purchase failed");
         setError(purchaseError);
 
-        if (__DEV__) {
-          console.warn("[usePurchase] Purchase error:", purchaseError.message);
-        }
+        Logger.warn("[usePurchase] Purchase error", {
+          message: purchaseError.message,
+        });
 
         return null;
       } finally {
@@ -89,9 +90,9 @@ export function usePurchase(): UsePurchaseReturn {
         err instanceof Error ? err : new Error("Restore failed");
       setError(restoreError);
 
-      if (__DEV__) {
-        console.warn("[usePurchase] Restore error:", restoreError.message);
-      }
+      Logger.warn("[usePurchase] Restore error", {
+        message: restoreError.message,
+      });
 
       return [];
     } finally {

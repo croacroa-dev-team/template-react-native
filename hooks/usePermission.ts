@@ -8,6 +8,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { AppState, AppStateStatus } from "react-native";
 
+import { Logger } from "@/services/logger/logger-adapter";
 import { PermissionManager } from "@/services/permissions/permission-manager";
 import {
   DEFAULT_PERMISSION_CONFIGS,
@@ -100,7 +101,7 @@ export function usePermission(
       const result = await PermissionManager.check(type);
       setStatus(result.status);
     } catch (error) {
-      console.error(`[usePermission] Failed to check ${type}:`, error);
+      Logger.error(`[usePermission] Failed to check ${type}:`, error as Error);
     }
   }, [type]);
 
@@ -123,7 +124,10 @@ export function usePermission(
       setStatus(result.status);
       return result.status;
     } catch (error) {
-      console.error(`[usePermission] Failed to request ${type}:`, error);
+      Logger.error(
+        `[usePermission] Failed to request ${type}:`,
+        error as Error
+      );
       return "undetermined";
     } finally {
       setIsLoading(false);

@@ -2,6 +2,9 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { InteractionManager } from "react-native";
 import { IS_DEV, ENABLE_ANALYTICS } from "@/constants/config";
 import { analytics, AnalyticsEvents } from "@/services/analytics";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "Performance" });
 
 // ============================================================================
 // Types
@@ -167,8 +170,8 @@ export function usePerformance(
     }));
 
     // Warn on slow render
-    if (renderDuration > slowRenderThreshold && IS_DEV && logInDev) {
-      console.warn(
+    if (renderDuration > slowRenderThreshold && logInDev) {
+      log.warn(
         `[Performance] ${name}: Slow render detected (${renderDuration.toFixed(1)}ms)`
       );
     }
@@ -186,8 +189,8 @@ export function usePerformance(
       mountTime: mountDuration,
     }));
 
-    if (IS_DEV && logInDev) {
-      console.log(`[Performance] ${name}: Mounted in ${mountDuration}ms`);
+    if (logInDev) {
+      log.debug(`[Performance] ${name}: Mounted in ${mountDuration}ms`);
     }
 
     // Report to analytics
@@ -199,8 +202,8 @@ export function usePerformance(
     }
 
     return () => {
-      if (IS_DEV && logInDev) {
-        console.log(
+      if (logInDev) {
+        log.debug(
           `[Performance] ${name}: Unmounted after ${renderCountRef.current} renders`
         );
       }
@@ -233,8 +236,8 @@ export function usePerformance(
         }));
 
         // Warn on low FPS
-        if (fpsRef.current < 30 && IS_DEV && logInDev) {
-          console.warn(
+        if (fpsRef.current < 30 && logInDev) {
+          log.warn(
             `[Performance] ${name}: Low FPS detected (${fpsRef.current})`
           );
         }
@@ -265,15 +268,15 @@ export function usePerformance(
     (markName: string): number => {
       const start = marksRef.current.get(markName);
       if (!start) {
-        console.warn(`[Performance] No start mark found for "${markName}"`);
+        log.warn(`[Performance] No start mark found for "${markName}"`);
         return 0;
       }
 
       const duration = Date.now() - start;
       marksRef.current.delete(markName);
 
-      if (IS_DEV && logInDev) {
-        console.log(`[Performance] ${name}.${markName}: ${duration}ms`);
+      if (logInDev) {
+        log.debug(`[Performance] ${name}.${markName}: ${duration}ms`);
       }
 
       if (reportToAnalytics && ENABLE_ANALYTICS) {
@@ -294,8 +297,8 @@ export function usePerformance(
    */
   const trackMetric = useCallback(
     (metricName: string, value: number) => {
-      if (IS_DEV && logInDev) {
-        console.log(`[Performance] ${name}.${metricName}: ${value}`);
+      if (logInDev) {
+        log.debug(`[Performance] ${name}.${metricName}: ${value}`);
       }
 
       if (reportToAnalytics && ENABLE_ANALYTICS) {
@@ -349,14 +352,14 @@ export async function measureAsync<T>(
   fn: () => Promise<T>,
   options?: { log?: boolean; reportToAnalytics?: boolean }
 ): Promise<{ result: T; duration: number }> {
-  const { log = IS_DEV, reportToAnalytics = false } = options || {};
+  const { log: shouldLog = IS_DEV, reportToAnalytics = false } = options || {};
 
   const start = Date.now();
   const result = await fn();
   const duration = Date.now() - start;
 
-  if (log) {
-    console.log(`[Performance] ${name}: ${duration}ms`);
+  if (shouldLog) {
+    Logger.debug(`[Performance] ${name}: ${duration}ms`);
   }
 
   if (reportToAnalytics && ENABLE_ANALYTICS) {
@@ -377,14 +380,14 @@ export function measureSync<T>(
   fn: () => T,
   options?: { log?: boolean; reportToAnalytics?: boolean }
 ): { result: T; duration: number } {
-  const { log = IS_DEV, reportToAnalytics = false } = options || {};
+  const { log: shouldLog = IS_DEV, reportToAnalytics = false } = options || {};
 
   const start = Date.now();
   const result = fn();
   const duration = Date.now() - start;
 
-  if (log) {
-    console.log(`[Performance] ${name}: ${duration}ms`);
+  if (shouldLog) {
+    Logger.debug(`[Performance] ${name}: ${duration}ms`);
   }
 
   if (reportToAnalytics && ENABLE_ANALYTICS) {
@@ -424,9 +427,7 @@ export function createTrackedDebounce<
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => {
-      if (IS_DEV) {
-        console.log(`[Performance] ${name}: Debounced ${callCount} calls to 1`);
-      }
+      Logger.debug(`[Performance] ${name}: Debounced ${callCount} calls to 1`);
       callCount = 0;
       fn(...args);
     }, delay);

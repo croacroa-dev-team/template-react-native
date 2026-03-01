@@ -7,6 +7,9 @@
  */
 
 import type { FeatureFlagAdapter } from "../types";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "FeatureFlagsMock" });
 
 // ============================================================================
 // Mock Adapter
@@ -48,11 +51,9 @@ export class MockFeatureFlagAdapter implements FeatureFlagAdapter {
   }
 
   async initialize(): Promise<void> {
-    if (__DEV__) {
-      console.log(
-        `[FeatureFlags] Initialized (mock adapter — ${this.flags.size} flags, ${this.experiments.size} experiments)`
-      );
-    }
+    log.debug(
+      `[FeatureFlags] Initialized (mock adapter — ${this.flags.size} flags, ${this.experiments.size} experiments)`
+    );
   }
 
   isEnabled(flag: string): boolean {
@@ -70,15 +71,11 @@ export class MockFeatureFlagAdapter implements FeatureFlagAdapter {
   }
 
   identify(userId: string, attributes?: Record<string, unknown>): void {
-    if (__DEV__) {
-      console.log("[FeatureFlags] Identified user:", userId, attributes);
-    }
+    log.debug("[FeatureFlags] Identified user:", { userId, attributes });
   }
 
   async refresh(): Promise<void> {
-    if (__DEV__) {
-      console.log("[FeatureFlags] Refreshed (mock adapter — no-op)");
-    }
+    log.debug("[FeatureFlags] Refreshed (mock adapter — no-op)");
   }
 
   // --------------------------------------------------------------------------

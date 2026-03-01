@@ -15,6 +15,7 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 import { toast } from "@/utils/toast";
+import { Logger } from "@/services/logger/logger-adapter";
 
 /**
  * User profile information
@@ -141,7 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch (error) {
-      console.error("Failed to load auth:", error);
+      Logger.error("Failed to load auth", error as Error);
       await clearAuth();
     } finally {
       setIsLoading(false);
@@ -171,7 +172,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await saveAuth(mockTokens, mockUser);
       return true;
     } catch (error) {
-      console.error("Token refresh failed:", error);
+      Logger.error("Token refresh failed", error as Error);
       return false;
     }
   };
@@ -267,7 +268,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast.info("Signed out");
       router.replace("/(public)/login");
     } catch (error) {
-      console.error("Sign out error:", error);
+      Logger.error("Sign out error", error as Error);
       // Clear local state anyway
       await clearAuth();
     }
@@ -365,12 +366,12 @@ export async function getAuthToken(): Promise<string | null> {
     if (tokens.expiresAt < Date.now() + TOKEN_REFRESH_THRESHOLD) {
       // Token needs refresh - this should be handled by the auth context
       // For now, return the current token and let the API handle 401
-      console.warn("Token is expired or about to expire");
+      Logger.warn("Token is expired or about to expire");
     }
 
     return tokens.accessToken;
   } catch (error) {
-    console.error("Failed to get auth token:", error);
+    Logger.error("Failed to get auth token", error as Error);
     return null;
   }
 }

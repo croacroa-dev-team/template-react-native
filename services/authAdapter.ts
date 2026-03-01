@@ -7,6 +7,7 @@
 
 import * as SecureStore from "expo-secure-store";
 import type { User, AuthTokens } from "@/types";
+import { Logger } from "@/services/logger/logger-adapter";
 
 // ============================================================================
 // Types
@@ -156,7 +157,7 @@ export const mockAuthAdapter: AuthAdapter = {
       throw { code: "invalid_email", message: "Invalid email format" };
     }
 
-    console.log(`[Mock] Password reset email sent to ${email}`);
+    Logger.debug(`[Mock] Password reset email sent to ${email}`);
   },
 
   async resetPassword(_token: string, newPassword: string): Promise<void> {
@@ -169,7 +170,7 @@ export const mockAuthAdapter: AuthAdapter = {
       };
     }
 
-    console.log("[Mock] Password reset successful");
+    Logger.debug("[Mock] Password reset successful");
   },
 
   async getSession(): Promise<AuthResult | null> {

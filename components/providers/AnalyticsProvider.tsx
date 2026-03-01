@@ -26,6 +26,7 @@ import React, { useEffect } from "react";
 import { Analytics } from "@/services/analytics/analytics-adapter";
 import { ENABLE_ANALYTICS, IS_DEV } from "@/constants/config";
 import { useTrackScreen } from "@/hooks/useTrackScreen";
+import { Logger } from "@/services/logger/logger-adapter";
 
 // ============================================================================
 // Props
@@ -56,7 +57,10 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     });
 
     Analytics.initialize().catch((error) => {
-      console.error("[AnalyticsProvider] Initialization failed:", error);
+      Logger.error(
+        "[AnalyticsProvider] Initialization failed:",
+        error as Error
+      );
     });
   }, []);
 

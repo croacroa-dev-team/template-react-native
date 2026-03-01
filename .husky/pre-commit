@@ -4,8 +4,13 @@ echo "Checking for potential secrets..."
 # Common patterns for secrets (API keys, tokens, passwords)
 SECRETS_PATTERN='(password|passwd|pwd|secret|api[_-]?key|apikey|auth[_-]?token|access[_-]?token|private[_-]?key|client[_-]?secret)\s*[:=]\s*["\x27][^"\x27]{8,}'
 
-# Check staged files for secrets (case insensitive), excluding test files
-if git diff --cached --name-only | grep -v '__tests__/' | grep -v '\.test\.' | grep -v '\.spec\.' | xargs grep -l -i -E "$SECRETS_PATTERN" 2>/dev/null; then
+# Exclude mock/placeholder values from detection
+MOCK_EXCLUDE='mock_|example_|fake_|test_|placeholder|TODO|Replace'
+
+# Check staged files for secrets (case insensitive), excluding test files and mock values
+SECRET_HITS=$(git diff --cached --name-only | grep -v '__tests__/' | grep -v '\.test\.' | grep -v '\.spec\.' | xargs grep -i -E "$SECRETS_PATTERN" 2>/dev/null | grep -iv -E "$MOCK_EXCLUDE" | cut -d: -f1 | sort -u || true)
+if [ -n "$SECRET_HITS" ]; then
+  echo "$SECRET_HITS"
   echo ""
   echo "WARNING: Potential secrets detected in staged files!"
   echo "Please review the files above and ensure no sensitive data is being committed."

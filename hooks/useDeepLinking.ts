@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from "react";
 import * as Linking from "expo-linking";
 import { router } from "expo-router";
+import { Logger } from "@/services/logger/logger-adapter";
 
 // Define your app's deep link routes
 type DeepLinkRoute =
@@ -91,7 +92,7 @@ function parseDeepLink(url: string): ParsedDeepLink {
       }
     }
   } catch (error) {
-    console.error("Failed to parse deep link:", error);
+    Logger.error("Failed to parse deep link:", error as Error);
     return { route: null, rawUrl: url };
   }
 }
@@ -195,7 +196,7 @@ export function useDeepLinking(options: UseDeepLinkingOptions = {}): void {
 
       if (!route) {
         onUnknownLink?.(rawUrl);
-        console.log("Unknown deep link:", rawUrl);
+        Logger.debug("Unknown deep link", { url: rawUrl });
         return;
       }
 

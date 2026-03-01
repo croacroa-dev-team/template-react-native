@@ -15,6 +15,7 @@ import React, {
   useState,
 } from "react";
 import { View, Text, ActivityIndicator, Pressable } from "react-native";
+import { Logger } from "@/services/logger/logger-adapter";
 
 // ============================================================================
 // Error Boundary
@@ -72,14 +73,10 @@ export class LocalErrorBoundary extends Component<
     this.setState({ errorInfo });
     this.props.onError?.(error, errorInfo);
 
-    // Log to console in development
-    if (__DEV__) {
-      console.error("[ErrorBoundary] Caught error:", error);
-      console.error(
-        "[ErrorBoundary] Component stack:",
-        errorInfo.componentStack
-      );
-    }
+    // Log via Logger facade
+    Logger.error("[ErrorBoundary] Caught error", error, {
+      componentStack: errorInfo.componentStack?.slice(0, 500),
+    });
   }
 
   reset = (): void => {
@@ -355,7 +352,7 @@ export function BoundaryProvider({ children }: { children: ReactNode }) {
 
   const reportError = useCallback((error: Error) => {
     // Could be used to propagate errors to error tracking
-    console.error("[BoundaryProvider] Error reported:", error);
+    Logger.error("[BoundaryProvider] Error reported", error);
   }, []);
 
   return (

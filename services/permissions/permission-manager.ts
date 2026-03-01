@@ -14,11 +14,14 @@ import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { STORAGE_KEYS } from "@/constants/config";
+import { Logger } from "@/services/logger/logger-adapter";
 import type {
   PermissionType,
   PermissionResult,
   PermissionStatus,
 } from "./types";
+
+const log = Logger.withContext({ module: "Permissions" });
 
 /** AsyncStorage key prefix for tracking asked permissions */
 const PERMISSION_ASKED_PREFIX = STORAGE_KEYS.PERMISSION_PREFIX;
@@ -215,7 +218,7 @@ export const PermissionManager = {
       const handler = permissionHandlers[type];
       return await handler.check();
     } catch (error) {
-      console.error(`[PermissionManager] Failed to check ${type}:`, error);
+      log.error(`Failed to check ${type}`, error as Error);
       return { status: "undetermined", canAskAgain: true };
     }
   },
@@ -237,7 +240,7 @@ export const PermissionManager = {
 
       return result;
     } catch (error) {
-      console.error(`[PermissionManager] Failed to request ${type}:`, error);
+      log.error(`Failed to request ${type}`, error as Error);
       return { status: "undetermined", canAskAgain: true };
     }
   },
@@ -255,7 +258,7 @@ export const PermissionManager = {
         await Linking.openSettings();
       }
     } catch (error) {
-      console.error("[PermissionManager] Failed to open settings:", error);
+      log.error("Failed to open settings", error as Error);
     }
   },
 
@@ -274,10 +277,7 @@ export const PermissionManager = {
       );
       return value === "true";
     } catch (error) {
-      console.error(
-        `[PermissionManager] Failed to check if ${type} was asked:`,
-        error
-      );
+      log.error(`Failed to check if ${type} was asked`, error as Error);
       return false;
     }
   },

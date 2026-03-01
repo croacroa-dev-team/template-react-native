@@ -8,6 +8,7 @@ import { useEffect, useState, useCallback } from "react";
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { toast } from "@/utils/toast";
+import { Logger } from "@/services/logger/logger-adapter";
 
 /**
  * Options for the useOffline hook
@@ -98,7 +99,10 @@ export function usePendingMutations(pollingInterval = 5000) {
       const queue = await getMutationQueue();
       setPendingCount(queue.length);
     } catch (error) {
-      console.error("[usePendingMutations] Failed to get queue:", error);
+      Logger.error(
+        "[usePendingMutations] Failed to get queue:",
+        error as Error
+      );
     } finally {
       setIsLoading(false);
     }

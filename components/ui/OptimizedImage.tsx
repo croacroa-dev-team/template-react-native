@@ -1,9 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Image, ImageProps, ImageContentFit } from "expo-image";
 import Animated, {
   useAnimatedStyle,
   withTiming,
+  withRepeat,
+  cancelAnimation,
   interpolate,
   useSharedValue,
 } from "react-native-reanimated";
@@ -212,11 +214,12 @@ function SkeletonLoader({ borderRadius }: { borderRadius: number }) {
   const shimmer = useSharedValue(0);
 
   // Start shimmer animation
-  useState(() => {
-    shimmer.value = withTiming(1, { duration: 1500 }, () => {
-      shimmer.value = 0;
-    });
-  });
+  useEffect(() => {
+    shimmer.value = withRepeat(withTiming(1, { duration: 1500 }), -1, true);
+    return () => {
+      cancelAnimation(shimmer);
+    };
+  }, [shimmer]);
 
   const shimmerStyle = useAnimatedStyle(() => {
     return {

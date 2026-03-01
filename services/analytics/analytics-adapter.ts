@@ -18,6 +18,7 @@ import {
   setUserProperties,
 } from "@/services/analytics";
 import type { AnalyticsConfig } from "./types";
+import { Logger } from "@/services/logger/logger-adapter";
 
 // ============================================================================
 // Module-level state
@@ -45,10 +46,7 @@ export const Analytics = {
    */
   configure(newConfig: Partial<AnalyticsConfig>): void {
     config = { ...config, ...newConfig };
-
-    if (config.debug) {
-      console.log("[Analytics] Configured:", config);
-    }
+    Logger.debug("[Analytics] Configured:", { config });
   },
 
   /**
@@ -57,9 +55,7 @@ export const Analytics = {
    */
   async initialize(): Promise<void> {
     if (!config.enabled) return;
-    if (config.debug) {
-      console.log("[Analytics] Initialized (delegating to services/analytics)");
-    }
+    Logger.debug("[Analytics] Initialized (delegating to services/analytics)");
   },
 
   /** Track a named event with optional properties. */

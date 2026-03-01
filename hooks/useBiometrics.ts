@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import * as LocalAuthentication from "expo-local-authentication";
 import { storage } from "@/services/storage";
 import { ENABLE_BIOMETRIC_AUTH } from "@/constants/config";
+import { Logger } from "@/services/logger/logger-adapter";
+
+const log = Logger.withContext({ module: "Biometrics" });
 
 // Storage key for biometric preference
 const BIOMETRIC_ENABLED_KEY = "biometric_auth_enabled";
@@ -188,7 +191,7 @@ export function useBiometrics(): UseBiometricsReturn {
           setIsEnabled(enabled ?? false);
         }
       } catch (error) {
-        console.error("Failed to check biometric capabilities:", error);
+        log.error("Failed to check biometric capabilities:", error as Error);
       } finally {
         setIsLoading(false);
       }
@@ -203,7 +206,7 @@ export function useBiometrics(): UseBiometricsReturn {
   const authenticate = useCallback(
     async (options: AuthenticateOptions = {}): Promise<boolean> => {
       if (!capabilities.isAvailable || !capabilities.isEnrolled) {
-        console.warn("Biometric authentication not available");
+        log.warn("Biometric authentication not available");
         return false;
       }
 
@@ -217,7 +220,7 @@ export function useBiometrics(): UseBiometricsReturn {
 
         return result.success;
       } catch (error) {
-        console.error("Biometric authentication error:", error);
+        log.error("Biometric authentication error:", error as Error);
         return false;
       }
     },

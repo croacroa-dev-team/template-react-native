@@ -17,6 +17,7 @@ import { SocialLoginButtons } from "@/components/auth/SocialLoginButtons";
 import { AnimatedButton } from "@/components/ui/AnimatedButton";
 import { useAuth } from "@/hooks/useAuth";
 import { loginSchema, LoginFormData } from "@/utils/validation";
+import { Logger } from "@/services/logger/logger-adapter";
 
 export default function LoginScreen() {
   const { signIn } = useAuth();
@@ -122,12 +123,10 @@ export default function LoginScreen() {
           <Animated.View entering={FadeInDown.delay(400).springify()}>
             <SocialLoginButtons
               onSuccess={(result) => {
-                if (__DEV__)
-                  console.log(
-                    "Social login succeeded:",
-                    result.provider,
-                    result.user.email
-                  );
+                Logger.debug("Social login succeeded:", {
+                  provider: result.provider,
+                  email: result.user.email,
+                });
                 // TODO: Send result.idToken to your backend
               }}
             />

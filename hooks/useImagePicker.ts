@@ -8,12 +8,15 @@ import { useState, useCallback } from "react";
 import { Alert, Platform } from "react-native";
 
 import { usePermission } from "@/hooks/usePermission";
+import { Logger } from "@/services/logger/logger-adapter";
 import {
   pickFromLibrary as pickFromLib,
   pickFromCamera as pickFromCam,
   type PickedMedia,
 } from "@/services/media/media-picker";
 import { compressImage } from "@/services/media/compression";
+
+const log = Logger.withContext({ module: "ImagePicker" });
 
 /**
  * Options for the useImagePicker hook
@@ -153,10 +156,9 @@ export function useImagePicker(
           height: result.height,
         };
       } catch (err) {
-        console.warn(
-          "[useImagePicker] Compression failed, using original:",
-          err
-        );
+        log.warn("[useImagePicker] Compression failed, using original", {
+          error: String(err),
+        });
         return media;
       }
     },
@@ -186,7 +188,7 @@ export function useImagePicker(
       setSelectedMedia(compressed);
       return compressed;
     } catch (err) {
-      console.error("[useImagePicker] Library pick error:", err);
+      log.error("[useImagePicker] Library pick error:", err as Error);
       return null;
     } finally {
       setIsLoading(false);
@@ -213,7 +215,7 @@ export function useImagePicker(
       setSelectedMedia(compressed);
       return compressed;
     } catch (err) {
-      console.error("[useImagePicker] Camera pick error:", err);
+      log.error("[useImagePicker] Camera pick error:", err as Error);
       return null;
     } finally {
       setIsLoading(false);
