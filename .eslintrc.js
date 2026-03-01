@@ -42,6 +42,7 @@ module.exports = {
       files: ["__tests__/**/*", "jest.setup.js"],
       rules: {
         "@typescript-eslint/no-require-imports": "off",
+        "no-console": "off",
       },
     },
   ],

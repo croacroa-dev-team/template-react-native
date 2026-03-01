@@ -1,6 +1,6 @@
 {
   "name": "@croacroa/react-native-template",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "Production-ready React Native template with Expo, authentication, i18n, offline support, and more",
   "main": "expo-router/entry",
   "author": "Croacroa <contact@croacroa.dev>",

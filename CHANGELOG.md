@@ -11,6 +11,24 @@ _No unreleased changes._
 
 ---
 
+## [3.6.0] - 2026-03-01
+
+### Added — Phase 12: Code Review + Polish
+
+- **HMAC Request Signing** — Replaced stub `generateRequestSignature()` with real SHA-256 digest via `expo-crypto`; interceptor now calls the real function with `METHOD:URL:BODY:TIMESTAMP` payload
+
+### Fixed
+
+- **Barrel Exports** — Added missing exports for `PermissionGate`, `Paywall`, `PurchaseButton` in `components/ui/index.ts`
+- **ESLint DX** — Disabled `no-console` rule in `__tests__/**/*` override so test files can use `console.log` freely
+
+### Tests
+
+- 12 new test files (165 tests): circuit-breaker, retry, deduplicator, interceptors, session-manager, security, storage, force-update, logger, validation, versionGate, accessibility
+- Total: 423 tests across 35 suites (up from 258 across 23)
+
+---
+
 ## [3.5.0] - 2026-03-01
 
 ### Added — Phase 11: Party Game Infrastructure + Follow-ups

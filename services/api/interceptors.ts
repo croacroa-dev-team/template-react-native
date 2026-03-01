@@ -4,6 +4,7 @@
  */
 
 import { Logger } from "@/services/logger/logger-adapter";
+import { generateRequestSignature } from "@/services/security";
 import { SECURITY, APP_VERSION } from "@/constants/config";
 
 export interface RequestConfig {
@@ -112,13 +113,25 @@ export const requestLoggingInterceptor: ResponseInterceptor = (
 };
 
 /** HMAC request signing (when enabled) */
-export const requestSigningInterceptor: RequestInterceptor = (config) => {
+export const requestSigningInterceptor: RequestInterceptor = async (config) => {
   if (!SECURITY.REQUEST_SIGNING.ENABLED) return config;
+
+  const timestamp = Date.now();
+  const signature = await generateRequestSignature(
+    config.method,
+    config.url,
+    config.body,
+    timestamp
+  );
+
+  if (!signature) return config;
+
   return {
     ...config,
     headers: {
       ...config.headers,
-      [SECURITY.REQUEST_SIGNING.HEADER_NAME]: "placeholder-signature",
+      [SECURITY.REQUEST_SIGNING.HEADER_NAME]: signature,
+      "X-Request-Timestamp": timestamp.toString(),
     },
   };
 };

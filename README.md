@@ -130,7 +130,7 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **Analytics Adapter** for multiple providers
 - **Performance Monitoring** hooks
 - **Accessibility** utilities, hooks, and 26 a11y tests
-- **Jest + Testing Library** with 200+ tests across 23 suites
+- **Jest + Testing Library** with 420+ tests across 35 suites
 - **Storybook** with 15 component stories
 - **ESLint + Prettier + Husky** for code quality
 
@@ -213,7 +213,7 @@ npm run android     # Run on Android emulator
 ├── utils/                 # cn, toast, validation, piiScrubber
 ├── constants/             # App configuration
 ├── types/                 # TypeScript types
-├── __tests__/             # Test files (200+ tests, 23 suites)
+├── __tests__/             # Test files (420+ tests, 35 suites)
 ├── docs/guides/           # Integration guides (Supabase, RevenueCat, etc.)
 └── scripts/               # Init scripts for template setup
 ```
@@ -443,7 +443,7 @@ EXPO_PUBLIC_SENTRY_DSN=your-sentry-dsn
 
 ## 🧪 Testing
 
-172+ tests across 14 suites:
+420+ tests across 35 suites:
 
 ```bash
 npm test              # Run all tests
@@ -464,6 +464,11 @@ Test coverage:
 - Accessibility - 26 tests
 - UI components & snapshots - 18 tests
 - Performance - 15 tests
+- CircuitBreaker, Retry, Deduplicator - 24 tests
+- Interceptors, SessionManager - 22 tests
+- Security, Storage, ForceUpdate - 33 tests
+- Logger, Validation, VersionGate - 39 tests
+- Accessibility builders - 28 tests
 
 ## 📜 Available Scripts
 

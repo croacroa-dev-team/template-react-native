@@ -4,6 +4,7 @@
  * @module services/security
  */
 
+import * as Crypto from "expo-crypto";
 import { SECURITY, IS_DEV } from "@/constants/config";
 import { Logger } from "@/services/logger/logger-adapter";
 
@@ -65,17 +66,17 @@ export function isSslPinningEnabled(hostname: string): boolean {
  * }
  * ```
  */
-export function generateRequestSignature(
+export async function generateRequestSignature(
   method: string,
   url: string,
   body: unknown,
   timestamp: number
-): string | null {
+): Promise<string | null> {
   if (!SECURITY.REQUEST_SIGNING.ENABLED) {
     return null;
   }
 
-  // Create payload to sign
+  // Build canonical payload: METHOD:URL:BODY:TIMESTAMP
   const payload = [
     method.toUpperCase(),
     url,
@@ -83,15 +84,19 @@ export function generateRequestSignature(
     timestamp.toString(),
   ].join(":");
 
-  // In production, use a proper HMAC implementation with a secret key
-  // This is a placeholder - implement actual signing based on your backend requirements
-  Logger.warn("[Security] Would sign payload:", { payload });
-
-  // TODO: Implement actual HMAC signing
-  // const hmac = crypto.createHmac(SECURITY.REQUEST_SIGNING.ALGORITHM, SECRET_KEY);
-  // return hmac.update(payload).digest('base64');
-
-  return null;
+  try {
+    const signature = await Crypto.digestStringAsync(
+      Crypto.CryptoDigestAlgorithm.SHA256,
+      payload
+    );
+    return signature;
+  } catch (error) {
+    Logger.error(
+      "[Security] Failed to generate request signature",
+      error as Error
+    );
+    return null;
+  }
 }
 
 /**
