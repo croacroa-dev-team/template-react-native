@@ -15,7 +15,7 @@ export function useAppLifecycle(callbacks?: AppLifecycleCallbacks): {
   appState: AppStateStatus;
 } {
   const [appState, setAppState] = useState<AppStateStatus>(
-    AppState.currentState,
+    AppState.currentState
   );
   const previousState = useRef<AppStateStatus>(AppState.currentState);
   const callbacksRef = useRef(callbacks);
