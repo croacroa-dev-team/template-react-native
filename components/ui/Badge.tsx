@@ -158,6 +158,9 @@ export function Badge({
             : variantStyle.bg,
         className
       )}
+      accessible
+      accessibilityRole="text"
+      accessibilityLabel={`${variant} badge: ${typeof children === "string" ? children : ""}`}
     >
       {icon && (
         <Ionicons
@@ -407,6 +410,9 @@ export function CountBadge({
         height: sizeConfig.min,
         paddingHorizontal: sizeConfig.px,
       }}
+      accessible
+      accessibilityRole="text"
+      accessibilityLabel={`${count} ${count === 1 ? "notification" : "notifications"}`}
     >
       <Text className={cn(sizeConfig.text, "font-bold text-white")}>
         {displayCount}

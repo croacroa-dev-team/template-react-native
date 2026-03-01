@@ -8,6 +8,7 @@ import { View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import { useTranslation } from "react-i18next";
+import { alertA11y, buttonA11y } from "@/utils/accessibility";
 
 // ============================================================================
 // Types
@@ -58,7 +59,12 @@ export function ForceUpdateScreen({
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-white px-8 dark:bg-gray-900">
+    <View
+      className="flex-1 items-center justify-center bg-white px-8 dark:bg-gray-900"
+      {...alertA11y("App update required. Please update to continue.", {
+        type: "warning",
+      })}
+    >
       {/* Icon */}
       <View className="mb-8 h-24 w-24 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
         <Ionicons name="cloud-download-outline" size={48} color="#3b82f6" />
@@ -98,6 +104,9 @@ export function ForceUpdateScreen({
       <Pressable
         onPress={handleUpdate}
         className="w-full items-center rounded-xl bg-primary-600 px-6 py-4 active:bg-primary-700"
+        {...buttonA11y("Update now", {
+          hint: "Opens the app store to download the latest version",
+        })}
       >
         <Text className="text-lg font-semibold text-white">
           {t("forceUpdate.button")}

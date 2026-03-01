@@ -248,6 +248,7 @@ export function VirtualizedList<T>({
       onEndReached={handleEndReached}
       onEndReachedThreshold={onEndReachedThreshold}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      accessibilityRole="list"
       // FlashList specific optimizations
       estimatedItemSize={estimatedItemSize}
       drawDistance={drawDistance}

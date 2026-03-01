@@ -129,7 +129,7 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **Sentry** for crash reporting with PII scrubbing
 - **Analytics Adapter** for multiple providers
 - **Performance Monitoring** hooks
-- **Accessibility** utilities, hooks, and 26 a11y tests
+- **Accessibility** — All 27 UI components have a11y attributes via centralized builders; utilities, hooks, and 26 a11y tests
 - **Jest + Testing Library** with 420+ tests across 35 suites
 - **Storybook** with 15 component stories
 - **ESLint + Prettier + Husky** for code quality
@@ -472,18 +472,20 @@ Test coverage:
 
 ## 📜 Available Scripts
 
-| Command                 | Description              |
-| ----------------------- | ------------------------ |
-| `npm start`             | Start Expo dev server    |
-| `npm run ios`           | Run on iOS simulator     |
-| `npm run android`       | Run on Android emulator  |
-| `npm test`              | Run tests                |
-| `npm run storybook`     | Start Storybook          |
-| `npm run lint`          | Run ESLint               |
-| `npm run typecheck`     | TypeScript check         |
-| `npm run build:dev`     | Build development client |
-| `npm run build:preview` | Build preview APK/IPA    |
-| `npm run build:prod`    | Build production release |
+| Command                 | Description               |
+| ----------------------- | ------------------------- |
+| `npm start`             | Start Expo dev server     |
+| `npm run ios`           | Run on iOS simulator      |
+| `npm run android`       | Run on Android emulator   |
+| `npm test`              | Run tests                 |
+| `npm run storybook`     | Start Storybook           |
+| `npm run lint`          | Run ESLint                |
+| `npm run typecheck`     | TypeScript check          |
+| `npm run ci`            | Lint + typecheck + test   |
+| `npm run format:check`  | Check Prettier formatting |
+| `npm run build:dev`     | Build development client  |
+| `npm run build:preview` | Build preview APK/IPA     |
+| `npm run build:prod`    | Build production release  |
 
 ## ✅ Customization Checklist
 

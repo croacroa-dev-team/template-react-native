@@ -102,7 +102,12 @@ export function PermissionGate({
 
   return (
     <View className="flex-1 items-center justify-center px-8 bg-background-light dark:bg-background-dark">
-      <View className="w-full items-center rounded-2xl bg-surface-light dark:bg-surface-dark p-8">
+      <View
+        className="w-full items-center rounded-2xl bg-surface-light dark:bg-surface-dark p-8"
+        accessible
+        accessibilityRole="alert"
+        accessibilityLabel={`${config.title}. ${config.message}`}
+      >
         {/* Icon */}
         <View className="mb-6 h-20 w-20 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900">
           <Ionicons

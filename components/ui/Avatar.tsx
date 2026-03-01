@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils/cn";
+import { imageA11y } from "@/utils/accessibility";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const avatarPlaceholder = require("@/assets/images/icon.png");
@@ -189,10 +190,17 @@ export function Avatar({
     );
   };
 
+  const a11yDescription = name
+    ? `${name}'s avatar`
+    : source
+      ? "User avatar"
+      : "Default avatar placeholder";
+
   return (
     <View
       className={cn("relative", className)}
       style={{ width: containerSize, height: containerSize }}
+      {...imageA11y(a11yDescription)}
     >
       <View
         className={cn("overflow-hidden rounded-full", borderClassName)}

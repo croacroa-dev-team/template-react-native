@@ -11,6 +11,25 @@ _No unreleased changes._
 
 ---
 
+## [3.7.0] - 2026-03-01
+
+### Added — Phase 13: Accessibility + Final Polish
+
+- **Accessibility for 21 components** — Applied `inputA11y()`, `buttonA11y()`, `toggleA11y()`, `imageA11y()`, `progressA11y()`, `alertA11y()` builders from `utils/accessibility.ts` to all UI components that were missing a11y attributes
+  - **Interactive**: Input, Checkbox, Select, Modal, BottomSheet, PurchaseButton, ImagePickerButton
+  - **Display**: Card, Avatar, Badge/CountBadge, Skeleton, UploadProgress, Paywall
+  - **Animated/Container**: AnimatedButton, AnimatedCard, AnimatedList, AnimatedListItem, AnimatedScreen, VirtualizedList, PermissionGate, ForceUpdateScreen
+- **Auth barrel file** — `components/auth/index.ts` exporting `SocialLoginButtons`
+- **Integration checklist** — `docs/INTEGRATION_CHECKLIST.md` documenting all 18 TODO placeholders grouped by category
+- **CI script** — `npm run ci` runs lint + typecheck + test in sequence
+- **Format check** — `npm run format:check` for CI Prettier validation
+
+### Changed
+
+- **Accessibility coverage** — Increased from 6/27 to 27/27 UI components with proper a11y attributes
+
+---
+
 ## [3.6.0] - 2026-03-01
 
 ### Added — Phase 12: Code Review + Polish

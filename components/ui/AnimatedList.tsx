@@ -91,7 +91,12 @@ export function AnimatedListItem({
   });
 
   return (
-    <Animated.View style={[animatedStyle, style]} {...props}>
+    <Animated.View
+      style={[animatedStyle, style]}
+      accessible
+      accessibilityRole="summary"
+      {...props}
+    >
       {children}
     </Animated.View>
   );

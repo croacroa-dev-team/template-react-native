@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { cn } from "@/utils/cn";
+import { buttonA11y } from "@/utils/accessibility";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
@@ -114,6 +115,10 @@ export const AnimatedButton = forwardRef<Animated.View, AnimatedButtonProps>(
             sizeStyles[size],
             className
           )}
+          {...buttonA11y(typeof children === "string" ? children : "Button", {
+            disabled: isDisabled,
+            loading: isLoading,
+          })}
           {...props}
         >
           {isLoading ? (

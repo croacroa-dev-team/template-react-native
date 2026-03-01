@@ -9,6 +9,7 @@ import GorhomBottomSheet, {
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils/cn";
+import { buttonA11y } from "@/utils/accessibility";
 
 /**
  * Hook to control BottomSheet imperatively
@@ -199,6 +200,9 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
             isDark ? "bg-surface-dark" : "bg-white",
             containerClassName
           )}
+          accessible
+          accessibilityRole="none"
+          accessibilityLabel={title ? `${title} bottom sheet` : "Bottom sheet"}
         >
           {/* Header */}
           {(title || showCloseButton) && (
@@ -221,6 +225,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
                   onPress={handleClose}
                   hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                   className="p-1"
+                  {...buttonA11y("Close bottom sheet")}
                 >
                   <Ionicons
                     name="close"

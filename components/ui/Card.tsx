@@ -24,6 +24,8 @@ export function Card({
           "border-2 border-gray-200 bg-transparent dark:border-gray-700",
         className
       )}
+      accessible
+      accessibilityRole="summary"
       {...props}
     >
       {children}

@@ -8,6 +8,7 @@ import Animated, {
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils/cn";
+import { toggleA11y } from "@/utils/accessibility";
 
 interface CheckboxProps {
   /**
@@ -123,6 +124,9 @@ export function Checkbox({
         disabled && "opacity-50",
         className
       )}
+      {...toggleA11y(label || "Checkbox", checked, {
+        disabled,
+      })}
     >
       <AnimatedView
         style={[

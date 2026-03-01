@@ -421,6 +421,8 @@ exports[`UI Components Snapshots Button renders with custom children correctly 1
 
 exports[`UI Components Snapshots Card renders complex content correctly 1`] = `
 <View
+  accessibilityRole="summary"
+  accessible={true}
   className="rounded-xl bg-surface-light shadow-lg dark:bg-surface-dark p-4"
 >
   <Text>
@@ -473,6 +475,8 @@ exports[`UI Components Snapshots Card renders complex content correctly 1`] = `
 
 exports[`UI Components Snapshots Card renders default variant correctly 1`] = `
 <View
+  accessibilityRole="summary"
+  accessible={true}
   className="rounded-xl bg-surface-light dark:bg-surface-dark"
 >
   <Text>
@@ -483,6 +487,8 @@ exports[`UI Components Snapshots Card renders default variant correctly 1`] = `
 
 exports[`UI Components Snapshots Card renders elevated variant correctly 1`] = `
 <View
+  accessibilityRole="summary"
+  accessible={true}
   className="rounded-xl bg-surface-light shadow-lg dark:bg-surface-dark"
 >
   <Text>
@@ -493,6 +499,8 @@ exports[`UI Components Snapshots Card renders elevated variant correctly 1`] = `
 
 exports[`UI Components Snapshots Card renders outlined variant correctly 1`] = `
 <View
+  accessibilityRole="summary"
+  accessible={true}
   className="rounded-xl border-2 border-gray-200 bg-transparent dark:border-gray-700"
 >
   <Text>
@@ -503,6 +511,8 @@ exports[`UI Components Snapshots Card renders outlined variant correctly 1`] = `
 
 exports[`UI Components Snapshots Card renders with custom className correctly 1`] = `
 <View
+  accessibilityRole="summary"
+  accessible={true}
   className="rounded-xl bg-surface-light dark:bg-surface-dark p-4 m-2"
 >
   <Text>

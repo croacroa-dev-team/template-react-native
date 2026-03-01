@@ -3,6 +3,7 @@ import { View, Text, TextInput, TextInputProps, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { cn } from "@/utils/cn";
 import { useTheme } from "@/hooks/useTheme";
+import { inputA11y } from "@/utils/accessibility";
 
 interface InputProps extends TextInputProps {
   label?: string;
@@ -72,11 +73,22 @@ export const Input = forwardRef<TextInput, InputProps>(
             )}
             placeholderTextColor={isDark ? "#64748b" : "#94a3b8"}
             secureTextEntry={isPassword && !isPasswordVisible}
+            {...inputA11y(label || props.placeholder || "Text input", {
+              hint: hint,
+              error: error,
+              required: props.accessibilityState?.disabled === false,
+            })}
             {...props}
           />
 
           {isPassword ? (
-            <Pressable onPress={togglePasswordVisibility}>
+            <Pressable
+              onPress={togglePasswordVisibility}
+              accessibilityRole="button"
+              accessibilityLabel={
+                isPasswordVisible ? "Hide password" : "Show password"
+              }
+            >
               <Ionicons
                 name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
                 size={20}

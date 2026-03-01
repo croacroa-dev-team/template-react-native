@@ -7,6 +7,7 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
+import { buttonA11y } from "@/utils/accessibility";
 import { useProducts } from "@/hooks/useProducts";
 import { usePurchase } from "@/hooks/usePurchase";
 import { Skeleton, SkeletonText } from "@/components/ui/Skeleton";
@@ -192,7 +193,7 @@ export function Paywall({
       showsVerticalScrollIndicator={false}
     >
       {/* Header */}
-      <View className="mb-6">
+      <View className="mb-6" accessible accessibilityRole="header">
         <Text className="text-2xl font-bold text-text-light dark:text-text-dark">
           {resolvedTitle}
         </Text>
@@ -236,6 +237,7 @@ export function Paywall({
         onPress={handleRestore}
         disabled={purchaseLoading}
         className="mt-6 items-center py-3"
+        {...buttonA11y("Restore purchases", { disabled: purchaseLoading })}
       >
         <Text
           className={cn(

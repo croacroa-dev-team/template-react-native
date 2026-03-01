@@ -58,6 +58,9 @@ export function Skeleton({
         style,
       ]}
       className={cn(className)}
+      accessible
+      accessibilityLabel="Loading"
+      accessibilityState={{ busy: true }}
       {...props}
     />
   );

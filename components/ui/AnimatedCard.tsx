@@ -66,6 +66,8 @@ export function AnimatedCard({
           "border-2 border-gray-200 bg-transparent dark:border-gray-700",
         className
       )}
+      accessible
+      accessibilityRole="summary"
       {...props}
     >
       {children}
@@ -101,6 +103,7 @@ export function AnimatedList({
     <Animated.View
       entering={FadeIn.duration(300)}
       className={cn("gap-3", className)}
+      accessibilityRole="list"
     >
       {children}
     </Animated.View>

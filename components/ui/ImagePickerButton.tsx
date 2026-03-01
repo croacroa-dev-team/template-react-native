@@ -15,6 +15,7 @@ import {
 } from "@/hooks/useImagePicker";
 import type { PickedMedia } from "@/services/media/media-picker";
 import { cn } from "@/utils/cn";
+import { buttonA11y } from "@/utils/accessibility";
 
 /**
  * Props for the ImagePickerButton component
@@ -122,6 +123,7 @@ export function ImagePickerButton({
             "absolute -right-2 -top-2 z-10 items-center justify-center rounded-full",
             isDark ? "bg-gray-700" : "bg-white"
           )}
+          {...buttonA11y("Remove selected image")}
           style={{
             width: 24,
             height: 24,
@@ -160,6 +162,9 @@ export function ImagePickerButton({
         borderWidth: 2,
         borderStyle: "dashed",
       }}
+      {...buttonA11y(placeholder, {
+        hint: "Double tap to select from library, long press for camera",
+      })}
     >
       <Ionicons
         name="camera-outline"

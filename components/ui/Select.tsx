@@ -10,6 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils/cn";
+import { buttonA11y } from "@/utils/accessibility";
 
 export interface SelectOption<T = string> {
   label: string;
@@ -155,6 +156,10 @@ export function Select<T = string>({
           disabled && "opacity-50"
         )}
         activeOpacity={0.7}
+        accessibilityRole="button"
+        accessibilityLabel={label || "Select"}
+        accessibilityHint="Double tap to open options"
+        accessibilityState={{ disabled, expanded: isOpen }}
       >
         <Text
           className={cn(
@@ -184,6 +189,7 @@ export function Select<T = string>({
         transparent
         animationType="slide"
         onRequestClose={() => setIsOpen(false)}
+        accessibilityViewIsModal
       >
         <View className="flex-1 justify-end bg-black/50">
           <View
@@ -210,6 +216,7 @@ export function Select<T = string>({
               <TouchableOpacity
                 onPress={() => setIsOpen(false)}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                {...buttonA11y("Close")}
               >
                 <Ionicons
                   name="close"

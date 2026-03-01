@@ -7,6 +7,7 @@
 import { useCallback } from "react";
 import { Button } from "@/components/ui/Button";
 import { usePurchase } from "@/hooks/usePurchase";
+import { buttonA11y } from "@/utils/accessibility";
 import type { Purchase } from "@/services/payments/types";
 import type { PressableProps } from "react-native";
 
@@ -76,6 +77,7 @@ export function PurchaseButton({
       onPress={handlePress}
       isLoading={isLoading}
       className={className}
+      {...buttonA11y(label, { loading: isLoading })}
       {...props}
     >
       {label}

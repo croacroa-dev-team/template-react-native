@@ -10,6 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { cn } from "@/utils/cn";
 import { useTheme } from "@/hooks/useTheme";
+import { buttonA11y } from "@/utils/accessibility";
 
 interface ModalProps extends Omit<RNModalProps, "children"> {
   title?: string;
@@ -45,6 +46,7 @@ export function Modal({
       transparent
       animationType="fade"
       onRequestClose={onClose}
+      accessibilityViewIsModal
       {...props}
     >
       <KeyboardAvoidingView
@@ -62,6 +64,9 @@ export function Modal({
               size !== "full" && sizeStyles[size],
               className
             )}
+            accessibilityRole="none"
+            accessible
+            accessibilityLabel={title ? `${title} dialog` : "Dialog"}
           >
             {/* Header */}
             {(title || showCloseButton) && (
@@ -77,6 +82,7 @@ export function Modal({
                   <Pressable
                     onPress={onClose}
                     className="h-8 w-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800"
+                    {...buttonA11y("Close dialog")}
                   >
                     <Ionicons
                       name="close"

@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@/hooks/useTheme";
 import type { UploadProgress as UploadProgressType } from "@/services/media/media-upload";
 import { cn } from "@/utils/cn";
+import { progressA11y, buttonA11y } from "@/utils/accessibility";
 
 /**
  * Props for the UploadProgress component
@@ -104,6 +105,7 @@ export function UploadProgress({
                 ? "bg-red-800/50 active:bg-red-800"
                 : "bg-red-100 active:bg-red-200"
             )}
+            {...buttonA11y("Retry upload")}
           >
             <Text
               className={cn(
@@ -129,6 +131,7 @@ export function UploadProgress({
         isDark ? "bg-gray-800" : "bg-gray-50",
         className
       )}
+      {...progressA11y("Upload", percentage)}
     >
       {/* Header row */}
       <View className="mb-2 flex-row items-center justify-between">
@@ -159,6 +162,7 @@ export function UploadProgress({
                 ? "bg-gray-700 active:bg-gray-600"
                 : "bg-gray-200 active:bg-gray-300"
             )}
+            {...buttonA11y("Cancel upload")}
           >
             <Text
               className={cn(
