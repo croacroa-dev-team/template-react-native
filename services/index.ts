@@ -150,3 +150,4 @@ export type {
   ResponseInterceptor,
 } from "./api/interceptors";
 export { AnalyticsSession } from "./analytics/session";
+export { SoundManager } from "./sound/sound-manager";

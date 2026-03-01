@@ -64,6 +64,8 @@ export interface AnalyticsAdapter {
 
 // ============================================================================
 // Console Adapter (Development)
+// Uses raw console.log intentionally — this adapter IS the dev analytics sink,
+// so routing through Logger would create a circular dependency.
 // ============================================================================
 
 const consoleAdapter: AnalyticsAdapter = {

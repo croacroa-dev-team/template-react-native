@@ -201,5 +201,25 @@
     },
     "allow": "Autoriser",
     "deny": "Plus tard"
+  },
+  "game": {
+    "ready": "Prêt ?",
+    "go": "C'est parti !",
+    "round": "Manche {{current}} sur {{total}}",
+    "score": "Score : {{score}}",
+    "timeUp": "Temps écoulé !",
+    "gameOver": "Partie terminée",
+    "playAgain": "Rejouer",
+    "nextRound": "Manche suivante",
+    "waiting": "En attente des joueurs...",
+    "yourTurn": "À vous de jouer !",
+    "correct": "Correct !",
+    "wrong": "Faux !"
+  },
+  "countdown": {
+    "secondsRemaining": "{{count}} seconde restante",
+    "secondsRemaining_plural": "{{count}} secondes restantes",
+    "timesUp": "Temps écoulé !",
+    "starting": "Début dans..."
   }
 }

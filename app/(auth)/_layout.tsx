@@ -9,8 +9,9 @@ import { View, ActivityIndicator } from "react-native";
 export default function AuthLayout() {
   const { isAuthenticated, isLoading, signOut } = useAuth();
   const { isDark } = useTheme();
-  const { isWarning, isExpired, remainingSeconds, extend } =
-    useSessionTimeout();
+  const { isWarning, isExpired, remainingSeconds, extend } = useSessionTimeout({
+    enabled: isAuthenticated,
+  });
 
   useEffect(() => {
     if (isExpired) {

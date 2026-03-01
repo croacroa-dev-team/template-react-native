@@ -201,5 +201,25 @@
     },
     "allow": "Allow",
     "deny": "Not Now"
+  },
+  "game": {
+    "ready": "Ready?",
+    "go": "Go!",
+    "round": "Round {{current}} of {{total}}",
+    "score": "Score: {{score}}",
+    "timeUp": "Time's up!",
+    "gameOver": "Game Over",
+    "playAgain": "Play Again",
+    "nextRound": "Next Round",
+    "waiting": "Waiting for players...",
+    "yourTurn": "Your turn!",
+    "correct": "Correct!",
+    "wrong": "Wrong!"
+  },
+  "countdown": {
+    "secondsRemaining": "{{count}} second remaining",
+    "secondsRemaining_plural": "{{count}} seconds remaining",
+    "timesUp": "Time's up!",
+    "starting": "Starting in..."
   }
 }

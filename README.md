@@ -51,6 +51,7 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **Avatar** with initials fallback
 - **Badge, Chip, CountBadge**
 - **OptimizedImage** with expo-image
+- **CountdownTimer** with animated progress bar
 - **SessionTimeoutModal** with auto-signout
 - **PermissionRationale** pre-permission dialog
 - **ForceUpdateScreen** non-dismissible update gate
@@ -110,6 +111,17 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **PII Scrubbing** — Automatic redaction of emails, phone numbers, credit cards, JWTs in logs and Sentry events
 - **Debug Menu** — Dev-only panel with env info, network requests, AsyncStorage viewer, feature flags
 
+### Party Game Infrastructure
+
+- **SoundManager** — Singleton audio manager with preload, play, stop, volume control via `expo-av`
+- **useSound** & **useSoundEffects** — React hooks for single and batched sound playback with auto-cleanup
+- **useHaptics** — Impact, notification, and selection haptic feedback via `expo-haptics`
+- **useKeepAwake** — Prevent screen sleep during game sessions via `expo-keep-awake`
+- **useCountdown** — Timer with start/pause/reset, progress tracking, and `onFinish` callback
+- **CountdownTimer** — Visual countdown component with animated progress bar (Reanimated)
+- **useScreenOrientation** — Lock/unlock screen orientation with auto-unlock on unmount
+- **useShare** — Cross-platform sharing (files via `expo-sharing`, text via RN `Share`)
+
 ### DevOps & Quality
 
 - **GitHub Actions** CI/CD workflows
@@ -118,8 +130,8 @@ A production-ready React Native template with Expo SDK 52, featuring authenticat
 - **Analytics Adapter** for multiple providers
 - **Performance Monitoring** hooks
 - **Accessibility** utilities, hooks, and 26 a11y tests
-- **Jest + Testing Library** with 172+ tests across 14 suites
-- **Storybook** for component documentation
+- **Jest + Testing Library** with 200+ tests across 23 suites
+- **Storybook** with 15 component stories
 - **ESLint + Prettier + Husky** for code quality
 
 ## 🚀 Quick Start
@@ -179,7 +191,7 @@ npm run android     # Run on Android emulator
 │   ├── forms/             # Form components (FormInput)
 │   ├── providers/         # AnalyticsProvider, SuspenseBoundary
 │   └── ErrorBoundary.tsx  # Global error handling
-├── hooks/                 # useAuth, useTheme, useSessionTimeout, useUpdates, ...
+├── hooks/                 # useAuth, useTheme, useSound, useCountdown, useHaptics, ...
 ├── stores/                # Zustand stores (appStore, notificationStore)
 ├── services/
 │   ├── api.ts            # HTTP client with 401 retry & ETag caching
@@ -194,13 +206,14 @@ npm run android     # Run on Android emulator
 │   ├── auth/             # Social login (Google, Apple)
 │   ├── media/            # Image picker, compression, upload
 │   ├── permissions/      # Centralized permission manager
+│   ├── sound/            # SoundManager singleton (expo-av)
 │   ├── sentry.ts         # Crash reporting with PII scrubbing
 │   ├── queryClient.ts    # TanStack Query with persistence
 │   └── storage.ts        # AsyncStorage & SecureStore helpers
 ├── utils/                 # cn, toast, validation, piiScrubber
 ├── constants/             # App configuration
 ├── types/                 # TypeScript types
-├── __tests__/             # Test files (172+ tests, 14 suites)
+├── __tests__/             # Test files (200+ tests, 23 suites)
 ├── docs/guides/           # Integration guides (Supabase, RevenueCat, etc.)
 └── scripts/               # Init scripts for template setup
 ```

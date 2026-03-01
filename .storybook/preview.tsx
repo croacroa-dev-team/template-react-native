@@ -1,6 +1,8 @@
 import type { Preview } from "@storybook/react";
 import React from "react";
 import { View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "@/i18n";
 
 const preview: Preview = {
   parameters: {
@@ -20,9 +22,11 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <View style={{ padding: 16, flex: 1 }}>
-        <Story />
-      </View>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <View style={{ padding: 16, flex: 1 }}>
+          <Story />
+        </View>
+      </GestureHandlerRootView>
     ),
   ],
 };

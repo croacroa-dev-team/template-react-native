@@ -3,15 +3,21 @@ import { SessionManager } from "@/services/session/session-manager";
 import { useAppLifecycle } from "./useAppLifecycle";
 import { SESSION } from "@/constants/config";
 
+export interface UseSessionTimeoutOptions {
+  /** Set to false to disable monitoring (e.g. when the user is unauthenticated). Defaults to true. */
+  enabled?: boolean;
+}
+
 /**
  * Hook for session timeout management.
  */
-export function useSessionTimeout(): {
+export function useSessionTimeout(options?: UseSessionTimeoutOptions): {
   isWarning: boolean;
   isExpired: boolean;
   remainingSeconds: number;
   extend: () => void;
 } {
+  const enabled = options?.enabled ?? true;
   const [isWarning, setIsWarning] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(
@@ -38,7 +44,7 @@ export function useSessionTimeout(): {
   useAppLifecycle(lifecycleCallbacks);
 
   useEffect(() => {
-    if (!SESSION.ENABLED) return;
+    if (!SESSION.ENABLED || !enabled) return;
 
     SessionManager.onWarning(() => setIsWarning(true));
     SessionManager.onExpired(() => setIsExpired(true));
@@ -52,7 +58,7 @@ export function useSessionTimeout(): {
       SessionManager.stopMonitoring();
       clearInterval(tick);
     };
-  }, []);
+  }, [enabled]);
 
   return { isWarning, isExpired, remainingSeconds, extend };
 }

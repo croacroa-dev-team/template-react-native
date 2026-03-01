@@ -144,5 +144,68 @@ jest.mock("react-native", () => {
   return RN;
 });
 
+// Mock expo-av
+jest.mock("expo-av", () => ({
+  Audio: {
+    Sound: {
+      createAsync: jest.fn(() =>
+        Promise.resolve({
+          sound: {
+            playAsync: jest.fn(() => Promise.resolve()),
+            stopAsync: jest.fn(() => Promise.resolve()),
+            setPositionAsync: jest.fn(() => Promise.resolve()),
+            setVolumeAsync: jest.fn(() => Promise.resolve()),
+            unloadAsync: jest.fn(() => Promise.resolve()),
+          },
+        })
+      ),
+    },
+  },
+}));
+
+// Mock expo-haptics
+jest.mock("expo-haptics", () => ({
+  impactAsync: jest.fn(() => Promise.resolve()),
+  notificationAsync: jest.fn(() => Promise.resolve()),
+  selectionAsync: jest.fn(() => Promise.resolve()),
+  ImpactFeedbackStyle: { Light: "light", Medium: "medium", Heavy: "heavy" },
+  NotificationFeedbackType: {
+    Success: "success",
+    Warning: "warning",
+    Error: "error",
+  },
+}));
+
+// Mock expo-keep-awake
+jest.mock("expo-keep-awake", () => ({
+  activateKeepAwakeAsync: jest.fn(() => Promise.resolve()),
+  deactivateKeepAwake: jest.fn(),
+}));
+
+// Mock expo-screen-orientation
+jest.mock("expo-screen-orientation", () => ({
+  getOrientationAsync: jest.fn(() => Promise.resolve(1)),
+  lockAsync: jest.fn(() => Promise.resolve()),
+  unlockAsync: jest.fn(() => Promise.resolve()),
+  addOrientationChangeListener: jest.fn(() => ({ remove: jest.fn() })),
+  removeOrientationChangeListener: jest.fn(),
+  Orientation: {
+    PORTRAIT_UP: 1,
+    PORTRAIT_DOWN: 2,
+    LANDSCAPE_LEFT: 3,
+    LANDSCAPE_RIGHT: 4,
+  },
+  OrientationLock: {
+    PORTRAIT_UP: 2,
+    LANDSCAPE: 5,
+  },
+}));
+
+// Mock expo-sharing
+jest.mock("expo-sharing", () => ({
+  isAvailableAsync: jest.fn(() => Promise.resolve(true)),
+  shareAsync: jest.fn(() => Promise.resolve()),
+}));
+
 // Global test timeout
 jest.setTimeout(10000);

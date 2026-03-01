@@ -201,5 +201,25 @@
     },
     "allow": "السماح",
     "deny": "ليس الآن"
+  },
+  "game": {
+    "ready": "مستعد؟",
+    "go": "انطلق!",
+    "round": "الجولة {{current}} من {{total}}",
+    "score": "النتيجة: {{score}}",
+    "timeUp": "انتهى الوقت!",
+    "gameOver": "انتهت اللعبة",
+    "playAgain": "العب مرة أخرى",
+    "nextRound": "الجولة التالية",
+    "waiting": "في انتظار اللاعبين...",
+    "yourTurn": "دورك!",
+    "correct": "صحيح!",
+    "wrong": "خطأ!"
+  },
+  "countdown": {
+    "secondsRemaining": "ثانية واحدة متبقية",
+    "secondsRemaining_plural": "{{count}} ثوانٍ متبقية",
+    "timesUp": "انتهى الوقت!",
+    "starting": "يبدأ في..."
   }
 }

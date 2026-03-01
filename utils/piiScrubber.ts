@@ -3,23 +3,44 @@
  * @module utils/piiScrubber
  */
 
-const SENSITIVE_KEYS = new Set([
+/** Suffixes that mark a key as sensitive regardless of prefix (e.g. api_token, auth_secret) */
+const SENSITIVE_SUFFIXES = [
+  "token",
+  "secret",
   "password",
   "passwd",
-  "secret",
-  "token",
+  "key",
+  "credential",
   "authorization",
   "cookie",
+];
+
+/** Exact-match keys that are sensitive but cannot be reliably detected via suffix */
+const SENSITIVE_EXACT = new Set([
+  "cvv",
+  "cvc",
+  "ssn",
+  "social_security",
   "session",
   "creditcard",
   "credit_card",
   "cardnumber",
   "card_number",
-  "cvv",
-  "cvc",
-  "ssn",
-  "social_security",
 ]);
+
+/**
+ * Check whether a key name refers to sensitive data.
+ * Uses suffix matching for composable names (e.g. refresh_token, api_key)
+ * and exact matching for standalone identifiers (e.g. cvv, ssn).
+ */
+export function isSensitiveKey(key: string): boolean {
+  const lower = key.toLowerCase();
+  if (SENSITIVE_EXACT.has(lower)) return true;
+  return SENSITIVE_SUFFIXES.some(
+    (suffix) =>
+      lower === suffix || lower.endsWith(`_${suffix}`) || lower.endsWith(suffix)
+  );
+}
 
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
 const PHONE_REGEX = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g;
@@ -55,7 +76,7 @@ export function scrub(data: unknown): unknown {
     for (const [key, value] of Object.entries(
       data as Record<string, unknown>
     )) {
-      if (SENSITIVE_KEYS.has(key.toLowerCase())) {
+      if (isSensitiveKey(key)) {
         result[key] = "[REDACTED]";
       } else {
         result[key] = scrub(value);

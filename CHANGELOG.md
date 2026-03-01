@@ -11,6 +11,35 @@ _No unreleased changes._
 
 ---
 
+## [3.5.0] - 2026-03-01
+
+### Added — Phase 11: Party Game Infrastructure + Follow-ups
+
+- **SoundManager** — Singleton audio service with `preload()`, `play()`, `stop()`, `setVolume()`, `unloadAll()` using `expo-av`
+- **useSound / useSoundEffects** — React hooks for single and batched sound playback with automatic cleanup on unmount
+- **useHaptics** — Impact, notification, and selection haptic feedback via `expo-haptics` with platform safety checks
+- **useKeepAwake** — Prevent screen sleep during active game sessions via `expo-keep-awake` with tag-based activation
+- **useCountdown** — Timer hook with start/pause/reset, `progress` (1→0), `isFinished`, and `onFinish` callback
+- **CountdownTimer** — Visual countdown component with Reanimated-animated progress bar, size variants (sm/md/lg), urgent color
+- **useScreenOrientation** — Read and lock screen orientation with auto-unlock on unmount via `expo-screen-orientation`
+- **useShare** — Cross-platform sharing: `expo-sharing` for files, RN `Share` for text/URLs, `isAvailable` check
+- **i18n** — `game.*` (12 keys) and `countdown.*` (4 keys) added to all 5 locales (en, fr, es, de, ar)
+- **Storybook** — 12 new stories: Modal, Select, Checkbox, Avatar, Badge, Skeleton, SessionTimeoutModal, ForceUpdateScreen, AnimatedButton, AnimatedCard, CountdownTimer, BottomSheet
+- **Storybook Preview** — Added `GestureHandlerRootView` wrapper and i18n initialization decorator
+
+### Fixed
+
+- **PII Scrubber** — Replaced exact-match `SENSITIVE_KEYS.has()` with suffix-aware `isSensitiveKey()` that catches compound keys like `api_token`, `refresh_token`, `auth_secret`, `api_key`
+- **Session Timeout** — `useSessionTimeout` now accepts `options?: { enabled?: boolean }` to skip monitoring when user is unauthenticated; auth layout passes `{ enabled: isAuthenticated }`
+- **Analytics Console** — Added comment explaining raw `console.log` in `consoleAdapter` is intentional (prevents circular dependency with Logger)
+
+### Tests
+
+- 9 new test files (86 tests): piiScrubber, sound-manager, useSound, useHaptics, useKeepAwake, useCountdown, useScreenOrientation, useShare, CountdownTimer
+- Jest mock setup for 5 new Expo modules: expo-av, expo-haptics, expo-keep-awake, expo-screen-orientation, expo-sharing
+
+---
+
 ## [3.4.0] - 2026-02-28
 
 ### Added — Phase 10: Wire Everything
