@@ -27,10 +27,7 @@ export const Database = {
     return adapter.query<T>(sql, params);
   },
 
-  async insert(
-    table: string,
-    data: Record<string, unknown>,
-  ): Promise<number> {
+  async insert(table: string, data: Record<string, unknown>): Promise<number> {
     return adapter.insert(table, data);
   },
 
@@ -38,7 +35,7 @@ export const Database = {
     table: string,
     data: Record<string, unknown>,
     where: string,
-    params?: unknown[],
+    params?: unknown[]
   ): Promise<number> {
     return adapter.update(table, data, where, params);
   },
@@ -46,14 +43,12 @@ export const Database = {
   async delete(
     table: string,
     where: string,
-    params?: unknown[],
+    params?: unknown[]
   ): Promise<number> {
     return adapter.delete(table, where, params);
   },
 
-  async transaction<T>(
-    fn: (tx: TransactionContext) => Promise<T>,
-  ): Promise<T> {
+  async transaction<T>(fn: (tx: TransactionContext) => Promise<T>): Promise<T> {
     return adapter.transaction(fn);
   },
 
